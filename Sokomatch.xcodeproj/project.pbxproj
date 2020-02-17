@@ -20,7 +20,6 @@
 		859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CBB23F80F7200F4342C /* TokenView.swift */; };
 		859E4CBE23F80FEC00F4342C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CBD23F80FEC00F4342C /* Location.swift */; };
 		859E4CC023F8102000F4342C /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CBF23F8102000F4342C /* Direction.swift */; };
-		859E4CC223F8340A00F4342C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CC123F8340A00F4342C /* Map.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +38,6 @@
 		859E4CBB23F80F7200F4342C /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
 		859E4CBD23F80FEC00F4342C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		859E4CBF23F8102000F4342C /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
-		859E4CC123F8340A00F4342C /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 				859E4CAD23F7FFDA00F4342C /* Preview Content */,
 				859E4CBD23F80FEC00F4342C /* Location.swift */,
 				859E4CBF23F8102000F4342C /* Direction.swift */,
-				859E4CC123F8340A00F4342C /* Map.swift */,
 				8562221723F9AC4400B1506D /* Stage.swift */,
 			);
 			path = Sokomatch;
@@ -189,7 +186,6 @@
 				859E4CC023F8102000F4342C /* Direction.swift in Sources */,
 				85651F4123F98461008D30CA /* Token.swift in Sources */,
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
-				859E4CC223F8340A00F4342C /* Map.swift in Sources */,
 				8562221623F99A2300B1506D /* Board.swift in Sources */,
 				8562221823F9AC4400B1506D /* Stage.swift in Sources */,
 				859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */,

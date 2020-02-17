@@ -13,7 +13,6 @@ struct ContentView: View {
     @ObservedObject private var stage: Stage
     
     private let board: Board
-    private let map: Map
     
     var body: some View {
         BoardView(board: board) { tileSize in
@@ -21,7 +20,7 @@ struct ContentView: View {
                 TokenView(token: self.stage.token(fromId: id), size: tileSize, stepLength: tileSize)
             }
         }
-        .gesture(DragGesture(minimumDistance: map.tileSize / 2)
+        .gesture(DragGesture(minimumDistance: board.tileSize / 2)
             .onEnded { value in
                 let dir: Direction
                 let deltaX = value.translation.width
@@ -34,22 +33,21 @@ struct ContentView: View {
                 withAnimation {
                     self.stage.move(
                         tokenAtLocation: Location(
-                            x: Int(value.startLocation.x / self.map.tileSize),
-                            y: Int(value.startLocation.y / self.map.tileSize)),
+                            x: Int(value.startLocation.x / self.board.tileSize),
+                            y: Int(value.startLocation.y / self.board.tileSize)),
                         toward: dir)
                 }
         })
         .onAppear {
             self.stage.place(token: Token(location: Location.zero, style: .red))
-            self.stage.place(token: Token(location: self.map.center, style: .blue))
+            self.stage.place(token: Token(location: self.board.center, style: .blue))
             self.stage.place(token: Token(location: Location(x: self.board.cols - 1, y: self.board.rows - 1), style: .green))
         }
     }
     
     init() {
-        map = Map(cols: 7, rows: 7, tileSize: 50)
-        board = Board(cols: map.cols, rows: map.rows, tileSize: map.tileSize)
-        stage = Stage(map: map)
+        board = Board(cols: 7, rows: 7, tileSize: 50)
+        stage = Stage(board: board)
     }
 }
 

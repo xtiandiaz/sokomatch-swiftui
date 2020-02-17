@@ -14,11 +14,31 @@ class Stage: ObservableObject {
     @Published private(set) var _targets = [Location: UUID]()
     @Published private(set) var _tokens = [UUID: Token]()
     
-    private let map: Map
+    private let board: Board
     
-    init(map: Map) {
-        self.map = map
+    init(board: Board) {
+        self.board = board
     }
+    
+//    subscript(location: Location) -> Locatable? {
+//        get { locatables[location] }
+//        set {
+//            guard let introducing = newValue else {
+//                print("Attempted to set nil as Locatable at \(location)")
+//                return
+//            }
+//            if
+//                !isAvailable(location: location),
+//                let existing = locatables[location],
+//                existing.id != introducing.id {
+//                    print("A Locatable with id \(existing.id) already exists at \(location)")
+//                return
+//            }
+//
+//            locatables[introducing.location] = nil
+//            locatables[location] = newValue
+//        }
+//    }
     
     func place(token: Token) {
         _ids.append(token.id)
@@ -27,7 +47,7 @@ class Stage: ObservableObject {
     }
     
     func move(tokenAtLocation location: Location, toward direction: Direction) {
-        if !map.isValid(location: location) {
+        if !board.isValid(location: location) {
             return
         }
 
@@ -35,14 +55,14 @@ class Stage: ObservableObject {
             let tokenId = _targets[location],
             let token = _tokens[tokenId] else { return }
 
-        let destination = map.nextLocation(from: location, toward: direction)
+        let destination = board.nextLocation(from: location, toward: direction)
         if destination == location {
             return
         }
         
         _targets[location] = nil
         _targets[destination] = token.id
-        _tokens[token.id] = Token(id: token.id, location: destination, style: .blue)
+        _tokens[token.id] = Token(id: token.id, location: destination, style: token.style)
     }
     
     func token(fromId id: UUID) -> Token {
