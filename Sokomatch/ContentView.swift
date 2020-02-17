@@ -30,7 +30,7 @@ struct ContentView: View {
                 } else {
                     dir = deltaY > 0 ? .up : .down
                 }
-                withAnimation {
+                withAnimation(.linear(duration: 0.1)) {
                     self.stage.move(
                         tokenAtLocation: Location(
                             x: Int(value.startLocation.x / self.board.tileSize),

@@ -28,16 +28,14 @@ class Board {
         location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
     }
     
-    func isAvailable(location: Location) -> Bool {
-//        locatables[location] == nil
-        return true
-    }
-    
-    func nextLocation(from origin: Location, toward direction: Direction) -> Location {
+    func nextLocation(
+        from origin: Location,
+        toward direction: Direction,
+        isAvailable: (Location) -> Bool) -> Location {
         let next = origin.shifted(toward: direction)
-        if !isValid(location: next) || !isAvailable(location: next) {
+        if !isValid(location: next) || !isAvailable(next) {
             return origin
         }
-        return nextLocation(from: next, toward: direction)
+        return nextLocation(from: next, toward: direction, isAvailable: isAvailable)
     }
 }

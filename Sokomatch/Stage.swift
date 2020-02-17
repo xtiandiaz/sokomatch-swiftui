@@ -55,7 +55,10 @@ class Stage: ObservableObject {
             let tokenId = _targets[location],
             let token = _tokens[tokenId] else { return }
 
-        let destination = board.nextLocation(from: location, toward: direction)
+        let destination = board.nextLocation(from: location, toward: direction) {
+            [weak self] in
+            self?._targets[$0] == nil
+        }
         if destination == location {
             return
         }
