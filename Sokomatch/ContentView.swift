@@ -20,7 +20,7 @@ struct ContentView: View {
                 TokenView(token: self.stage.token(fromId: id), size: tileSize, stepLength: tileSize)
             }
         }
-        .gesture(DragGesture(minimumDistance: board.tileSize / 2)
+        .gesture(DragGesture(minimumDistance: board.tileSize / 3)
             .onEnded { value in
                 let dir: Direction
                 let deltaX = value.translation.width
@@ -39,14 +39,14 @@ struct ContentView: View {
                 }
         })
         .onAppear {
-            self.stage.place(token: Token(location: Location.zero, style: .red))
-            self.stage.place(token: Token(location: self.board.center, style: .blue))
-            self.stage.place(token: Token(location: Location(x: self.board.cols - 1, y: self.board.rows - 1), style: .green))
+            self.stage.place(token: Blob(location: Location.zero, style: .red))
+            self.stage.place(token: Blob(location: self.board.center, style: .blue))
+            self.stage.place(token: Blob(location: Location(x: self.board.cols - 1, y: self.board.rows - 1), style: .green))
         }
     }
     
     init() {
-        board = Board(cols: 7, rows: 7, tileSize: 50)
+        board = Board(cols: 7, rows: 7, tileSize: 55)
         stage = Stage(board: board)
     }
 }

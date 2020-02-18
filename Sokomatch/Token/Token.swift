@@ -8,39 +8,25 @@
 
 import SwiftUI
 
-struct Token: Identifiable {
+protocol Movable {
     
-    static let example = Token(
-        location: Location.zero,
-        style: TokenStyle(color: Color.blue))
-    static let example2 = Token(
-        location: Location(x: 1, y: 1),
-        style: TokenStyle(color: Color.red))
-    
-    let id: UUID
-    var location: Location
-    var style: TokenStyle
-    
-    init(id: UUID, location: Location, style: TokenStyle) {
-        self.id = id
-        self.location = location
-        self.style = style
-    }
-    
-    init(location: Location, style: TokenStyle) {
-        self.init(id: UUID(), location: location, style: style)
-    }
-    
-    static func == (lhs: Token, rhs: Token) -> Bool {
-        return lhs.id == rhs.id
-    }
+    var canMove: Bool { get }
 }
 
-struct TokenStyle: Hashable {
+protocol Combinable {
     
-    static let red = TokenStyle(color: .red)
-    static let green = TokenStyle(color: .green)
-    static let blue = TokenStyle(color: .blue)
+    func canCombine(withOther other: Combinable)
+    func combine(withOther other: Combinable) -> Combinable
+}
+
+protocol Token {
     
-    var color: Color
+    var id: UUID { get }
+    var location: Location { get set }
+    var style: TokenStyle { get }
+}
+
+extension Token {
+    
+    var canMove: Bool { self is Movable }
 }

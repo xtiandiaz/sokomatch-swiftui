@@ -34,8 +34,8 @@ struct BoardView<Content: View>: View {
 struct Board_Previews: PreviewProvider {
     static var previews: some View {
         BoardView(board: Board.example) { tileSize in
-            TokenView(token: Token.example, size: tileSize, stepLength: tileSize)
-            TokenView(token: Token.example2, size: tileSize, stepLength: tileSize)
+            TokenView(token: Blob.example, size: tileSize, stepLength: tileSize)
+            TokenView(token: Blob.example2, size: tileSize, stepLength: tileSize)
         }
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85438F0823FBAE1F00BAFA36 /* Blob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0723FBAE1F00BAFA36 /* Blob.swift */; };
+		85438F0A23FBB7FF00BAFA36 /* TokenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */; };
 		8562221623F99A2300B1506D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221523F99A2300B1506D /* Board.swift */; };
 		8562221823F9AC4400B1506D /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221723F9AC4400B1506D /* Stage.swift */; };
 		85651F4123F98461008D30CA /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651F4023F98461008D30CA /* Token.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		85438F0723FBAE1F00BAFA36 /* Blob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blob.swift; sourceTree = "<group>"; };
+		85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStyle.swift; sourceTree = "<group>"; };
 		8562221523F99A2300B1506D /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		8562221723F9AC4400B1506D /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		85651F4023F98461008D30CA /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 			children = (
 				859E4CBB23F80F7200F4342C /* TokenView.swift */,
 				85651F4023F98461008D30CA /* Token.swift */,
+				85438F0723FBAE1F00BAFA36 /* Blob.swift */,
+				85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */,
 			);
 			path = Token;
 			sourceTree = "<group>";
@@ -187,6 +193,8 @@
 				85651F4123F98461008D30CA /* Token.swift in Sources */,
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
 				8562221623F99A2300B1506D /* Board.swift in Sources */,
+				85438F0823FBAE1F00BAFA36 /* Blob.swift in Sources */,
+				85438F0A23FBB7FF00BAFA36 /* TokenStyle.swift in Sources */,
 				8562221823F9AC4400B1506D /* Stage.swift in Sources */,
 				859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,

@@ -39,7 +39,7 @@ struct TokenView: View {
 
 struct Token_Previews: PreviewProvider {
     static var previews: some View {
-        TokenView(token: Token.example, size: 50, stepLength: 50)
+        TokenView(token: Blob.example, size: 50, stepLength: 50)
     }
 }
 

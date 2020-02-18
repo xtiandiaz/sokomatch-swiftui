@@ -20,26 +20,6 @@ class Stage: ObservableObject {
         self.board = board
     }
     
-//    subscript(location: Location) -> Locatable? {
-//        get { locatables[location] }
-//        set {
-//            guard let introducing = newValue else {
-//                print("Attempted to set nil as Locatable at \(location)")
-//                return
-//            }
-//            if
-//                !isAvailable(location: location),
-//                let existing = locatables[location],
-//                existing.id != introducing.id {
-//                    print("A Locatable with id \(existing.id) already exists at \(location)")
-//                return
-//            }
-//
-//            locatables[introducing.location] = nil
-//            locatables[location] = newValue
-//        }
-//    }
-    
     func place(token: Token) {
         _ids.append(token.id)
         _tokens[token.id] = token
@@ -53,8 +33,14 @@ class Stage: ObservableObject {
 
         guard
             let tokenId = _targets[location],
-            let token = _tokens[tokenId] else { return }
-
+            var token = _tokens[tokenId]
+        else { return }
+        
+        if !token.canMove {
+            print("Token can't be moved")
+            return
+        }
+        
         let destination = board.nextLocation(from: location, toward: direction) {
             [weak self] in
             self?._targets[$0] == nil
@@ -63,9 +49,12 @@ class Stage: ObservableObject {
             return
         }
         
+        // Mutates the struct, thus creating a new, updated instance
+        token.location = destination
+        
         _targets[location] = nil
         _targets[destination] = token.id
-        _tokens[token.id] = Token(id: token.id, location: destination, style: token.style)
+        _tokens[token.id] = token
     }
     
     func token(fromId id: UUID) -> Token {
