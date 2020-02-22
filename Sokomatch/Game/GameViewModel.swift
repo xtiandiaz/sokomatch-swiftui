@@ -10,10 +10,10 @@ import SwiftUI
 
 class GameViewModel: ObservableObject {
     
-    @Published var stageVM: StageViewModel!
-    @Published var boardVM: BoardViewModel!
+    let stageVM: StageViewModel
+    let boardVM: BoardViewModel
     
-    @Published private var game = Game()
+    private let game = Game()
     
     init() {
         boardVM = BoardViewModel(board: game.stage.board)

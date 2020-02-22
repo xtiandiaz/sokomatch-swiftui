@@ -10,10 +10,10 @@ import SwiftUI
 
 class StageViewModel: ObservableObject {
     
+    let boardVM: BoardViewModel
     let tileSize: CGFloat
     
-    @Published var stage: Stage
-    @Published var boardVM: BoardViewModel
+    private let stage: Stage
     
     init(stage: Stage, boardVM: BoardViewModel) {
         self.stage = stage

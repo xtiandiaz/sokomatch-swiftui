@@ -13,9 +13,17 @@ class BoardViewModel: ObservableObject {
     
     static let transitionDuration: TimeInterval = 0.1
     
-    let board: Board
     let tileSize: CGFloat
     
+    var width: CGFloat {
+        CGFloat(board.cols) * board.tileSize
+    }
+    
+    var height: CGFloat {
+        CGFloat(board.rows) * board.tileSize
+    }
+    
+    private let board: Board
     @Published private var tokens = [UUID: Token]()
     @Published private var tokenLocations = [Location: Token]()
     

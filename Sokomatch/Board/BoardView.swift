@@ -26,9 +26,7 @@ struct BoardView: View {
                     stepLength: self.viewModel.tileSize)
             }
         }
-        .frame(
-            width: CGFloat(viewModel.board.cols) * viewModel.board.tileSize,
-            height: CGFloat(viewModel.board.rows) * viewModel.board.tileSize)
+        .frame(width: viewModel.width, height: viewModel.height)
     }
     
     init(viewModel: BoardViewModel) {
