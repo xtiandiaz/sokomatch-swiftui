@@ -22,11 +22,17 @@ struct TokenView: View {
     }
     
     var body: some View {
-        Circle()
-            .fill(token.style.color)
-            .frame(width: size, height: size)
-            .position(position)
-
+        ZStack {
+            Circle()
+                .fill(token.style.color)
+            
+            if token.isCombinable && token.value > 0 {
+                Text("\(token.value)")
+                    .font(.title)
+            }
+        }
+        .frame(width: size, height: size)
+        .position(position)
     }
     
     init(token: Token, size: CGFloat, stepLength: CGFloat) {

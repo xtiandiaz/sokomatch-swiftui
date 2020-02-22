@@ -15,8 +15,10 @@ protocol Movable {
 
 protocol Combinable {
     
-    func canCombine(withOther other: Combinable)
-    func combine(withOther other: Combinable) -> Combinable
+    var value: Int { get set }
+    
+    func canCombine(withOther other: Combinable) -> Bool
+    mutating func combine(withOther other: Combinable)
 }
 
 protocol Token {
@@ -29,4 +31,6 @@ protocol Token {
 extension Token {
     
     var canMove: Bool { self is Movable }
+    var isCombinable: Bool { self is Combinable }
+    var value: Int { self.isCombinable ? (self as! Combinable).value : 0 }
 }
