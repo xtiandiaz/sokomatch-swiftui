@@ -12,6 +12,7 @@
 		85438F0C2401154D00BAFA36 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0B2401154D00BAFA36 /* Game.swift */; };
 		85438F10240126CA00BAFA36 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0F240126CA00BAFA36 /* GameView.swift */; };
 		85438F1324012B2200BAFA36 /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F1224012B2200BAFA36 /* StageView.swift */; };
+		85438F16240135C300BAFA36 /* TokenValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F15240135C300BAFA36 /* TokenValueView.swift */; };
 		8562221623F99A2300B1506D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221523F99A2300B1506D /* Board.swift */; };
 		8562221823F9AC4400B1506D /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221723F9AC4400B1506D /* Stage.swift */; };
 		85651F4123F98461008D30CA /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651F4023F98461008D30CA /* Token.swift */; };
@@ -33,6 +34,7 @@
 		85438F0B2401154D00BAFA36 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		85438F0F240126CA00BAFA36 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		85438F1224012B2200BAFA36 /* StageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageView.swift; sourceTree = "<group>"; };
+		85438F15240135C300BAFA36 /* TokenValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenValueView.swift; sourceTree = "<group>"; };
 		8562221523F99A2300B1506D /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		8562221723F9AC4400B1506D /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		85651F4023F98461008D30CA /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				859E4CBB23F80F7200F4342C /* TokenView.swift */,
+				85438F15240135C300BAFA36 /* TokenValueView.swift */,
 				85438F0723FBAE1F00BAFA36 /* Blob.swift */,
 				85651F4023F98461008D30CA /* Token.swift */,
 				85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */,
@@ -230,6 +233,7 @@
 				85438F0823FBAE1F00BAFA36 /* Blob.swift in Sources */,
 				85438F10240126CA00BAFA36 /* GameView.swift in Sources */,
 				85438F0A23FBB7FF00BAFA36 /* TokenStyle.swift in Sources */,
+				85438F16240135C300BAFA36 /* TokenValueView.swift in Sources */,
 				8562221823F9AC4400B1506D /* Stage.swift in Sources */,
 				859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */,
 				85438F1324012B2200BAFA36 /* StageView.swift in Sources */,

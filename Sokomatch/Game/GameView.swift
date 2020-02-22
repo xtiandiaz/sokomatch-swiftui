@@ -14,7 +14,7 @@ struct GameView: View {
     @ObservedObject private var vm = ViewModel()
     
     var body: some View {
-        StageView()
+        StageView(stage: vm.stage)
     }
 }
 
@@ -28,9 +28,12 @@ extension GameView {
     
     class ViewModel: ObservableObject {
         
+        let stage: Stage
+        
         private let game = Game()
         
         init() {
+            stage = game.stage
         }
     }
 }

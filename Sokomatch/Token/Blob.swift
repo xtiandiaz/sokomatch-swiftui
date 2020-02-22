@@ -20,7 +20,7 @@ struct Blob: Token, Movable, Combinable {
     let id: UUID
     var location: Location
     var style: TokenStyle
-    var value: Int = 1
+    var value: Int? = nil
     
     init(id: UUID, location: Location, style: TokenStyle) {
         self.id = id
@@ -37,6 +37,6 @@ struct Blob: Token, Movable, Combinable {
     }
     
     mutating func combine(withOther other: Combinable) {
-        value += other.value
+//        value += other.value
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct StageView: View {
     
-    @ObservedObject private var vm: ViewModel = ViewModel()
+    @ObservedObject private var vm: ViewModel
     
     var body: some View {
         BoardView(board: vm.board) { tileSize in
@@ -37,16 +37,18 @@ struct StageView: View {
                 }
         })
         .onAppear {
-            self.vm.place(token: Blob(location: Location.zero, style: .red))
-            self.vm.place(token: Blob(location: self.vm.board.center, style: .blue))
-            self.vm.place(token: Blob(location: Location(x: self.vm.board.cols - 1, y: self.vm.board.rows - 1), style: .green))
+            self.vm.spawnTokens()
         }
+    }
+    
+    init(stage: Stage) {
+        vm = ViewModel(stage: stage)
     }
 }
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView()
+        StageView(stage: Stage())
     }
 }
 
@@ -64,14 +66,13 @@ extension StageView {
             _tokens.values.map { $0.id }
         }
         
-        init() {
-            stage = Stage()
+        init(stage: Stage) {
+            self.stage = stage
             board = stage.board
         }
         
-        func place(token: Token) {
-            _tokens[token.id] = token
-            _targets[token.location] = token.id
+        func spawnTokens() {
+            stage.tokens.forEach { place(token: $0) }
         }
         
         func move(tokenAtLocation location: Location, toward direction: Direction) {
@@ -107,6 +108,11 @@ extension StageView {
         
         func token(fromId id: UUID) -> Token {
             _tokens[id]!
+        }
+        
+        private func place(token: Token) {
+            _tokens[token.id] = token
+            _targets[token.location] = token.id
         }
     }
 }

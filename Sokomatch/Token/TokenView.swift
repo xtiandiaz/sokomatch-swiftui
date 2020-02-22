@@ -13,6 +13,7 @@ struct TokenView: View {
     private let token: Token
     private let size: CGFloat
     private let stepLength: CGFloat
+    @State private var scale: CGFloat = 0.1
     
     var position: CGPoint {
         let location = token.location
@@ -26,13 +27,16 @@ struct TokenView: View {
             Circle()
                 .fill(token.style.color)
             
-            if token.isCombinable && token.value > 0 {
-                Text("\(token.value)")
-                    .font(.title)
-            }
+            TokenValueView(token: token)
         }
         .frame(width: size, height: size)
+        .scaleEffect(scale)
         .position(position)
+        .onAppear {
+            withAnimation(.spring()) {
+                self.scale = 1.0
+            }
+        }
     }
     
     init(token: Token, size: CGFloat, stepLength: CGFloat) {
