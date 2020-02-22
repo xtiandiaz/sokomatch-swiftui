@@ -39,7 +39,11 @@ struct TokenView: View {
         }
     }
     
-    init(token: Token, size: CGFloat, stepLength: CGFloat) {
+    init?(token: Token?, size: CGFloat, stepLength: CGFloat) {
+        guard let token = token else {
+            return nil
+        }
+        
         self.token = token
         self.size = size
         self.stepLength = stepLength

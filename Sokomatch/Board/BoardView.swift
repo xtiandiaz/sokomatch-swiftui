@@ -7,35 +7,80 @@
 //
 
 import SwiftUI
+import Combine
 
-struct BoardView<Content: View>: View {
+struct BoardView: View {
     
-    private let board: Board
-    private let content: (CGFloat) -> Content
+    @ObservedObject private var vm: ViewModel
     
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(Color.yellow)
             
-            self.content(board.tileSize)
+            ForEach(self.vm.tokenIds, id: \.self) { id in
+                TokenView(
+                    token: self.vm.token(fromId: id),
+                    size: self.vm.tileSize,
+                    stepLength: self.vm.tileSize)
+            }
         }
         .frame(
-            width: CGFloat(board.cols) * board.tileSize,
-            height: CGFloat(board.rows) * board.tileSize)
+            width: CGFloat(vm.board.cols) * vm.board.tileSize,
+            height: CGFloat(vm.board.rows) * vm.board.tileSize)
     }
     
-    init(board: Board, @ViewBuilder content: @escaping (CGFloat) -> Content) {
-        self.board = board
-        self.content = content
+    init(board: Board) {
+        vm = ViewModel(board: board)
     }
 }
 
 struct Board_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView(board: Board.example) { tileSize in
-            TokenView(token: Blob.example, size: tileSize, stepLength: tileSize)
-            TokenView(token: Blob.example2, size: tileSize, stepLength: tileSize)
+        BoardView(board: Board.example)
+    }
+}
+
+extension BoardView {
+    
+    class ViewModel: ObservableObject {
+        
+        let tileSize: CGFloat
+        
+        @Published var board: Board
+        
+        var tokenIds: [UUID] {
+            Array(board.tokens.keys)
+        }
+        
+        private var boardCancellable: AnyCancellable?
+        
+        init(board: Board) {
+            self.board = board
+            tileSize = board.tileSize
+            
+            boardCancellable = board.objectWillChange.sink { _ in
+                self.objectWillChange.send()
+            }
+        }
+        
+        func token(fromId id: UUID) -> Token? {
+            board.tokens[id]
+        }
+        
+        func move(tokenAtLocation location: Location, toward direction: Direction) {
+            if !board.isValid(location: location) {
+                return
+            }
+
+            guard var token = board.tokenLocations[location] else { return }
+            
+            if !token.canMove {
+                print("Token can't be moved")
+                return
+            }
+            
+            board.move(tokenAtLocation: location, toward: direction)
         }
     }
 }

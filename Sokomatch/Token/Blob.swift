@@ -20,7 +20,7 @@ struct Blob: Token, Movable, Combinable {
     let id: UUID
     var location: Location
     var style: TokenStyle
-    var value: Int? = nil
+    var value: Int? = 1
     
     init(id: UUID, location: Location, style: TokenStyle) {
         self.id = id
