@@ -8,27 +8,33 @@
 
 import SwiftUI
 
+protocol Token: Stylable {
+    
+    var id: UUID { get }
+    var location: Location { get set }
+}
+
 protocol Movable {
     
     var canMove: Bool { get }
 }
 
-protocol Combinable {
+protocol Accumulable {
     
-    func canCombine(withOther other: Combinable) -> Bool
-    mutating func combine(withOther other: Combinable)
+     var value: Int { get set }
 }
 
-protocol Token {
+protocol Stylable {
     
-    var id: UUID { get }
-    var location: Location { get set }
-    var value: Int? { get set }
     var style: TokenStyle { get }
+}
+
+protocol Combinable: Accumulable, Stylable {
+    
+    func combine(with other: Combinable) -> Token?
 }
 
 extension Token {
     
     var canMove: Bool { self is Movable }
-    var isCombinable: Bool { self is Combinable }
 }

@@ -8,17 +8,21 @@
 
 import SwiftUI
 
-class Stage {
+struct Stage {
+    
+    static let example = Stage()
     
     let board: Board
-    
-    private(set) lazy var tokens = {[
-        Blob(location: Location.zero, style: .red),
-        Blob(location: board.center, style: .blue),
-        Blob(location: Location(x: board.cols - 1, y: board.rows - 1), style: .green)
-    ]}()
+    let tokens: [Token]
     
     init() {
-        board = Board(cols: 7, rows: 7, tileSize: 55)
+        board = Board(cols: 7, rows: 7, tileSize: 58)
+        tokens = [
+            Blob(location: Location.zero, style: .red),
+            Blob(location: board.center, style: .blue),
+            Blob(location: Location(x: 0, y: board.rows - 1), style: .blue),
+            Blob(location: Location(x: board.cols - 1, y: 0), style: .blue),
+            Blob(location: Location(x: board.cols - 1, y: board.rows - 1), style: .green)
+        ]
     }
 }

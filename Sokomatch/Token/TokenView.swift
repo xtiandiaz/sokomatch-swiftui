@@ -30,6 +30,7 @@ struct TokenView: View {
             TokenValueView(token: token)
         }
         .frame(width: size, height: size)
+        .transition(.scale)
         .scaleEffect(scale)
         .position(position)
         .onAppear {

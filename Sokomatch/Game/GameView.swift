@@ -11,29 +11,24 @@ import Combine
 
 struct GameView: View {
     
-    @ObservedObject private var vm = ViewModel()
+    @ObservedObject var viewModel: GameViewModel
     
     var body: some View {
-        StageView(stage: vm.stage)
+        VStack {
+            StageView(viewModel: viewModel.stageVM)
+            
+            Button("Restart") {
+                self.viewModel.restart()
+            }
+        }
+        .onAppear {
+            self.viewModel.start()
+        }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
-    }
-}
-
-extension GameView {
-    
-    class ViewModel: ObservableObject {
-        
-        let stage: Stage
-        
-        private let game = Game()
-        
-        init() {
-            stage = game.stage
-        }
+        GameView(viewModel: GameViewModel())
     }
 }

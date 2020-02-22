@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TokenValueView: View {
     
-    private let value: Int
+    private var value: Int
     
     var body: some View {
         Text("\(value)")
@@ -18,7 +18,7 @@ struct TokenValueView: View {
     }
     
     init?(token: Token) {
-        guard let value = token.value else {
+        guard let value = (token as? Accumulable)?.value else {
             return nil
         }
         

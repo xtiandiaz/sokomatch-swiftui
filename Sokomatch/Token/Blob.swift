@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Blob: Token, Movable, Combinable {
+struct Blob: Token, Combinable, Movable {
 
     static let example = Blob(
         location: Location.zero,
@@ -20,7 +20,7 @@ struct Blob: Token, Movable, Combinable {
     let id: UUID
     var location: Location
     var style: TokenStyle
-    var value: Int? = 1
+    var value: Int = 1
     
     init(id: UUID, location: Location, style: TokenStyle) {
         self.id = id
@@ -32,11 +32,13 @@ struct Blob: Token, Movable, Combinable {
         self.init(id: UUID(), location: location, style: style)
     }
     
-    func canCombine(withOther other: Combinable) -> Bool {
-        true
-    }
-    
-    mutating func combine(withOther other: Combinable) {
-//        value += other.value
+    func combine(with other: Combinable) -> Token? {
+        if other.style.color != self.style.color {
+            return nil
+        }
+        
+        var result = self
+        result.value += other.value
+        return result
     }
 }

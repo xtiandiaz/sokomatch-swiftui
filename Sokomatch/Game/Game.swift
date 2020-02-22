@@ -6,11 +6,9 @@
 //  Copyright © 2020 Berilio. All rights reserved.
 //
 
-import SwiftUI
-
-class Game {
+struct Game {
     
-    private(set) var stage: Stage
+    let stage: Stage
     
     init() {
         stage = Stage()
