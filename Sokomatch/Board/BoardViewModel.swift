@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Combine
 
 class BoardViewModel: ObservableObject {
     
@@ -15,20 +14,20 @@ class BoardViewModel: ObservableObject {
     
     let tileSize: CGFloat
     
-    var width: CGFloat {
-        CGFloat(board.cols) * board.tileSize
-    }
-    
-    var height: CGFloat {
-        CGFloat(board.rows) * board.tileSize
-    }
-    
     private let board: Board
     @Published private var tokens = [UUID: Token]()
     @Published private var tokenLocations = [Location: Token]()
     
     var tokenIds: [UUID] {
         Array(tokens.keys)
+    }
+    
+    var width: CGFloat {
+        CGFloat(board.cols) * board.tileSize
+    }
+    
+    var height: CGFloat {
+        CGFloat(board.rows) * board.tileSize
     }
     
     init(board: Board) {
@@ -93,19 +92,27 @@ class BoardViewModel: ObservableObject {
         }
         
         if !isAvailable(location: next) {
-            if let combinable = token as? Combinable,
+            guard
                 let other = self.token(atLocation: next),
-                let otherCombinable = other as? Combinable,
-                var result = combinable.combine(with: otherCombinable) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Self.transitionDuration) { [weak self] in
-                    self?.remove(token: other)
-                    
-                    result.location = next
-                    self?.place(token: result)
-                }
-                return next
+                token.canCombine(with: other)
+            else {
+                return origin
             }
-            return origin
+            
+            let result = token.combine(with: other)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.transitionDuration) { [weak self] in
+                guard var result = result else {
+                    self?.removeAndClear(token: token)
+                    self?.removeAndClear(token: other)
+                    return
+                }
+                
+                self?.remove(token: other)
+                result.location = next
+                self?.place(token: result)
+            }
+            return next
         }
         
         return move(from: next, toward: direction, forToken: token)
@@ -117,6 +124,11 @@ class BoardViewModel: ObservableObject {
     
     private func token(atLocation location: Location) -> Token? {
         tokenLocations[location]
+    }
+    
+    private func removeAndClear(token: Token) {
+        remove(token: token)
+        clear(location: token.location)
     }
     
     private func remove(token: Token) {

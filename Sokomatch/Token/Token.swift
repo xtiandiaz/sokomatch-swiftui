@@ -8,33 +8,61 @@
 
 import SwiftUI
 
-protocol Token: Stylable {
+protocol Token {
     
     var id: UUID { get }
+    var type: TokenType { get }
+    var value: Int { get set }
     var location: Location { get set }
-}
-
-protocol Movable {
-    
-    var canMove: Bool { get }
-}
-
-protocol Accumulable {
-    
-     var value: Int { get set }
-}
-
-protocol Stylable {
-    
     var style: TokenStyle { get }
-}
-
-protocol Combinable: Accumulable, Stylable {
+    var canMove: Bool { get }
     
-    func combine(with other: Combinable) -> Token?
+    var constructors: [TokenType] { get }
+    var destructors: [TokenType] { get }
+    
+    func canCombine(with other: Token) -> Bool
+    func combine(with other: Token) -> Token?
+    func add(_ value: Int) -> Token?
+    func destruct(by other: Token) -> Token?
+    func construct(with other: Token) -> Token?
 }
 
 extension Token {
     
-    var canMove: Bool { self is Movable }
+    var canMove: Bool { true }
+    
+    func canCombine(with other: Token) -> Bool {
+        self.type == other.type
+            || destructors.contains(other.type)
+            || constructors.contains(other.type)
+    }
+    
+    func combine(with other: Token) -> Token? {
+        if other.type == self.type {
+            return add(other.value)
+        } else if destructors.contains(other.type) {
+            return destruct(by: other)
+        } else if constructors.contains(other.type) {
+            return construct(with: other)
+        }
+        return nil
+    }
+    
+    func add(_ value: Int) -> Token? {
+        let sum = self.value + value
+        if sum <= 0 {
+            return nil
+        }
+        var result = self
+        result.value = sum
+        return result
+    }
+    
+    func destruct(by other: Token) -> Token? {
+        add(-other.value)
+    }
+    
+    func construct(with other: Token) -> Token? {
+        return nil
+    }
 }

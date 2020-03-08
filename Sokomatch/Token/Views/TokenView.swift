@@ -24,8 +24,13 @@ struct TokenView: View {
     
     var body: some View {
         ZStack {
-            Circle()
-                .fill(token.style.color)
+            if token.style.image != nil {
+                Image(token.style.image!)
+                    .resizable()
+            } else {
+                Circle()
+                    .fill(token.style.color)
+            }
             
             TokenValueView(token: token)
         }
@@ -54,7 +59,7 @@ struct TokenView: View {
 
 struct Token_Previews: PreviewProvider {
     static var previews: some View {
-        TokenView(token: Blob.example, size: 50, stepLength: 50)
+        TokenView(token: Water(location: Location.zero), size: 50, stepLength: 50)
     }
 }
 

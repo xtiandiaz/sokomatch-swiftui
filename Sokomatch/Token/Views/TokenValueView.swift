@@ -18,16 +18,16 @@ struct TokenValueView: View {
     }
     
     init?(token: Token) {
-        guard let value = (token as? Accumulable)?.value else {
+        if token.value <= 0 {
             return nil
         }
         
-        self.value = value
+        self.value = token.value
     }
 }
 
 struct TokenValueView_Previews: PreviewProvider {
     static var previews: some View {
-        TokenValueView(token: Blob.example)
+        TokenValueView(token: Water(location: Location.zero))
     }
 }

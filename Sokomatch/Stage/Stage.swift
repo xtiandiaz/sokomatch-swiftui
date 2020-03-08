@@ -16,13 +16,13 @@ struct Stage {
     let tokens: [Token]
     
     init() {
-        board = Board(cols: 7, rows: 7, tileSize: 58)
+        board = Board(cols: 6, rows: 8, tileSize: 64)
         tokens = [
-            Blob(location: Location.zero, style: .red),
-            Blob(location: board.center, style: .blue),
-            Blob(location: Location(x: 0, y: board.rows - 1), style: .blue),
-            Blob(location: Location(x: board.cols - 1, y: 0), style: .blue),
-            Blob(location: Location(x: board.cols - 1, y: board.rows - 1), style: .green)
+            Water(location: Location.zero),
+            Water(location: board.center),
+            Water(location: Location(x: 0, y: board.rows - 1)),
+            Fire(location: Location(x: board.cols - 1, y: 0)),
+            Fire(location: Location(x: board.cols - 1, y: board.rows - 1))
         ]
     }
 }

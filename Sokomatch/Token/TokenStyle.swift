@@ -15,4 +15,5 @@ struct TokenStyle {
     static let blue = TokenStyle(color: .blue)
     
     var color: Color
+    var image: String?
 }
