@@ -60,7 +60,7 @@ class BoardViewModel: ObservableObject {
         
         guard var token = token(atLocation: location) else { return }
         
-        if !token.canMove {
+        if !token.isMovable {
             print("Token can't be moved")
             return
         }
@@ -94,12 +94,12 @@ class BoardViewModel: ObservableObject {
         if !isAvailable(location: next) {
             guard
                 let other = self.token(atLocation: next),
-                token.canCombine(with: other)
+                token.canInteract(with: other)
             else {
                 return origin
             }
             
-            let result = token.combine(with: other)
+            let result = token.interact(with: other)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + Self.transitionDuration) { [weak self] in
                 guard var result = result else {
@@ -108,8 +108,11 @@ class BoardViewModel: ObservableObject {
                     return
                 }
                 
+                self?.remove(token: token)
                 self?.remove(token: other)
+                
                 result.location = next
+                
                 self?.place(token: result)
             }
             return next

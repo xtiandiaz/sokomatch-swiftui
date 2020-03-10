@@ -8,6 +8,49 @@
 
 import SwiftUI
 
+protocol Movable {
+}
+
+protocol Combinable {
+    
+    var value: Int { get set }
+    
+    func canCombine(with other: Token) -> Bool
+    func combine(with other: Token) -> Token?
+}
+
+extension Combinable where Self: Token {
+    
+    func canCombine(with other: Token) -> Bool {
+        return self.type == other.type
+    }
+    
+    func combine(with other: Token) -> Token? {
+        return self.add(other.value)
+    }
+}
+
+protocol Reactive {
+    
+    var catalysts: [TokenType] { get }
+    
+    func canReact(with other: Token) -> Bool
+    func react(with other: Token) -> Token?
+}
+
+extension Reactive where Self: Token {
+    
+    func canReact(with other: Token) -> Bool {
+        catalysts.contains(other.type)
+    }
+    
+    func react(with other: Token) -> Token? {
+        return value < other.value
+            ? other.add(-value)
+            : add(-other.value)
+    }
+}
+
 protocol Token {
     
     var id: UUID { get }
@@ -15,36 +58,31 @@ protocol Token {
     var value: Int { get set }
     var location: Location { get set }
     var style: TokenStyle { get }
-    var canMove: Bool { get }
     
-    var constructors: [TokenType] { get }
-    var destructors: [TokenType] { get }
+    var isMovable: Bool { get }
     
-    func canCombine(with other: Token) -> Bool
-    func combine(with other: Token) -> Token?
+    func canInteract(with other: Token) -> Bool
+    func interact(with other: Token) -> Token?
     func add(_ value: Int) -> Token?
-    func destruct(by other: Token) -> Token?
-    func construct(with other: Token) -> Token?
 }
 
 extension Token {
     
-    var canMove: Bool { true }
+    var isMovable: Bool { self is Movable }
     
-    func canCombine(with other: Token) -> Bool {
-        self.type == other.type
-            || destructors.contains(other.type)
-            || constructors.contains(other.type)
+    func canInteract(with other: Token) -> Bool {
+        canCombine(with: other) || canReact(with: other)
     }
     
-    func combine(with other: Token) -> Token? {
-        if other.type == self.type {
-            return add(other.value)
-        } else if destructors.contains(other.type) {
-            return destruct(by: other)
-        } else if constructors.contains(other.type) {
-            return construct(with: other)
+    func interact(with other: Token) -> Token? {
+        if canCombine(with: other), let self = self as? Combinable {
+            return self.combine(with: other)
         }
+        
+        if canReact(with: other), let self = self as? Reactive {
+            return self.react(with: other)
+        }
+        
         return nil
     }
     
@@ -58,11 +96,13 @@ extension Token {
         return result
     }
     
-    func destruct(by other: Token) -> Token? {
-        add(-other.value)
+    private func canCombine(with other: Token) -> Bool {
+        guard let self = self as? Combinable else { return false }
+        return self.canCombine(with: other)
     }
     
-    func construct(with other: Token) -> Token? {
-        return nil
+    private func canReact(with other: Token) -> Bool {
+        guard let self = self as? Reactive else { return false }
+        return self.canReact(with: other)
     }
 }

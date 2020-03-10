@@ -8,18 +8,15 @@
 
 import Foundation
 
-struct Water: Token {
+struct Water: Token, Combinable, Reactive, Movable {
     
     let id: UUID
     let type: TokenType = .water
     var location: Location
     var value: Int = 1
-    var style = TokenStyle(
-        color: .blue,
-        image: "water")
+    var style = TokenStyle(color: .blue)
     
-    var constructors: [TokenType] = []
-    var destructors: [TokenType] = [.fire]
+    var catalysts: [TokenType] = [.fire]
     
     init(id: UUID, location: Location) {
         self.id = id
@@ -28,9 +25,5 @@ struct Water: Token {
     
     init(location: Location) {
         self.init(id: UUID(), location: location)
-    }
-    
-    func canCombine(with other: Token) -> Bool {
-        [self.type, TokenType.fire].contains(other.type)
     }
 }

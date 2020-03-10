@@ -8,18 +8,15 @@
 
 import Foundation
 
-struct Fire: Token {
+struct Fire: Token, Combinable, Reactive, Movable {
     
     let id: UUID
     let type: TokenType = .fire
     var location: Location
     var value: Int = 1
-    var style = TokenStyle(
-        color: .orange,
-        image: "fire")
+    var style = TokenStyle(color: .orange)
     
-    var constructors: [TokenType] = []
-    var destructors: [TokenType] = [.water]
+    var catalysts: [TokenType] = [.bomb, .water]
     
     init(id: UUID, location: Location) {
         self.id = id
@@ -28,9 +25,5 @@ struct Fire: Token {
     
     init(location: Location) {
         self.init(id: UUID(), location: location)
-    }
-    
-    func canCombine(with other: Token) -> Bool {
-        [self.type, TokenType.water].contains(other.type)
     }
 }

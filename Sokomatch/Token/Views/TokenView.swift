@@ -24,14 +24,7 @@ struct TokenView: View {
     
     var body: some View {
         ZStack {
-            if token.style.image != nil {
-                Image(token.style.image!)
-                    .resizable()
-            } else {
-                Circle()
-                    .fill(token.style.color)
-            }
-            
+            TokenBodyView(style: token.style)
             TokenValueView(token: token)
         }
         .frame(width: size, height: size)

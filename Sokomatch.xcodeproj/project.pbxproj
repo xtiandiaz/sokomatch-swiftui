@@ -19,6 +19,9 @@
 		8562221623F99A2300B1506D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221523F99A2300B1506D /* Board.swift */; };
 		8562221823F9AC4400B1506D /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221723F9AC4400B1506D /* Stage.swift */; };
 		85651F4123F98461008D30CA /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651F4023F98461008D30CA /* Token.swift */; };
+		857B0D8E2417607F00E26599 /* TokenShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D8D2417607F00E26599 /* TokenShape.swift */; };
+		857B0D902417636A00E26599 /* TokenBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D8F2417636A00E26599 /* TokenBodyView.swift */; };
+		857B0D932417674E00E26599 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D922417674E00E26599 /* Bomb.swift */; };
 		85995B812414E29D00C52DDA /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85995B802414E29D00C52DDA /* TokenType.swift */; };
 		85995B852414ED1400C52DDA /* Fire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85995B842414ED1400C52DDA /* Fire.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
@@ -46,6 +49,9 @@
 		8562221523F99A2300B1506D /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		8562221723F9AC4400B1506D /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		85651F4023F98461008D30CA /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		857B0D8D2417607F00E26599 /* TokenShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenShape.swift; sourceTree = "<group>"; };
+		857B0D8F2417636A00E26599 /* TokenBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBodyView.swift; sourceTree = "<group>"; };
+		857B0D922417674E00E26599 /* Bomb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
 		85995B802414E29D00C52DDA /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		85995B842414ED1400C52DDA /* Fire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fire.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,11 +118,25 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
+		857B0D91241766FC00E26599 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				857B0D922417674E00E26599 /* Bomb.swift */,
+				85995B842414ED1400C52DDA /* Fire.swift */,
+				85438F0723FBAE1F00BAFA36 /* Water.swift */,
+				85995B802414E29D00C52DDA /* TokenType.swift */,
+				85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */,
+				857B0D8D2417607F00E26599 /* TokenShape.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
 		85995B862414ED2500C52DDA /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				859E4CBB23F80F7200F4342C /* TokenView.swift */,
 				85438F15240135C300BAFA36 /* TokenValueView.swift */,
+				857B0D8F2417636A00E26599 /* TokenBodyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,12 +187,9 @@
 		859E4CC723F9813400F4342C /* Token */ = {
 			isa = PBXGroup;
 			children = (
-				85995B862414ED2500C52DDA /* Views */,
-				85995B842414ED1400C52DDA /* Fire.swift */,
-				85438F0723FBAE1F00BAFA36 /* Water.swift */,
 				85651F4023F98461008D30CA /* Token.swift */,
-				85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */,
-				85995B802414E29D00C52DDA /* TokenType.swift */,
+				857B0D91241766FC00E26599 /* Types */,
+				85995B862414ED2500C52DDA /* Views */,
 			);
 			path = Token;
 			sourceTree = "<group>";
@@ -253,9 +270,11 @@
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
 				85438F0C2401154D00BAFA36 /* Game.swift in Sources */,
 				8562221623F99A2300B1506D /* Board.swift in Sources */,
+				857B0D932417674E00E26599 /* Bomb.swift in Sources */,
 				85438F0823FBAE1F00BAFA36 /* Water.swift in Sources */,
 				85438F10240126CA00BAFA36 /* GameView.swift in Sources */,
 				85438F1A2401C4FB00BAFA36 /* StageViewModel.swift in Sources */,
+				857B0D902417636A00E26599 /* TokenBodyView.swift in Sources */,
 				85438F0A23FBB7FF00BAFA36 /* TokenStyle.swift in Sources */,
 				85995B812414E29D00C52DDA /* TokenType.swift in Sources */,
 				85995B852414ED1400C52DDA /* Fire.swift in Sources */,
@@ -265,6 +284,7 @@
 				85438F1324012B2200BAFA36 /* StageView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				859E4CBA23F802F500F4342C /* BoardView.swift in Sources */,
+				857B0D8E2417607F00E26599 /* TokenShape.swift in Sources */,
 				85438F1C2401C96400BAFA36 /* GameViewModel.swift in Sources */,
 				85438F182401C0FA00BAFA36 /* BoardViewModel.swift in Sources */,
 				859E4CBE23F80FEC00F4342C /* Location.swift in Sources */,

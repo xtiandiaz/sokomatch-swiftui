@@ -16,10 +16,10 @@ struct Stage {
     let tokens: [Token]
     
     init() {
-        board = Board(cols: 6, rows: 8, tileSize: 64)
+        board = Board(cols: 6, rows: 6, tileSize: 64)
         tokens = [
             Water(location: Location.zero),
-            Water(location: board.center),
+            Bomb(location: board.center),
             Water(location: Location(x: 0, y: board.rows - 1)),
             Fire(location: Location(x: board.cols - 1, y: 0)),
             Fire(location: Location(x: board.cols - 1, y: board.rows - 1))
