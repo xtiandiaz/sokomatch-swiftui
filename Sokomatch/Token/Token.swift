@@ -13,8 +13,6 @@ protocol Movable {
 
 protocol Combinable {
     
-    var value: Int { get set }
-    
     func canCombine(with other: Token) -> Bool
     func combine(with other: Token) -> Token?
 }

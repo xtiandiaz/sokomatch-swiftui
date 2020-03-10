@@ -18,7 +18,11 @@ struct TokenValueView: View {
     }
     
     init?(token: Token) {
-        if token.value <= 0 {
+        guard token is Combinable else {
+            return nil
+        }
+        
+        if token.value < 1 {
             return nil
         }
         

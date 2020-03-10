@@ -16,7 +16,7 @@ struct BoardView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.secondary)
+                .fill(Color.init(red: 0.1, green: 0.1, blue: 0.1))
                 .zIndex(-1)
             
             ForEach(self.viewModel.tokenIds, id: \.self) { id in

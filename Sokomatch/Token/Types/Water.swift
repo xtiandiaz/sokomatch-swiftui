@@ -14,7 +14,7 @@ struct Water: Token, Combinable, Reactive, Movable {
     let type: TokenType = .water
     var location: Location
     var value: Int = 1
-    var style = TokenStyle(color: .blue)
+    var style = TokenStyle(fillColor: .blue)
     
     var catalysts: [TokenType] = [.fire]
     

@@ -10,15 +10,17 @@ import SwiftUI
 
 struct TokenStyle {
     
-    let color: Color
     let shape: TokenShape
+    let fillColor: Color
+    let borderColor: Color
     
-    init(shape: TokenShape, color: Color) {
+    init(shape: TokenShape, fillColor: Color, borderColor: Color) {
         self.shape = shape
-        self.color = color
+        self.fillColor = fillColor
+        self.borderColor = borderColor
     }
     
-    init(color: Color) {
-        self.init(shape: .circle, color: color)
+    init(fillColor: Color, borderColor: Color = Color.clear) {
+        self.init(shape: .circle, fillColor: fillColor, borderColor: borderColor)
     }
 }

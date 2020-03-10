@@ -14,7 +14,7 @@ struct Fire: Token, Combinable, Reactive, Movable {
     let type: TokenType = .fire
     var location: Location
     var value: Int = 1
-    var style = TokenStyle(color: .orange)
+    var style = TokenStyle(fillColor: .orange)
     
     var catalysts: [TokenType] = [.bomb, .water]
     

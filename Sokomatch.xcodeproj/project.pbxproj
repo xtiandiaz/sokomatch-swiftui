@@ -22,6 +22,7 @@
 		857B0D8E2417607F00E26599 /* TokenShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D8D2417607F00E26599 /* TokenShape.swift */; };
 		857B0D902417636A00E26599 /* TokenBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D8F2417636A00E26599 /* TokenBodyView.swift */; };
 		857B0D932417674E00E26599 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D922417674E00E26599 /* Bomb.swift */; };
+		857B0D952418233A00E26599 /* Boulder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D942418233A00E26599 /* Boulder.swift */; };
 		85995B812414E29D00C52DDA /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85995B802414E29D00C52DDA /* TokenType.swift */; };
 		85995B852414ED1400C52DDA /* Fire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85995B842414ED1400C52DDA /* Fire.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 		857B0D8D2417607F00E26599 /* TokenShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenShape.swift; sourceTree = "<group>"; };
 		857B0D8F2417636A00E26599 /* TokenBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBodyView.swift; sourceTree = "<group>"; };
 		857B0D922417674E00E26599 /* Bomb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
+		857B0D942418233A00E26599 /* Boulder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boulder.swift; sourceTree = "<group>"; };
 		85995B802414E29D00C52DDA /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
 		85995B842414ED1400C52DDA /* Fire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fire.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 		857B0D91241766FC00E26599 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				857B0D942418233A00E26599 /* Boulder.swift */,
 				857B0D922417674E00E26599 /* Bomb.swift */,
 				85995B842414ED1400C52DDA /* Fire.swift */,
 				85438F0723FBAE1F00BAFA36 /* Water.swift */,
@@ -281,6 +284,7 @@
 				85438F16240135C300BAFA36 /* TokenValueView.swift in Sources */,
 				8562221823F9AC4400B1506D /* Stage.swift in Sources */,
 				859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */,
+				857B0D952418233A00E26599 /* Boulder.swift in Sources */,
 				85438F1324012B2200BAFA36 /* StageView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				859E4CBA23F802F500F4342C /* BoardView.swift in Sources */,

@@ -16,13 +16,23 @@ struct Stage {
     let tokens: [Token]
     
     init() {
-        board = Board(cols: 6, rows: 6, tileSize: 64)
-        tokens = [
-            Water(location: Location.zero),
-            Bomb(location: board.center),
-            Water(location: Location(x: 0, y: board.rows - 1)),
-            Fire(location: Location(x: board.cols - 1, y: 0)),
-            Fire(location: Location(x: board.cols - 1, y: board.rows - 1))
-        ]
+        let cols = 6
+        let rows = 6
+        
+        board = Board(cols: cols, rows: rows, tileSize: 64)
+        
+        let types: [TokenType?] = [.water, nil, .fire, nil, .bomb, nil, .boulder]
+        var tokens = [Token]()
+        
+        for y in 0..<rows {
+            for x in 0..<cols {
+                guard let randomType = types.randomElement()! else {
+                    continue
+                }
+                tokens.append(randomType.create(withLocation: Location(x: x, y: y)))
+            }
+        }
+        
+        self.tokens = tokens
     }
 }

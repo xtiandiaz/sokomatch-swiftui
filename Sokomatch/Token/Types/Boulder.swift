@@ -1,5 +1,5 @@
 //
-//  Bomb.swift
+//  Boulder.swift
 //  Sokomatch
 //
 //  Created by Cristian Díaz on 10.3.2020.
@@ -8,15 +8,13 @@
 
 import Foundation
 
-struct Bomb: Token, Reactive, Movable {
+struct Boulder: Token, Movable {
     
     let id: UUID
-    let type: TokenType = .bomb
+    let type: TokenType = .boulder
     var location: Location
     var value: Int = 1
-    var style = TokenStyle(fillColor: .black, borderColor: .gray)
-    
-    var catalysts: [TokenType] = [.fire]
+    var style = TokenStyle(fillColor: .gray)
     
     init(id: UUID, location: Location) {
         self.id = id

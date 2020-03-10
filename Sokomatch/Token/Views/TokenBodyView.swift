@@ -20,10 +20,11 @@ struct TokenBodyView: View {
         Group {
             if style.shape == .roundedSquare {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(style.color)
+                    .fill(style.fillColor)
             } else {
                 Circle()
-                    .fill(style.color)
+                    .fill(style.fillColor)
+                    .overlay(Circle().strokeBorder(style.borderColor, lineWidth: 2))
             }
         }
     }
@@ -31,6 +32,6 @@ struct TokenBodyView: View {
 
 struct TokenBody_Previews: PreviewProvider {
     static var previews: some View {
-        TokenBodyView(style: TokenStyle(color: .blue))
+        TokenBodyView(style: TokenStyle(fillColor: .blue))
     }
 }
