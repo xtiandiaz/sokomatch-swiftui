@@ -3,59 +3,41 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		85438F0823FBAE1F00BAFA36 /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0723FBAE1F00BAFA36 /* Water.swift */; };
-		85438F0A23FBB7FF00BAFA36 /* TokenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */; };
-		85438F0C2401154D00BAFA36 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0B2401154D00BAFA36 /* Game.swift */; };
-		85438F10240126CA00BAFA36 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F0F240126CA00BAFA36 /* GameView.swift */; };
-		85438F1324012B2200BAFA36 /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F1224012B2200BAFA36 /* StageView.swift */; };
-		85438F16240135C300BAFA36 /* TokenValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F15240135C300BAFA36 /* TokenValueView.swift */; };
-		85438F182401C0FA00BAFA36 /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F172401C0FA00BAFA36 /* BoardViewModel.swift */; };
-		85438F1A2401C4FB00BAFA36 /* StageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F192401C4FB00BAFA36 /* StageViewModel.swift */; };
-		85438F1C2401C96400BAFA36 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85438F1B2401C96400BAFA36 /* GameViewModel.swift */; };
-		8562221623F99A2300B1506D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221523F99A2300B1506D /* Board.swift */; };
-		8562221823F9AC4400B1506D /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562221723F9AC4400B1506D /* Stage.swift */; };
-		85651F4123F98461008D30CA /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85651F4023F98461008D30CA /* Token.swift */; };
-		857B0D8E2417607F00E26599 /* TokenShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D8D2417607F00E26599 /* TokenShape.swift */; };
-		857B0D902417636A00E26599 /* TokenBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D8F2417636A00E26599 /* TokenBodyView.swift */; };
-		857B0D932417674E00E26599 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D922417674E00E26599 /* Bomb.swift */; };
-		857B0D952418233A00E26599 /* Boulder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B0D942418233A00E26599 /* Boulder.swift */; };
-		85995B812414E29D00C52DDA /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85995B802414E29D00C52DDA /* TokenType.swift */; };
-		85995B852414ED1400C52DDA /* Fire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85995B842414ED1400C52DDA /* Fire.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
 		859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA923F7FFD900F4342C /* ContentView.swift */; };
 		859E4CAC23F7FFDA00F4342C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CAB23F7FFDA00F4342C /* Assets.xcassets */; };
 		859E4CAF23F7FFDA00F4342C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CAE23F7FFDA00F4342C /* Preview Assets.xcassets */; };
 		859E4CB223F7FFDA00F4342C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CB023F7FFDA00F4342C /* LaunchScreen.storyboard */; };
-		859E4CBA23F802F500F4342C /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CB923F802F500F4342C /* BoardView.swift */; };
-		859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CBB23F80F7200F4342C /* TokenView.swift */; };
-		859E4CBE23F80FEC00F4342C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CBD23F80FEC00F4342C /* Location.swift */; };
-		859E4CC023F8102000F4342C /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CBF23F8102000F4342C /* Direction.swift */; };
+		85B51D9C256A5E2400DDD44E /* MoveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51D9B256A5E2400DDD44E /* MoveController.swift */; };
+		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
+		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
+		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
+		85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA9256A5E5A00DDD44E /* StageView.swift */; };
+		85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB0256A5EA400DDD44E /* Bomb.swift */; };
+		85B51DBC256A5EA500DDD44E /* Boulder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB1256A5EA500DDD44E /* Boulder.swift */; };
+		85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB2256A5EA500DDD44E /* Fire.swift */; };
+		85B51DBE256A5EA500DDD44E /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB3256A5EA500DDD44E /* Token.swift */; };
+		85B51DBF256A5EA500DDD44E /* TokenShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB4256A5EA500DDD44E /* TokenShape.swift */; };
+		85B51DC0256A5EA500DDD44E /* TokenBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB5256A5EA500DDD44E /* TokenBodyView.swift */; };
+		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
+		85B51DC2256A5EA500DDD44E /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB7256A5EA500DDD44E /* Water.swift */; };
+		85B51DC3256A5EA500DDD44E /* TokenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB8256A5EA500DDD44E /* TokenStyle.swift */; };
+		85B51DC4256A5EA500DDD44E /* TokenValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB9256A5EA500DDD44E /* TokenValueView.swift */; };
+		85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DBA256A5EA500DDD44E /* TokenType.swift */; };
+		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
+		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
+		85B51DD2256A685900DDD44E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD1256A685900DDD44E /* NavigationController.swift */; };
+		85B51DD5256A739F00DDD44E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD4256A739F00DDD44E /* Map.swift */; };
+		8F614C3C485677AB3E9B52F2 /* Pods_Sokomatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		85438F0723FBAE1F00BAFA36 /* Water.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Water.swift; sourceTree = "<group>"; };
-		85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStyle.swift; sourceTree = "<group>"; };
-		85438F0B2401154D00BAFA36 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		85438F0F240126CA00BAFA36 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		85438F1224012B2200BAFA36 /* StageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageView.swift; sourceTree = "<group>"; };
-		85438F15240135C300BAFA36 /* TokenValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenValueView.swift; sourceTree = "<group>"; };
-		85438F172401C0FA00BAFA36 /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
-		85438F192401C4FB00BAFA36 /* StageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageViewModel.swift; sourceTree = "<group>"; };
-		85438F1B2401C96400BAFA36 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
-		8562221523F99A2300B1506D /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
-		8562221723F9AC4400B1506D /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
-		85651F4023F98461008D30CA /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		857B0D8D2417607F00E26599 /* TokenShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenShape.swift; sourceTree = "<group>"; };
-		857B0D8F2417636A00E26599 /* TokenBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenBodyView.swift; sourceTree = "<group>"; };
-		857B0D922417674E00E26599 /* Bomb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
-		857B0D942418233A00E26599 /* Boulder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boulder.swift; sourceTree = "<group>"; };
-		85995B802414E29D00C52DDA /* TokenType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenType.swift; sourceTree = "<group>"; };
-		85995B842414ED1400C52DDA /* Fire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fire.swift; sourceTree = "<group>"; };
+		11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sokomatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA523F7FFD900F4342C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859E4CA723F7FFD900F4342C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,10 +46,28 @@
 		859E4CAE23F7FFDA00F4342C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		859E4CB123F7FFDA00F4342C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859E4CB323F7FFDA00F4342C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		859E4CB923F802F500F4342C /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
-		859E4CBB23F80F7200F4342C /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
-		859E4CBD23F80FEC00F4342C /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		859E4CBF23F8102000F4342C /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
+		85B51D9B256A5E2400DDD44E /* MoveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoveController.swift; path = Source/MoveController.swift; sourceTree = "<group>"; };
+		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
+		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
+		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
+		85B51DA9256A5E5A00DDD44E /* StageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StageView.swift; path = Source/StageView.swift; sourceTree = "<group>"; };
+		85B51DB0256A5EA400DDD44E /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bomb.swift; path = Source/Bomb.swift; sourceTree = "<group>"; };
+		85B51DB1256A5EA500DDD44E /* Boulder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Boulder.swift; path = Source/Boulder.swift; sourceTree = "<group>"; };
+		85B51DB2256A5EA500DDD44E /* Fire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fire.swift; path = Source/Fire.swift; sourceTree = "<group>"; };
+		85B51DB3256A5EA500DDD44E /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = Source/Token.swift; sourceTree = "<group>"; };
+		85B51DB4256A5EA500DDD44E /* TokenShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenShape.swift; path = Source/TokenShape.swift; sourceTree = "<group>"; };
+		85B51DB5256A5EA500DDD44E /* TokenBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenBodyView.swift; path = Source/TokenBodyView.swift; sourceTree = "<group>"; };
+		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
+		85B51DB7256A5EA500DDD44E /* Water.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Water.swift; path = Source/Water.swift; sourceTree = "<group>"; };
+		85B51DB8256A5EA500DDD44E /* TokenStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenStyle.swift; path = Source/TokenStyle.swift; sourceTree = "<group>"; };
+		85B51DB9256A5EA500DDD44E /* TokenValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenValueView.swift; path = Source/TokenValueView.swift; sourceTree = "<group>"; };
+		85B51DBA256A5EA500DDD44E /* TokenType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenType.swift; path = Source/TokenType.swift; sourceTree = "<group>"; };
+		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
+		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
+		85B51DD1256A685900DDD44E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NavigationController.swift; path = Source/NavigationController.swift; sourceTree = "<group>"; };
+		85B51DD4256A739F00DDD44E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Source/Map.swift; sourceTree = "<group>"; };
+		B8E4DFF4AF1ADE0A39288A58 /* Pods-Sokomatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sokomatch.release.xcconfig"; path = "Target Support Files/Pods-Sokomatch/Pods-Sokomatch.release.xcconfig"; sourceTree = "<group>"; };
+		E82B3032B72087E861D00832 /* Pods-Sokomatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sokomatch.debug.xcconfig"; path = "Target Support Files/Pods-Sokomatch/Pods-Sokomatch.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,73 +75,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F614C3C485677AB3E9B52F2 /* Pods_Sokomatch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		85438F0E240126A800BAFA36 /* Game */ = {
+		72E3D9A6C9F61554EFF8D9B9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				85438F0F240126CA00BAFA36 /* GameView.swift */,
-				85438F1B2401C96400BAFA36 /* GameViewModel.swift */,
-				85438F0B2401154D00BAFA36 /* Game.swift */,
+				E82B3032B72087E861D00832 /* Pods-Sokomatch.debug.xcconfig */,
+				B8E4DFF4AF1ADE0A39288A58 /* Pods-Sokomatch.release.xcconfig */,
 			);
-			path = Game;
+			path = Pods;
 			sourceTree = "<group>";
 		};
-		85438F1124012B0700BAFA36 /* Stage */ = {
+		7FAD529D423A3DC5868496CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				85438F1224012B2200BAFA36 /* StageView.swift */,
-				85438F192401C4FB00BAFA36 /* StageViewModel.swift */,
-				8562221723F9AC4400B1506D /* Stage.swift */,
+				11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */,
 			);
-			path = Stage;
-			sourceTree = "<group>";
-		};
-		85438F142401308600BAFA36 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				859E4CBD23F80FEC00F4342C /* Location.swift */,
-				859E4CBF23F8102000F4342C /* Direction.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		8562221423F99A1600B1506D /* Board */ = {
-			isa = PBXGroup;
-			children = (
-				859E4CB923F802F500F4342C /* BoardView.swift */,
-				85438F172401C0FA00BAFA36 /* BoardViewModel.swift */,
-				8562221523F99A2300B1506D /* Board.swift */,
-			);
-			path = Board;
-			sourceTree = "<group>";
-		};
-		857B0D91241766FC00E26599 /* Types */ = {
-			isa = PBXGroup;
-			children = (
-				857B0D942418233A00E26599 /* Boulder.swift */,
-				857B0D922417674E00E26599 /* Bomb.swift */,
-				85995B842414ED1400C52DDA /* Fire.swift */,
-				85438F0723FBAE1F00BAFA36 /* Water.swift */,
-				85995B802414E29D00C52DDA /* TokenType.swift */,
-				85438F0923FBB7FF00BAFA36 /* TokenStyle.swift */,
-				857B0D8D2417607F00E26599 /* TokenShape.swift */,
-			);
-			path = Types;
-			sourceTree = "<group>";
-		};
-		85995B862414ED2500C52DDA /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				859E4CBB23F80F7200F4342C /* TokenView.swift */,
-				85438F15240135C300BAFA36 /* TokenValueView.swift */,
-				857B0D8F2417636A00E26599 /* TokenBodyView.swift */,
-			);
-			path = Views;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		859E4C9923F7FFD900F4342C = {
@@ -149,6 +104,8 @@
 			children = (
 				859E4CA423F7FFD900F4342C /* Sokomatch */,
 				859E4CA323F7FFD900F4342C /* Products */,
+				72E3D9A6C9F61554EFF8D9B9 /* Pods */,
+				7FAD529D423A3DC5868496CA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,11 +120,11 @@
 		859E4CA423F7FFD900F4342C /* Sokomatch */ = {
 			isa = PBXGroup;
 			children = (
-				85438F0E240126A800BAFA36 /* Game */,
-				85438F1124012B0700BAFA36 /* Stage */,
-				8562221423F99A1600B1506D /* Board */,
-				859E4CC723F9813400F4342C /* Token */,
-				85438F142401308600BAFA36 /* Utils */,
+				85B51D9F256A5E3200DDD44E /* Game */,
+				85B51DA7256A5E4A00DDD44E /* Stage */,
+				85B51DC7256A5EA900DDD44E /* Board */,
+				85B51DAF256A5E6400DDD44E /* Token */,
+				85B51D9A256A5E1500DDD44E /* Controllers */,
 				859E4CA523F7FFD900F4342C /* AppDelegate.swift */,
 				859E4CA723F7FFD900F4342C /* SceneDelegate.swift */,
 				859E4CA923F7FFD900F4342C /* ContentView.swift */,
@@ -187,14 +144,59 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		859E4CC723F9813400F4342C /* Token */ = {
+		85B51D9A256A5E1500DDD44E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				85651F4023F98461008D30CA /* Token.swift */,
-				857B0D91241766FC00E26599 /* Types */,
-				85995B862414ED2500C52DDA /* Views */,
+				85B51D9B256A5E2400DDD44E /* MoveController.swift */,
+				85B51DD1256A685900DDD44E /* NavigationController.swift */,
 			);
-			path = Token;
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		85B51D9F256A5E3200DDD44E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				85B51DA1256A5E4400DDD44E /* Game.swift */,
+				85B51DA0256A5E4400DDD44E /* GameView.swift */,
+			);
+			name = Game;
+			sourceTree = "<group>";
+		};
+		85B51DA7256A5E4A00DDD44E /* Stage */ = {
+			isa = PBXGroup;
+			children = (
+				85B51DA8256A5E5A00DDD44E /* Stage.swift */,
+				85B51DA9256A5E5A00DDD44E /* StageView.swift */,
+			);
+			name = Stage;
+			sourceTree = "<group>";
+		};
+		85B51DAF256A5E6400DDD44E /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				85B51DB0256A5EA400DDD44E /* Bomb.swift */,
+				85B51DB1256A5EA500DDD44E /* Boulder.swift */,
+				85B51DB2256A5EA500DDD44E /* Fire.swift */,
+				85B51DB3256A5EA500DDD44E /* Token.swift */,
+				85B51DB5256A5EA500DDD44E /* TokenBodyView.swift */,
+				85B51DB4256A5EA500DDD44E /* TokenShape.swift */,
+				85B51DB8256A5EA500DDD44E /* TokenStyle.swift */,
+				85B51DBA256A5EA500DDD44E /* TokenType.swift */,
+				85B51DB9256A5EA500DDD44E /* TokenValueView.swift */,
+				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
+				85B51DB7256A5EA500DDD44E /* Water.swift */,
+			);
+			name = Token;
+			sourceTree = "<group>";
+		};
+		85B51DC7256A5EA900DDD44E /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				85B51DCA256A5EB400DDD44E /* Board.swift */,
+				85B51DC8256A5EB400DDD44E /* BoardView.swift */,
+				85B51DD4256A739F00DDD44E /* Map.swift */,
+			);
+			name = Board;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,9 +206,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 859E4CB623F7FFDA00F4342C /* Build configuration list for PBXNativeTarget "Sokomatch" */;
 			buildPhases = (
+				EA6719B5205B60BB18808DE1 /* [CP] Check Pods Manifest.lock */,
 				859E4C9E23F7FFD900F4342C /* Sources */,
 				859E4C9F23F7FFD900F4342C /* Frameworks */,
 				859E4CA023F7FFD900F4342C /* Resources */,
+				4E0751D86D5B7F3C0FB17F66 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -263,36 +267,76 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4E0751D86D5B7F3C0FB17F66 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sokomatch/Pods-Sokomatch-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Sokomatch/Pods-Sokomatch-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sokomatch/Pods-Sokomatch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA6719B5205B60BB18808DE1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Sokomatch-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		859E4C9E23F7FFD900F4342C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				859E4CC023F8102000F4342C /* Direction.swift in Sources */,
-				85651F4123F98461008D30CA /* Token.swift in Sources */,
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
-				85438F0C2401154D00BAFA36 /* Game.swift in Sources */,
-				8562221623F99A2300B1506D /* Board.swift in Sources */,
-				857B0D932417674E00E26599 /* Bomb.swift in Sources */,
-				85438F0823FBAE1F00BAFA36 /* Water.swift in Sources */,
-				85438F10240126CA00BAFA36 /* GameView.swift in Sources */,
-				85438F1A2401C4FB00BAFA36 /* StageViewModel.swift in Sources */,
-				857B0D902417636A00E26599 /* TokenBodyView.swift in Sources */,
-				85438F0A23FBB7FF00BAFA36 /* TokenStyle.swift in Sources */,
-				85995B812414E29D00C52DDA /* TokenType.swift in Sources */,
-				85995B852414ED1400C52DDA /* Fire.swift in Sources */,
-				85438F16240135C300BAFA36 /* TokenValueView.swift in Sources */,
-				8562221823F9AC4400B1506D /* Stage.swift in Sources */,
-				859E4CBC23F80F7200F4342C /* TokenView.swift in Sources */,
-				857B0D952418233A00E26599 /* Boulder.swift in Sources */,
-				85438F1324012B2200BAFA36 /* StageView.swift in Sources */,
+				85B51DD2256A685900DDD44E /* NavigationController.swift in Sources */,
+				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
+				85B51DBC256A5EA500DDD44E /* Boulder.swift in Sources */,
+				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
+				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
+				85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */,
+				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
+				85B51DBF256A5EA500DDD44E /* TokenShape.swift in Sources */,
+				85B51DC3256A5EA500DDD44E /* TokenStyle.swift in Sources */,
+				85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */,
+				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
+				85B51DC0256A5EA500DDD44E /* TokenBodyView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
-				859E4CBA23F802F500F4342C /* BoardView.swift in Sources */,
-				857B0D8E2417607F00E26599 /* TokenShape.swift in Sources */,
-				85438F1C2401C96400BAFA36 /* GameViewModel.swift in Sources */,
-				85438F182401C0FA00BAFA36 /* BoardViewModel.swift in Sources */,
-				859E4CBE23F80FEC00F4342C /* Location.swift in Sources */,
+				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,
+				85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */,
+				85B51D9C256A5E2400DDD44E /* MoveController.swift in Sources */,
+				85B51DC2256A5EA500DDD44E /* Water.swift in Sources */,
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
+				85B51DD5256A739F00DDD44E /* Map.swift in Sources */,
+				85B51DC4256A5EA500DDD44E /* TokenValueView.swift in Sources */,
+				85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */,
+				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +470,7 @@
 		};
 		859E4CB723F7FFDA00F4342C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E82B3032B72087E861D00832 /* Pods-Sokomatch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -446,6 +491,7 @@
 		};
 		859E4CB823F7FFDA00F4342C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8E4DFF4AF1ADE0A39288A58 /* Pods-Sokomatch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

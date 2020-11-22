@@ -1,0 +1,29 @@
+{
+  "name": "Emerald",
+  "version": "1.0.0",
+  "summary": "Berilio's game framework for SwiftUI.",
+  "info_plist": {
+    "CFBundleIdentifier": "io.beril.Emerald"
+  },
+  "pod_target_xcconfig": {
+    "PRODUCT_BUNDLE_IDENTIFIER": "io.beril.Emerald"
+  },
+  "homepage": "http://beril.io",
+  "license": "MIT",
+  "authors": {
+    "Cristian Díaz": "xtndiaz@gmail.com"
+  },
+  "source": {
+    "git": "git@github.com:xtiandiaz/Emerald.git"
+  },
+  "social_media_url": "https://beril.io",
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "Emerald/*.swift",
+  "resource_bundles": [
+
+  ],
+  "swift_versions": "5.3",
+  "swift_version": "5.3"
+}

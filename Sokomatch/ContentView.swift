@@ -10,8 +10,10 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @EnvironmentObject var game: Game
+    
     var body: some View {
-        GameView(viewModel: GameViewModel())
+        GameView(game: game)
     }
 }
 

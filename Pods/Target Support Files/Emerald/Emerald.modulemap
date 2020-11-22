@@ -1,0 +1,6 @@
+framework module Emerald {
+  umbrella header "Emerald-umbrella.h"
+
+  export *
+  module * { export * }
+}
