@@ -21,17 +21,24 @@ struct BoardLayout {
 
 class Board: ObservableObject {
     
+    let id: Int
     let cols: Int
     let rows: Int
     let center: Location
     
-    @Published private(set) var layout: BoardLayout?
+    @Published
+    private(set) var layout: BoardLayout?
     
-    var isReady: AnyPublisher<BoardLayout, Never> {
-        $layout.compactMap { $0 }.first().eraseToAnyPublisher()
+    var isReady: Bool {
+        layout != nil
     }
     
-    init(cols: Int, rows: Int) {
+    var onReady: AnyPublisher<Board, Never> {
+        $layout.compactMap { $0 }.first().map { _ in self }.eraseToAnyPublisher()
+    }
+    
+    init(id: Int, cols: Int, rows: Int) {
+        self.id = id
         self.cols = cols
         self.rows = rows
         
@@ -203,7 +210,7 @@ extension Board {
 extension View {
     
     func resolveLayout(forBoard board: Board) -> some View {
-        backgroundPreferenceValue(SizePreferenceKey.self) {
+        return backgroundPreferenceValue(SizePreferenceKey.self) {
             pref in
             GeometryReader {
                 proxy -> Color in
@@ -220,5 +227,5 @@ extension View {
 
 extension Board {
     
-    static let preview = Board(cols: 6, rows: 6)
+    static let preview = Board(id: 0, cols: 6, rows: 6)
 }

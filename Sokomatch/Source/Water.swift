@@ -44,3 +44,10 @@ struct WaterView: View {
             .fill(Color.blue)
     }
 }
+
+struct Water_Preview: PreviewProvider {
+    
+    static var previews: some View {
+        WaterView()
+    }
+}

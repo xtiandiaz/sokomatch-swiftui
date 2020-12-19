@@ -14,8 +14,7 @@ class Game: ObservableObject {
     
     init() {
         stage = Stage(boards: (0..<10).map {
-            _ in
-            return Board(cols: Int.random(in: 4...7), rows: Int.random(in: 4...7))
+            Board(id: $0, cols: Int.random(in: 4...7), rows: Int.random(in: 4...7))
         })
     }
     

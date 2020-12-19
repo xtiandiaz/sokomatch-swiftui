@@ -12,7 +12,8 @@ import Emerald
 
 class Stage: ObservableObject {
     
-    @Published var board: Board
+    @Published
+    var board: Board
     
     init(boards: [Board]) {
         self.boards = boards
@@ -21,12 +22,12 @@ class Stage: ObservableObject {
     }
     
     func start() {
-        cancellable = board.isReady
+        cancellable = board.onReady
             .sink {
                 print("completion \($0)")
             } receiveValue: {
                 [unowned self] in
-                self.start(boardLayout: $0)
+                self.start(board: $0)
             }
     }
     
@@ -43,11 +44,11 @@ class Stage: ObservableObject {
     
     private var cancellable: Cancellable?
     
-    private func start(boardLayout: BoardLayout) {
+    private func start(board: Board) {
         let types: [TokenType?] = [.water, nil, .fire, nil, .bomb, nil, .wall, nil, .target]
         
-        for y in 0..<boardLayout.rows {
-            for x in 0..<boardLayout.cols {
+        for y in 0..<board.rows {
+            for x in 0..<board.cols {
                 guard let randomType = types.randomElement()! else {
                     continue
                 }
@@ -62,6 +63,6 @@ class Stage: ObservableObject {
 extension Stage {
     
     static let preview = Stage(boards: [
-        .init(cols: 7, rows: 7)
+        .init(id: 0, cols: 7, rows: 7)
     ])
 }
