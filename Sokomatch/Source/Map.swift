@@ -13,4 +13,10 @@ protocol Map {
     
     func isValid(location: Location) -> Bool
     func isAvailable(location: Location) -> Bool
+    
+    func token(at: Location) -> Token?
+    func remove(token: Token)
+    func place(token: Token, at location: Location)
+    func move(token: Token, to location: Location)
+    
 }

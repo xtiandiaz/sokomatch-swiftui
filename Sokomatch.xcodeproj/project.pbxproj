@@ -3,41 +3,39 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		857402E725817C81000ABD86 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857402E625817C81000ABD86 /* Target.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
 		859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA923F7FFD900F4342C /* ContentView.swift */; };
 		859E4CAC23F7FFDA00F4342C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CAB23F7FFDA00F4342C /* Assets.xcassets */; };
 		859E4CAF23F7FFDA00F4342C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CAE23F7FFDA00F4342C /* Preview Assets.xcassets */; };
 		859E4CB223F7FFDA00F4342C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CB023F7FFDA00F4342C /* LaunchScreen.storyboard */; };
-		85B51D9C256A5E2400DDD44E /* MoveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51D9B256A5E2400DDD44E /* MoveController.swift */; };
+		85A41C0C258CFB1D00632089 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 85A41C0B258CFB1D00632089 /* Emerald */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
 		85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA9256A5E5A00DDD44E /* StageView.swift */; };
 		85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB0256A5EA400DDD44E /* Bomb.swift */; };
-		85B51DBC256A5EA500DDD44E /* Boulder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB1256A5EA500DDD44E /* Boulder.swift */; };
+		85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB1256A5EA500DDD44E /* Wall.swift */; };
 		85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB2256A5EA500DDD44E /* Fire.swift */; };
 		85B51DBE256A5EA500DDD44E /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB3256A5EA500DDD44E /* Token.swift */; };
-		85B51DBF256A5EA500DDD44E /* TokenShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB4256A5EA500DDD44E /* TokenShape.swift */; };
-		85B51DC0256A5EA500DDD44E /* TokenBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB5256A5EA500DDD44E /* TokenBodyView.swift */; };
 		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
 		85B51DC2256A5EA500DDD44E /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB7256A5EA500DDD44E /* Water.swift */; };
-		85B51DC3256A5EA500DDD44E /* TokenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB8256A5EA500DDD44E /* TokenStyle.swift */; };
 		85B51DC4256A5EA500DDD44E /* TokenValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB9256A5EA500DDD44E /* TokenValueView.swift */; };
 		85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DBA256A5EA500DDD44E /* TokenType.swift */; };
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
-		85B51DD2256A685900DDD44E /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD1256A685900DDD44E /* NavigationController.swift */; };
 		85B51DD5256A739F00DDD44E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD4256A739F00DDD44E /* Map.swift */; };
-		8F614C3C485677AB3E9B52F2 /* Pods_Sokomatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sokomatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
+		857402E625817C81000ABD86 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Target.swift; path = Source/Target.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA523F7FFD900F4342C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859E4CA723F7FFD900F4342C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,28 +44,21 @@
 		859E4CAE23F7FFDA00F4342C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		859E4CB123F7FFDA00F4342C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859E4CB323F7FFDA00F4342C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		85B51D9B256A5E2400DDD44E /* MoveController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoveController.swift; path = Source/MoveController.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
 		85B51DA9256A5E5A00DDD44E /* StageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StageView.swift; path = Source/StageView.swift; sourceTree = "<group>"; };
 		85B51DB0256A5EA400DDD44E /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bomb.swift; path = Source/Bomb.swift; sourceTree = "<group>"; };
-		85B51DB1256A5EA500DDD44E /* Boulder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Boulder.swift; path = Source/Boulder.swift; sourceTree = "<group>"; };
+		85B51DB1256A5EA500DDD44E /* Wall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Wall.swift; path = Source/Wall.swift; sourceTree = "<group>"; };
 		85B51DB2256A5EA500DDD44E /* Fire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fire.swift; path = Source/Fire.swift; sourceTree = "<group>"; };
 		85B51DB3256A5EA500DDD44E /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = Source/Token.swift; sourceTree = "<group>"; };
-		85B51DB4256A5EA500DDD44E /* TokenShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenShape.swift; path = Source/TokenShape.swift; sourceTree = "<group>"; };
-		85B51DB5256A5EA500DDD44E /* TokenBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenBodyView.swift; path = Source/TokenBodyView.swift; sourceTree = "<group>"; };
 		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
 		85B51DB7256A5EA500DDD44E /* Water.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Water.swift; path = Source/Water.swift; sourceTree = "<group>"; };
-		85B51DB8256A5EA500DDD44E /* TokenStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenStyle.swift; path = Source/TokenStyle.swift; sourceTree = "<group>"; };
 		85B51DB9256A5EA500DDD44E /* TokenValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenValueView.swift; path = Source/TokenValueView.swift; sourceTree = "<group>"; };
 		85B51DBA256A5EA500DDD44E /* TokenType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenType.swift; path = Source/TokenType.swift; sourceTree = "<group>"; };
 		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
 		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
-		85B51DD1256A685900DDD44E /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NavigationController.swift; path = Source/NavigationController.swift; sourceTree = "<group>"; };
 		85B51DD4256A739F00DDD44E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Source/Map.swift; sourceTree = "<group>"; };
-		B8E4DFF4AF1ADE0A39288A58 /* Pods-Sokomatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sokomatch.release.xcconfig"; path = "Target Support Files/Pods-Sokomatch/Pods-Sokomatch.release.xcconfig"; sourceTree = "<group>"; };
-		E82B3032B72087E861D00832 /* Pods-Sokomatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sokomatch.debug.xcconfig"; path = "Target Support Files/Pods-Sokomatch/Pods-Sokomatch.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,22 +66,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F614C3C485677AB3E9B52F2 /* Pods_Sokomatch.framework in Frameworks */,
+				85A41C0C258CFB1D00632089 /* Emerald in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		72E3D9A6C9F61554EFF8D9B9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				E82B3032B72087E861D00832 /* Pods-Sokomatch.debug.xcconfig */,
-				B8E4DFF4AF1ADE0A39288A58 /* Pods-Sokomatch.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		7FAD529D423A3DC5868496CA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,9 +84,9 @@
 		859E4C9923F7FFD900F4342C = {
 			isa = PBXGroup;
 			children = (
+				857402E0257EB984000ABD86 /* Emerald */,
 				859E4CA423F7FFD900F4342C /* Sokomatch */,
 				859E4CA323F7FFD900F4342C /* Products */,
-				72E3D9A6C9F61554EFF8D9B9 /* Pods */,
 				7FAD529D423A3DC5868496CA /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -147,8 +129,6 @@
 		85B51D9A256A5E1500DDD44E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				85B51D9B256A5E2400DDD44E /* MoveController.swift */,
-				85B51DD1256A685900DDD44E /* NavigationController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -174,17 +154,15 @@
 		85B51DAF256A5E6400DDD44E /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				857402E625817C81000ABD86 /* Target.swift */,
 				85B51DB0256A5EA400DDD44E /* Bomb.swift */,
-				85B51DB1256A5EA500DDD44E /* Boulder.swift */,
+				85B51DB1256A5EA500DDD44E /* Wall.swift */,
 				85B51DB2256A5EA500DDD44E /* Fire.swift */,
+				85B51DB7256A5EA500DDD44E /* Water.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
-				85B51DB5256A5EA500DDD44E /* TokenBodyView.swift */,
-				85B51DB4256A5EA500DDD44E /* TokenShape.swift */,
-				85B51DB8256A5EA500DDD44E /* TokenStyle.swift */,
 				85B51DBA256A5EA500DDD44E /* TokenType.swift */,
 				85B51DB9256A5EA500DDD44E /* TokenValueView.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
-				85B51DB7256A5EA500DDD44E /* Water.swift */,
 			);
 			name = Token;
 			sourceTree = "<group>";
@@ -206,17 +184,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 859E4CB623F7FFDA00F4342C /* Build configuration list for PBXNativeTarget "Sokomatch" */;
 			buildPhases = (
-				EA6719B5205B60BB18808DE1 /* [CP] Check Pods Manifest.lock */,
 				859E4C9E23F7FFD900F4342C /* Sources */,
 				859E4C9F23F7FFD900F4342C /* Frameworks */,
 				859E4CA023F7FFD900F4342C /* Resources */,
-				4E0751D86D5B7F3C0FB17F66 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Sokomatch;
+			packageProductDependencies = (
+				85A41C0B258CFB1D00632089 /* Emerald */,
+			);
 			productName = Sokomatch;
 			productReference = 859E4CA223F7FFD900F4342C /* Sokomatch.app */;
 			productType = "com.apple.product-type.application";
@@ -245,6 +224,8 @@
 				Base,
 			);
 			mainGroup = 859E4C9923F7FFD900F4342C;
+			packageReferences = (
+			);
 			productRefGroup = 859E4CA323F7FFD900F4342C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -267,73 +248,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		4E0751D86D5B7F3C0FB17F66 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sokomatch/Pods-Sokomatch-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sokomatch/Pods-Sokomatch-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sokomatch/Pods-Sokomatch-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EA6719B5205B60BB18808DE1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sokomatch-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		859E4C9E23F7FFD900F4342C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
-				85B51DD2256A685900DDD44E /* NavigationController.swift in Sources */,
 				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
-				85B51DBC256A5EA500DDD44E /* Boulder.swift in Sources */,
+				85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
 				85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
-				85B51DBF256A5EA500DDD44E /* TokenShape.swift in Sources */,
-				85B51DC3256A5EA500DDD44E /* TokenStyle.swift in Sources */,
 				85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
-				85B51DC0256A5EA500DDD44E /* TokenBodyView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,
 				85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */,
-				85B51D9C256A5E2400DDD44E /* MoveController.swift in Sources */,
 				85B51DC2256A5EA500DDD44E /* Water.swift in Sources */,
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
 				85B51DD5256A739F00DDD44E /* Map.swift in Sources */,
+				857402E725817C81000ABD86 /* Target.swift in Sources */,
 				85B51DC4256A5EA500DDD44E /* TokenValueView.swift in Sources */,
 				85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
@@ -470,11 +405,10 @@
 		};
 		859E4CB723F7FFDA00F4342C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E82B3032B72087E861D00832 /* Pods-Sokomatch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Sokomatch/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "Sokomatch/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5RLDR367YX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sokomatch/Info.plist;
@@ -491,11 +425,10 @@
 		};
 		859E4CB823F7FFDA00F4342C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8E4DFF4AF1ADE0A39288A58 /* Pods-Sokomatch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Sokomatch/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "Sokomatch/Preview\\ Content";
 				DEVELOPMENT_TEAM = 5RLDR367YX;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sokomatch/Info.plist;
@@ -532,6 +465,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		85A41C0B258CFB1D00632089 /* Emerald */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Emerald;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 859E4C9A23F7FFD900F4342C /* Project object */;
 }

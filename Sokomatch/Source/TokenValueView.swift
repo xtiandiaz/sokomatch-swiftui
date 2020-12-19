@@ -16,14 +16,11 @@ struct TokenValueView: View {
     var body: some View {
         Text("\(value)")
             .font(.title)
+            .foregroundColor(Color.white)
     }
     
     init?(token: Token) {
-        guard token is Combinable else {
-            return nil
-        }
-        
-        if token.value < 1 {
+        if token.value <= 1 {
             return nil
         }
         

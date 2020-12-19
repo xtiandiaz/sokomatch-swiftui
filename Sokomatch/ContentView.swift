@@ -13,12 +13,17 @@ struct ContentView: View {
     @EnvironmentObject var game: Game
     
     var body: some View {
-        GameView(game: game)
+        ZStack {
+            GameView(game: game)
+        }
+        .frame(maxHeight: .infinity)
+        .background(Color.black)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(Game())
     }
 }

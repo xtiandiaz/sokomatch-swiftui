@@ -10,10 +10,21 @@ import Foundation
 
 class Game: ObservableObject {
     
-    let stage: Stage
+    var stage: Stage
     
-    init(stage: Stage) {
-        self.stage = stage
+    init() {
+        stage = Stage(boards: (0..<10).map {
+            _ in
+            return Board(cols: Int.random(in: 4...7), rows: Int.random(in: 4...7))
+        })
+    }
+    
+    func start() {
+        stage.start()
+    }
+    
+    func reset() {
+        stage.reset()
     }
     
     // MARK: Private

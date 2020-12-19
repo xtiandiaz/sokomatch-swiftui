@@ -1,5 +1,5 @@
 //
-//  Bomb.swift
+//  Boulder.swift
 //  Sokomatch
 //
 //  Created by Cristian Díaz on 10.3.2020.
@@ -9,10 +9,10 @@
 import SwiftUI
 import Emerald
 
-struct Bomb: Token, Movable, Shovable {
+struct Wall: Token {
     
     let id = UUID()
-    let type: TokenType = .bomb
+    let type: TokenType = .wall
     var location: Location
     var value = 1
     
@@ -21,11 +21,10 @@ struct Bomb: Token, Movable, Shovable {
     }
 }
 
-struct BombView: View {
+struct WallView: View {
     
     var body: some View {
-        Circle()
-            .fill(Color.black)
-            .overlay(Circle().strokeBorder(Color.gray, lineWidth: 2))
+        Rectangle()
+            .fill(Color.gray)
     }
 }

@@ -6,14 +6,24 @@
 //  Copyright © 2020 Berilio. All rights reserved.
 //
 
+import SwiftUI
 import Emerald
 
 enum TokenType: UInt32 {
     
+    case target
     case water
     case fire
     case bomb
-    case boulder
+    case wall
+    
+    var color: Color {
+        switch self {
+        case .fire: return Color.orange
+        case .water: return Color.blue
+        default: return Color.clear
+        }
+    }
     
     func create(withLocation location: Location) -> Token {
         switch self {
@@ -23,8 +33,10 @@ enum TokenType: UInt32 {
             return Fire(location: location)
         case .bomb:
             return Bomb(location: location)
-        case .boulder:
-            return Boulder(location: location)
+        case .wall:
+            return Wall(location: location)
+        case .target:
+            return Target(location: location)
         }
     }
 }

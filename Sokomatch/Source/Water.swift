@@ -6,24 +6,41 @@
 //  Copyright © 2020 Berilio. All rights reserved.
 //
 
+import SwiftUI
 import Emerald
 
-struct Water: Token, Combinable, Reactive, Movable {
+struct Water: Token, Movable {
     
-    let id: UUID
+    let id = UUID()
     let type: TokenType = .water
     var location: Location
-    var value: Int = 1
-    var style = TokenStyle(fillColor: .blue)
-    
-    var catalysts: [TokenType] = [.fire]
-    
-    init(id: UUID, location: Location) {
-        self.id = id
-        self.location = location
-    }
+    var value = 1
     
     init(location: Location) {
-        self.init(id: UUID(), location: location)
+        self.location = location
+    }
+}
+
+extension Water: Interactable {
+    
+    func interact(with other: Interactable) -> Token? {
+        switch other {
+        case is Fire:
+            return other.interact(with: self)
+        case is Water:
+            return add(other.value)
+        case is Target:
+            return other.interact(with: self)
+        default:
+            return nil
+        }
+    }
+}
+
+struct WaterView: View {
+    
+    var body: some View {
+        Circle()
+            .fill(Color.blue)
     }
 }

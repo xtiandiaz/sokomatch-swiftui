@@ -14,21 +14,25 @@ struct GameView: View {
     @ObservedObject var game: Game
     
     var body: some View {
-        VStack {
-            StageView(stage: game.stage)
+        ZStack(alignment: .top) {
+            VStack {
+                Spacer()
+                StageView(stage: game.stage)
+                Spacer()
+            }
             
-//            Button("Restart") {
-//                game.restart()
-//            }
+            Button("Reset") {
+                game.reset()
+            }
         }
         .onAppear {
-            //game.start()
+            game.start()
         }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView(game: Game(stage: Stage.preview))
+        GameView(game: Game())
     }
 }

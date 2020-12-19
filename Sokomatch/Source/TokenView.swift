@@ -25,11 +25,19 @@ struct TokenView: View {
     
     var body: some View {
         ZStack {
-            TokenBodyView(style: token.style)
+            switch token {
+            case is Wall: WallView()
+            case is Water: WaterView()
+            case is Fire: FireView()
+            case is Bomb: BombView()
+            case let target as Target: TargetView(target: target)
+            default: Circle()
+            }
+            
             TokenValueView(token: token)
         }
         .frame(width: size, height: size)
-        .transition(.scale)
+        .transition(.asymmetric(insertion: .scale, removal: .identity))
         .scaleEffect(scale)
         .position(position)
         .onAppear {

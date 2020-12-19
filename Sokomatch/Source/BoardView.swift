@@ -16,7 +16,7 @@ struct BoardView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.init(red: 0.1, green: 0.1, blue: 0.1))
+                .fill(Color.init(red: 0.15, green: 0.15, blue: 0.15))
                 .zIndex(-1)
             
             ForEach(board.tokenIds, id: \.self) { id in
@@ -26,7 +26,8 @@ struct BoardView: View {
                     stepLength: board.tileSize)
             }
         }
-        .frame(width: board.width, height: board.height)
+        .aspectRatio(CGFloat(board.cols) / CGFloat(board.rows), contentMode: .fit)
+        .resolveLayout(forBoard: board)
         .gesture(DragGesture(minimumDistance: board.tileSize / 3)
             .onEnded { value in
                 let dir: Direction
@@ -37,7 +38,7 @@ struct BoardView: View {
                 } else {
                     dir = deltaY > 0 ? .up : .down
                 }
-                
+
                 withAnimation(.linear(duration: 0.1)) {
                     board.move(
                         tokenAtLocation: Location(
