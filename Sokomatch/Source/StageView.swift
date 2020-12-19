@@ -14,6 +14,22 @@ struct StageView: View {
     @ObservedObject var stage: Stage
     
     var body: some View {
-        BoardView(board: stage.board)
+        ZStack {
+            
+            GeometryReader {
+                proxy in
+                Color.clear
+                    .onAppear {
+                        stage.size = proxy.size
+                    }
+            }
+            
+            if stage.isReady, let board = stage.board {
+                BoardView(board: board)
+                    .transition(.slide)
+                    .animation(.default)
+            }
+        }
     }
 }
+

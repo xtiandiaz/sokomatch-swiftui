@@ -13,46 +13,58 @@ import Emerald
 class Stage: ObservableObject {
     
     @Published
-    var board: Board
+    var board: Board?
     
-    init(boards: [Board]) {
-        self.boards = boards
-        
-        board = boards[0]
+    @Published
+    var size: CGSize?
+    
+    var isReady: Bool {
+        size != nil
     }
     
-    func start() {
-        cancellable = board.onReady
+    init() {
+        cancellable = $size
+            .compactMap { $0 }
+            .first()
             .sink {
-                print("completion \($0)")
-            } receiveValue: {
-                [unowned self] in
-                self.start(board: $0)
+                [unowned self] size in
+                self.boards = (0..<10).map {
+                    Board(id: $0, cols: Int.random(in: 4...7), rows: Int.random(in: 4...7), width: size.width)
+                }
+                reset()
             }
     }
     
     func reset() {
-        board = boards[Int.random(in: 0..<boards.count)]
+        bi += 1
+        if bi >= boards.count {
+            bi = 0
+        }
         
-        board.clear()
-        start()
+        board = boards[bi]
+        board?.clear()
+        board?.populate()
     }
     
     // MARK: Private
     
-    private let boards: [Board]
+    private var boards = [Board]()
+    private var bi = 0
     
     private var cancellable: Cancellable?
+}
+
+extension Board {
     
-    private func start(board: Board) {
+    func populate() {
         let types: [TokenType?] = [.water, nil, .fire, nil, .bomb, nil, .wall, nil, .target]
         
-        for y in 0..<board.rows {
-            for x in 0..<board.cols {
+        for y in 0..<rows {
+            for x in 0..<cols {
                 guard let randomType = types.randomElement()! else {
                     continue
                 }
-                board.place(token: randomType.create(withLocation: Location(x: x, y: y)))
+                place(token: randomType.create(withLocation: Location(x: x, y: y)))
             }
         }
     }
@@ -62,7 +74,5 @@ class Stage: ObservableObject {
 
 extension Stage {
     
-    static let preview = Stage(boards: [
-        .init(id: 0, cols: 7, rows: 7)
-    ])
+    static let preview = Stage()
 }

@@ -15,15 +15,9 @@ struct BoardView: View {
     
     var body: some View {
         ZStack {
-            GeometryReader {
-                proxy in
-                Rectangle()
-                    .fill(Color.init(red: 0.15, green: 0.15, blue: 0.15))
-                    .zIndex(-1)
-                    .onAppear {
-                        board.layOut(size: proxy.size)
-                    }
-            }
+            Rectangle()
+                .fill(Color.init(red: 0.15, green: 0.15, blue: 0.15))
+                .zIndex(-1)
             
             ForEach(board.tokenIds, id: \.self) { id in
                 TokenView(
@@ -32,7 +26,7 @@ struct BoardView: View {
                     stepLength: board.tileSize)
             }
         }
-        .aspectRatio(CGFloat(board.cols) / CGFloat(board.rows), contentMode: .fit)
+        .frame(width: board.width, height: board.height)
         .gesture(DragGesture(minimumDistance: board.tileSize / 3)
             .onEnded { value in
                 let dir: Direction

@@ -13,13 +13,11 @@ class Game: ObservableObject {
     var stage: Stage
     
     init() {
-        stage = Stage(boards: (0..<10).map {
-            Board(id: $0, cols: Int.random(in: 4...7), rows: Int.random(in: 4...7))
-        })
+        stage = Stage()
     }
     
     func start() {
-        stage.start()
+//        stage.start()
     }
     
     func reset() {

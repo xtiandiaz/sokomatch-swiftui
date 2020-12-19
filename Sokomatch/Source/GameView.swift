@@ -16,9 +16,7 @@ struct GameView: View {
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
-                Spacer()
                 StageView(stage: game.stage)
-                Spacer()
             }
             
             Button("Reset") {

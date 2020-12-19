@@ -14,7 +14,7 @@ struct TokenView: View {
     private let token: Token
     private let size: CGFloat
     private let stepLength: CGFloat
-    @State private var scale: CGFloat = 0.1
+//    @State private var scale: CGFloat = 0.1
     
     var position: CGPoint {
         let location = token.location
@@ -38,13 +38,13 @@ struct TokenView: View {
         }
         .frame(width: size, height: size)
         .transition(.asymmetric(insertion: .scale, removal: .identity))
-        .scaleEffect(scale)
+//        .scaleEffect(scale)
         .position(position)
-        .onAppear {
-            withAnimation(.spring()) {
-                self.scale = 1.0
-            }
-        }
+//        .onAppear {
+//            withAnimation(.spring()) {
+//                self.scale = 1.0
+//            }
+//        }
     }
     
     init?(token: Token?, size: CGFloat, stepLength: CGFloat) {

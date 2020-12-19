@@ -24,23 +24,16 @@ class Board: ObservableObject {
     let id: Int
     let cols: Int
     let rows: Int
+    let tileSize: CGFloat
+    
     let center: Location
     
-    @Published
-    private(set) var layout: BoardLayout?
-    
-    var isReady: Bool {
-        layout != nil
-    }
-    
-    var onReady: AnyPublisher<Board, Never> {
-        $layout.compactMap { $0 }.first().map { _ in self }.eraseToAnyPublisher()
-    }
-    
-    init(id: Int, cols: Int, rows: Int) {
+    init(id: Int, cols: Int, rows: Int, width: CGFloat) {
         self.id = id
         self.cols = cols
         self.rows = rows
+        
+        tileSize = width / CGFloat(cols)
         
         center = Location(x: cols / 2, y: rows / 2)
     }
@@ -55,14 +48,6 @@ class Board: ObservableObject {
     
     func token(at location: Location) -> Token? {
         tokenLocations[location]
-    }
-    
-    func layOut(size: CGSize) {
-        layout = BoardLayout(
-            cols: cols,
-            rows: rows,
-            size: size,
-            tileSize: size.width / CGFloat(cols))
     }
     
     func place(token: Token) {
@@ -194,10 +179,6 @@ extension Board {
 
 extension Board {
     
-    var tileSize: CGFloat {
-        layout?.tileSize ?? 0
-    }
-    
     var width: CGFloat {
         CGFloat(cols) * tileSize
     }
@@ -215,7 +196,7 @@ extension View {
             GeometryReader {
                 proxy -> Color in
                 DispatchQueue.main.async {
-                    board.layOut(size: proxy.size)
+//                    board.layOut(size: proxy.size)
                 }
                 return Color.clear
             }
@@ -227,5 +208,5 @@ extension View {
 
 extension Board {
     
-    static let preview = Board(id: 0, cols: 6, rows: 6)
+    static let preview = Board(id: 0, cols: 6, rows: 6, width: 300)
 }
