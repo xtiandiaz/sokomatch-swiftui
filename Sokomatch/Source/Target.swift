@@ -32,21 +32,3 @@ extension Target: Interactable {
         return add(-value)
     }
 }
-
-struct TargetView: View {
-    
-    let target: Target
-    
-    @State var rotation: Double = 0
-    
-    var body: some View {
-        Circle()
-            .strokeBorder(style: StrokeStyle(lineWidth: 4, dash: [8]))
-            .foregroundColor(target.requirement.color)
-            .rotationEffect(Angle(degrees: rotation))
-            .animation(Animation.linear(duration: 5.0).repeatForever(autoreverses: false))
-            .onAppear {
-                rotation = 360
-            }
-    }
-}

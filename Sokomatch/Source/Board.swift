@@ -21,21 +21,31 @@ struct BoardLayout {
 
 class Board: ObservableObject {
     
-    let id: Int
+    let id = UUID()
     let cols: Int
     let rows: Int
     let tileSize: CGFloat
     
     let center: Location
+    let corners: [Location]
     
-    init(id: Int, cols: Int, rows: Int, width: CGFloat) {
-        self.id = id
+    var onEvent: AnyPublisher<StageEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
+    init(cols: Int, rows: Int, width: CGFloat) {
         self.cols = cols
         self.rows = rows
         
-        tileSize = width / CGFloat(cols)
+        tileSize = width / 7
         
         center = Location(x: cols / 2, y: rows / 2)
+        corners = [
+            Location(x: 0, y: 0),
+            Location(x: cols - 1, y: 0),
+            Location(x: 0, y: rows - 1),
+            Location(x: cols - 1, y: rows - 1)
+        ]
     }
     
     var tokenIds: [UUID] {
@@ -66,8 +76,12 @@ class Board: ObservableObject {
     
     // MARK: Private
     
-    @Published private var tokens = [UUID: Token]()
-    @Published private var tokenLocations = [Location: Token]()
+    @Published
+    private var tokens = [UUID: Token]()
+    @Published
+    private var tokenLocations = [Location: Token]()
+    
+    private var eventSubject = PassthroughSubject<StageEvent, Never>()
 }
 
 // MARK: - Navigation
@@ -84,6 +98,14 @@ extension Board {
         }
         
         move(token: token, from: origin, toward: direction, ripple: ripple)
+    }
+    
+    func isValid(location: Location) -> Bool {
+        location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
+    }
+    
+    func isAvailable(location: Location) -> Bool {
+        token(at: location) == nil
     }
     
     // MARK: Private
@@ -118,6 +140,13 @@ extension Board {
                     
                     if result.value > 0 {
                         self?.place(token: result, at: nextLocation)
+                    } else {
+                        switch result {
+                        case let trigger as Trigger:
+                            self?.eventSubject.send(trigger.event)
+                        default:
+                            break
+                        }
                     }
                 }
                 return nextLocation
@@ -156,7 +185,7 @@ extension Board {
         tokenLocations[token.location] = nil
     }
     
-    func place(token: Token, at location: Location) {
+    private func place(token: Token, at location: Location) {
         guard isValid(location: location) else {
             return
         }
@@ -164,14 +193,6 @@ extension Board {
         token.location = location
         tokens[token.id] = token
         tokenLocations[location] = token
-    }
-    
-    private func isValid(location: Location) -> Bool {
-        location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
-    }
-    
-    private func isAvailable(location: Location) -> Bool {
-        token(at: location) == nil
     }
 }
 
@@ -208,5 +229,5 @@ extension View {
 
 extension Board {
     
-    static let preview = Board(id: 0, cols: 6, rows: 6, width: 300)
+    static let preview = Board(cols: 6, rows: 6, width: 300)
 }

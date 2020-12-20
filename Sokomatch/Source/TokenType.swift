@@ -16,11 +16,14 @@ enum TokenType: UInt32 {
     case fire
     case bomb
     case wall
+    case trigger
+    case actor
     
     var color: Color {
         switch self {
         case .fire: return Color.orange
         case .water: return Color.blue
+        case .actor, .trigger: return Color.white
         default: return Color.clear
         }
     }
@@ -37,6 +40,10 @@ enum TokenType: UInt32 {
             return Wall(location: location)
         case .target:
             return Target(location: location)
+        case .actor:
+            return Actor(location: location)
+        case .trigger:
+            return Trigger(event: .goal, location: location)
         }
     }
 }

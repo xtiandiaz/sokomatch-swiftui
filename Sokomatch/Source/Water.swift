@@ -15,10 +15,6 @@ struct Water: Token, Movable {
     let type: TokenType = .water
     var location: Location
     var value = 1
-    
-    init(location: Location) {
-        self.location = location
-    }
 }
 
 extension Water: Interactable {
@@ -34,20 +30,5 @@ extension Water: Interactable {
         default:
             return nil
         }
-    }
-}
-
-struct WaterView: View {
-    
-    var body: some View {
-        Circle()
-            .fill(Color.blue)
-    }
-}
-
-struct Water_Preview: PreviewProvider {
-    
-    static var previews: some View {
-        WaterView()
     }
 }

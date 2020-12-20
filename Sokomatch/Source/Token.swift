@@ -16,12 +16,12 @@ protocol Token {
     var value: Int { get set }
     var location: Location { get set }
     
-    func add(_ value: Int) -> Token?
+    func add(_ value: Int) -> Token
 }
 
 extension Token {
     
-    func add(_ value: Int) -> Token? {
+    func add(_ value: Int) -> Token {
         var result = self
         result.value = self.value + value
         return result

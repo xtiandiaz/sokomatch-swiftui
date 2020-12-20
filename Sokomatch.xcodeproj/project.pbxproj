@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		850EB3CF258EABE900510705 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3CE258EABE900510705 /* Actor.swift */; };
+		850EB3D2258EAFF400510705 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3D1258EAFF400510705 /* Trigger.swift */; };
 		857402E725817C81000ABD86 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857402E625817C81000ABD86 /* Target.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
@@ -25,7 +27,6 @@
 		85B51DBE256A5EA500DDD44E /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB3256A5EA500DDD44E /* Token.swift */; };
 		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
 		85B51DC2256A5EA500DDD44E /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB7256A5EA500DDD44E /* Water.swift */; };
-		85B51DC4256A5EA500DDD44E /* TokenValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB9256A5EA500DDD44E /* TokenValueView.swift */; };
 		85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DBA256A5EA500DDD44E /* TokenType.swift */; };
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
@@ -34,6 +35,8 @@
 
 /* Begin PBXFileReference section */
 		11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sokomatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		850EB3CE258EABE900510705 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Actor.swift; path = Source/Actor.swift; sourceTree = "<group>"; };
+		850EB3D1258EAFF400510705 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trigger.swift; path = Source/Trigger.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
 		857402E625817C81000ABD86 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Target.swift; path = Source/Target.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +57,6 @@
 		85B51DB3256A5EA500DDD44E /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = Source/Token.swift; sourceTree = "<group>"; };
 		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
 		85B51DB7256A5EA500DDD44E /* Water.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Water.swift; path = Source/Water.swift; sourceTree = "<group>"; };
-		85B51DB9256A5EA500DDD44E /* TokenValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenValueView.swift; path = Source/TokenValueView.swift; sourceTree = "<group>"; };
 		85B51DBA256A5EA500DDD44E /* TokenType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenType.swift; path = Source/TokenType.swift; sourceTree = "<group>"; };
 		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
 		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
@@ -81,6 +83,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		850EB3E0258F694A00510705 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
 		859E4C9923F7FFD900F4342C = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +111,7 @@
 		859E4CA423F7FFD900F4342C /* Sokomatch */ = {
 			isa = PBXGroup;
 			children = (
+				850EB3E0258F694A00510705 /* Editor */,
 				85B51D9F256A5E3200DDD44E /* Game */,
 				85B51DA7256A5E4A00DDD44E /* Stage */,
 				85B51DC7256A5EA900DDD44E /* Board */,
@@ -158,10 +168,11 @@
 				85B51DB0256A5EA400DDD44E /* Bomb.swift */,
 				85B51DB1256A5EA500DDD44E /* Wall.swift */,
 				85B51DB2256A5EA500DDD44E /* Fire.swift */,
+				850EB3CE258EABE900510705 /* Actor.swift */,
+				850EB3D1258EAFF400510705 /* Trigger.swift */,
 				85B51DB7256A5EA500DDD44E /* Water.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
 				85B51DBA256A5EA500DDD44E /* TokenType.swift */,
-				85B51DB9256A5EA500DDD44E /* TokenValueView.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
 			);
 			name = Token;
@@ -257,6 +268,7 @@
 				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
 				85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
+				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
 				85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
@@ -269,9 +281,9 @@
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
 				85B51DD5256A739F00DDD44E /* Map.swift in Sources */,
 				857402E725817C81000ABD86 /* Target.swift in Sources */,
-				85B51DC4256A5EA500DDD44E /* TokenValueView.swift in Sources */,
 				85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
+				850EB3CF258EABE900510705 /* Actor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

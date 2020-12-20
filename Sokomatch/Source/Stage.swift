@@ -10,48 +10,51 @@ import SwiftUI
 import Combine
 import Emerald
 
+enum StageEvent {
+    case goal
+}
+
 class Stage: ObservableObject {
     
     @Published
     var board: Board?
     
-    @Published
-    var size: CGSize?
-    
-    var isReady: Bool {
-        size != nil
+    func setup(size: CGSize) {
+        self.size = size
+        
+        advance()
     }
     
-    init() {
-        cancellable = $size
-            .compactMap { $0 }
-            .first()
-            .sink {
-                [unowned self] size in
-                self.boards = (0..<10).map {
-                    Board(id: $0, cols: Int.random(in: 4...7), rows: Int.random(in: 4...7), width: size.width)
-                }
-                reset()
+    func advance() {
+        board = board(withSize: size)
+        board?.populate()
+        
+        board?.onEvent.sink {
+            [weak self] in
+            switch $0 {
+            case .goal:
+                self?.advance()
             }
+        }.store(in: &cancellables)
     }
     
     func reset() {
-        bi += 1
-        if bi >= boards.count {
-            bi = 0
-        }
-        
-        board = boards[bi]
         board?.clear()
         board?.populate()
     }
     
     // MARK: Private
     
-    private var boards = [Board]()
-    private var bi = 0
+    private var size: CGSize = .zero
     
-    private var cancellable: Cancellable?
+    private var cancellables = Set<AnyCancellable>()
+    
+    private func board(withSize size: CGSize) -> Board {
+        let length = {
+            Array(stride(from: 3, through: 7, by: 2)).randomElement()!
+        }
+        return Board(cols: length(), rows: length(), width: size.width)
+    }
 }
 
 extension Board {
@@ -59,11 +62,17 @@ extension Board {
     func populate() {
         let types: [TokenType?] = [.water, nil, .fire, nil, .bomb, nil, .wall, nil, .target]
         
+        place(token: Actor(location: center))
+        place(token: Trigger(event: .goal, location: corners.randomElement()!))
+        
         for y in 0..<rows {
             for x in 0..<cols {
-                guard let randomType = types.randomElement()! else {
+                let location = Location(x: x, y: y)
+                
+                guard isAvailable(location: location), let randomType = types.randomElement()! else {
                     continue
                 }
+                
                 place(token: randomType.create(withLocation: Location(x: x, y: y)))
             }
         }
