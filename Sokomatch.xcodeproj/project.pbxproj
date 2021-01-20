@@ -34,7 +34,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sokomatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		850EB3CE258EABE900510705 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Actor.swift; path = Source/Actor.swift; sourceTree = "<group>"; };
 		850EB3D1258EAFF400510705 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trigger.swift; path = Source/Trigger.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
@@ -75,14 +74,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7FAD529D423A3DC5868496CA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				11A1847690C3FDC33FF999AF /* Pods_Sokomatch.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		850EB3E0258F694A00510705 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,7 +87,6 @@
 				857402E0257EB984000ABD86 /* Emerald */,
 				859E4CA423F7FFD900F4342C /* Sokomatch */,
 				859E4CA323F7FFD900F4342C /* Products */,
-				7FAD529D423A3DC5868496CA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
