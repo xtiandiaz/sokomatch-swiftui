@@ -27,6 +27,7 @@ struct TokenView: View {
             switch token {
             case is Wall: WallView()
             case is Water, is Fire: BlobView(value: token.value, color: token.type.color)
+            case is Collectible: BlobView(value: token.value, color: token.type.color, scale: 0.25)
             case is Bomb: BombView()
             case is Actor: ActorView()
             case is Trigger: MarkerView(value: 0, color: Color.white)
@@ -54,6 +55,13 @@ private struct BlobView: View {
     
     let value: Int
     let color: Color
+    let scale: CGFloat
+    
+    init(value: Int, color: Color, scale: CGFloat = 1) {
+        self.value = value
+        self.color = color
+        self.scale = scale
+    }
     
     var body: some View {
         ZStack {
@@ -61,6 +69,7 @@ private struct BlobView: View {
             
             ValueView(value: value)
         }
+        .scaleEffect(scale)
     }
 }
 

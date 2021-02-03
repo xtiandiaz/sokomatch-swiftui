@@ -25,6 +25,6 @@ struct WallView: View {
     
     var body: some View {
         Rectangle()
-            .fill(Color.gray)
+            .fill(Color.black)
     }
 }

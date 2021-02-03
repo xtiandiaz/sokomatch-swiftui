@@ -1,0 +1,8 @@
+app_identifier("io.beril.sokomatch") # The bundle identifier of your app
+apple_id("xtian@beril.io") # Your Apple email address
+
+itc_team_id("122641571") # App Store Connect Team ID
+team_id("D8WCZ27XYM") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

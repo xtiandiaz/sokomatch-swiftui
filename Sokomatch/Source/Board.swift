@@ -74,6 +74,21 @@ class Board: ObservableObject {
         tokenLocations.removeAll()
     }
     
+    func randomLocation() -> Location? {
+        var location: Location?
+        var attempts = 3
+        repeat {
+            let _location = Location(x: (0..<cols).randomElement()!, y: (0..<rows).randomElement()!)
+            if isAvailable(location: _location) {
+                location = _location
+                break
+            }
+            attempts -= 1
+        } while attempts > 0
+        
+        return location
+    }
+    
     // MARK: Private
     
     @Published
@@ -81,7 +96,7 @@ class Board: ObservableObject {
     @Published
     private var tokenLocations = [Location: Token]()
     
-    private var eventSubject = PassthroughSubject<StageEvent, Never>()
+    private let eventSubject = PassthroughSubject<StageEvent, Never>()
 }
 
 // MARK: - Navigation
@@ -135,15 +150,26 @@ extension Board {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     [weak self] in
-                    self?.remove(token: token)
-                    self?.remove(token: other)
+                    guard let self = self else {
+                        return
+                    }
+                    
+                    self.remove(token: token)
+                    self.remove(token: other)
                     
                     if result.value > 0 {
-                        self?.place(token: result, at: nextLocation)
+                        self.place(token: result, at: nextLocation)
+                        
+                        switch otherInteractable {
+                        case let collectible as Collectible:
+                            self.eventSubject.send(.collectible(type: collectible.subtype, value: collectible.value))
+                        default:
+                            break
+                        }
                     } else {
-                        switch result {
+                        switch otherInteractable {
                         case let trigger as Trigger:
-                            self?.eventSubject.send(trigger.event)
+                            self.eventSubject.send(trigger.event)
                         default:
                             break
                         }

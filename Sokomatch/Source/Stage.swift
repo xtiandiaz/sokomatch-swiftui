@@ -12,6 +12,7 @@ import Emerald
 
 enum StageEvent {
     case goal
+    case collectible(type: CollectibleType, value: Int)
 }
 
 class Stage: ObservableObject {
@@ -19,23 +20,14 @@ class Stage: ObservableObject {
     @Published
     var board: Board?
     
+    var onEvent: AnyPublisher<GameEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
     func setup(size: CGSize) {
         self.size = size
         
         advance()
-    }
-    
-    func advance() {
-        board = board(withSize: size)
-        board?.populate()
-        
-        board?.onEvent.sink {
-            [weak self] in
-            switch $0 {
-            case .goal:
-                self?.advance()
-            }
-        }.store(in: &cancellables)
     }
     
     func reset() {
@@ -45,9 +37,37 @@ class Stage: ObservableObject {
     
     // MARK: Private
     
+    private let eventSubject = PassthroughSubject<GameEvent, Never>()
+    
     private var size: CGSize = .zero
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private func advance() {
+        board = board(withSize: size)
+        board?.populate()
+        
+        board?.onEvent.sink {
+            [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            switch $0 {
+            case .goal:
+                self.advance()
+            case .collectible(let type, let value):
+                self.collect(type: type, value: value)
+            }
+        }.store(in: &cancellables)
+    }
+    
+    private func collect(type: CollectibleType, value: Int) {
+        switch type {
+        case .coin:
+            eventSubject.send(.earnedScore(value: value))
+        }
+    }
     
     private func board(withSize size: CGSize) -> Board {
         let length = {
@@ -60,20 +80,18 @@ class Stage: ObservableObject {
 extension Board {
     
     func populate() {
-        let types: [TokenType?] = [.water, nil, .fire, nil, .bomb, nil, .wall, nil, .target]
-        
         place(token: Actor(location: center))
         place(token: Trigger(event: .goal, location: corners.randomElement()!))
         
-        for y in 0..<rows {
-            for x in 0..<cols {
-                let location = Location(x: x, y: y)
-                
-                guard isAvailable(location: location), let randomType = types.randomElement()! else {
-                    continue
-                }
-                
-                place(token: randomType.create(withLocation: Location(x: x, y: y)))
+        for _ in 0..<Int.random(in: 1...3) {
+            if let location = randomLocation() {
+                place(token: Collectible(location: location, subtype: .coin))
+            }
+        }
+        
+        for _ in 0..<Int.random(in: 0...2) {
+            if let location = randomLocation() {
+                place(token: Wall(location: location))
             }
         }
     }

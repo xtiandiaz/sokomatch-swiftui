@@ -16,13 +16,6 @@ struct StageView: View {
     
     var body: some View {
         ZStack {
-            GeometryReader {
-                proxy in
-                Color.clear.onAppear {
-                    stage.setup(size: proxy.size)
-                }
-            }
-            
             if let board = stage.board {
                 BoardView(board: board)
                     .transition(AnyTransition.opacity.animation(.default))

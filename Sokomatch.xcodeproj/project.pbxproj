@@ -17,6 +17,7 @@
 		859E4CAF23F7FFDA00F4342C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CAE23F7FFDA00F4342C /* Preview Assets.xcassets */; };
 		859E4CB223F7FFDA00F4342C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CB023F7FFDA00F4342C /* LaunchScreen.storyboard */; };
 		85A41C0C258CFB1D00632089 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 85A41C0B258CFB1D00632089 /* Emerald */; };
+		85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A3625CB3DFB00CB1592 /* Collectible.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
@@ -27,7 +28,6 @@
 		85B51DBE256A5EA500DDD44E /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB3256A5EA500DDD44E /* Token.swift */; };
 		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
 		85B51DC2256A5EA500DDD44E /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB7256A5EA500DDD44E /* Water.swift */; };
-		85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DBA256A5EA500DDD44E /* TokenType.swift */; };
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
 		85B51DD5256A739F00DDD44E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD4256A739F00DDD44E /* Map.swift */; };
@@ -46,6 +46,7 @@
 		859E4CAE23F7FFDA00F4342C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		859E4CB123F7FFDA00F4342C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859E4CB323F7FFDA00F4342C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85AB2A3625CB3DFB00CB1592 /* Collectible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Collectible.swift; path = Source/Collectible.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
@@ -56,7 +57,6 @@
 		85B51DB3256A5EA500DDD44E /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = Source/Token.swift; sourceTree = "<group>"; };
 		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
 		85B51DB7256A5EA500DDD44E /* Water.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Water.swift; path = Source/Water.swift; sourceTree = "<group>"; };
-		85B51DBA256A5EA500DDD44E /* TokenType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenType.swift; path = Source/TokenType.swift; sourceTree = "<group>"; };
 		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
 		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
 		85B51DD4256A739F00DDD44E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Source/Map.swift; sourceTree = "<group>"; };
@@ -162,8 +162,8 @@
 				850EB3D1258EAFF400510705 /* Trigger.swift */,
 				85B51DB7256A5EA500DDD44E /* Water.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
-				85B51DBA256A5EA500DDD44E /* TokenType.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
+				85AB2A3625CB3DFB00CB1592 /* Collectible.swift */,
 			);
 			name = Token;
 			sourceTree = "<group>";
@@ -208,7 +208,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = Berilio;
 				TargetAttributes = {
 					859E4CA123F7FFD900F4342C = {
@@ -256,13 +256,13 @@
 			files = (
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
 				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
+				85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */,
 				85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
 				85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
-				85B51DC5256A5EA500DDD44E /* TokenType.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,

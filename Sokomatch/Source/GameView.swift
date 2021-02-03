@@ -14,17 +14,30 @@ struct GameView: View {
     @ObservedObject var game: Game
     
     var body: some View {
-        ZStack(alignment: .top) {
-            VStack {
-                StageView(stage: game.stage)
+        ZStack(alignment: .center) {
+            GeometryReader {
+                proxy in
+                Color.clear.onAppear {
+                    game.setup(size: proxy.size)
+                }
             }
             
-            Button("Reset") {
-                game.reset()
+            VStack {
+                Text("\(game.score)")
+                    .font(.title)
+                
+                Spacer()
+                
+                if let stage = game.stage {
+                    StageView(stage: stage)
+                }
+                
+                Spacer()
+                
+                Button("Reset") {
+                    game.reset()
+                }
             }
-        }
-        .onAppear {
-            game.start()
         }
     }
 }

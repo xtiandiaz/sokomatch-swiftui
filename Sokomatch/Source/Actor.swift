@@ -13,6 +13,7 @@ struct Actor: Token, Movable {
     
     let id = UUID()
     let type: TokenType = .actor
+    
     var location: Location
     var value = 1
     
@@ -27,6 +28,8 @@ extension Actor: Interactable {
         switch other.type {
         case .trigger:
             return other.interact(with: self)
+        case .collectible:
+            return self
         default:
             return nil
         }
