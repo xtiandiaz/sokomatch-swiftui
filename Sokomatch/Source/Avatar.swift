@@ -1,5 +1,5 @@
 //
-//  Actor.swift
+//  Avatar.swift
 //  Sokomatch
 //
 //  Created by Cristian Díaz on 19.12.2020.
@@ -9,20 +9,16 @@
 import SwiftUI
 import Emerald
 
-struct Actor: Token, Movable {
+struct Avatar: Token, Movable {
     
     let id = UUID()
-    let type: TokenType = .actor
+    let type: TokenType = .avatar
     
-    var location: Location
     var value = 1
-    
-    init(location: Location) {
-        self.location = location
-    }
+    var location: Location = .zero
 }
 
-extension Actor: Interactable {
+extension Avatar: Interactable {
     
     func interact(with other: Interactable) -> Token? {
         switch other.type {

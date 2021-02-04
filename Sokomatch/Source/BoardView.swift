@@ -39,11 +39,7 @@ struct BoardView: View {
                 }
 
                 withAnimation(.linear(duration: 0.1)) {
-                    board.move(
-                        tokenAtLocation: Location(
-                            x: Int(value.startLocation.x / board.tileSize),
-                            y: Int(value.startLocation.y / board.tileSize)),
-                        toward: dir)
+                    board.move(toward: dir)
                 }
         })
         .id(board.id)

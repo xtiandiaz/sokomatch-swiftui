@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		850EB3CF258EABE900510705 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3CE258EABE900510705 /* Actor.swift */; };
+		850EB3CF258EABE900510705 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3CE258EABE900510705 /* Avatar.swift */; };
 		850EB3D2258EAFF400510705 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3D1258EAFF400510705 /* Trigger.swift */; };
 		857402E725817C81000ABD86 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857402E625817C81000ABD86 /* Target.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
@@ -34,7 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		850EB3CE258EABE900510705 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Actor.swift; path = Source/Actor.swift; sourceTree = "<group>"; };
+		850EB3CE258EABE900510705 /* Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Avatar.swift; path = Source/Avatar.swift; sourceTree = "<group>"; };
 		850EB3D1258EAFF400510705 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trigger.swift; path = Source/Trigger.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
 		857402E625817C81000ABD86 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Target.swift; path = Source/Target.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 				85B51DB0256A5EA400DDD44E /* Bomb.swift */,
 				85B51DB1256A5EA500DDD44E /* Wall.swift */,
 				85B51DB2256A5EA500DDD44E /* Fire.swift */,
-				850EB3CE258EABE900510705 /* Actor.swift */,
+				850EB3CE258EABE900510705 /* Avatar.swift */,
 				850EB3D1258EAFF400510705 /* Trigger.swift */,
 				85B51DB7256A5EA500DDD44E /* Water.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
@@ -273,7 +273,7 @@
 				857402E725817C81000ABD86 /* Target.swift in Sources */,
 				85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
-				850EB3CF258EABE900510705 /* Actor.swift in Sources */,
+				850EB3CF258EABE900510705 /* Avatar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

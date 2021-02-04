@@ -13,12 +13,9 @@ struct Wall: Token {
     
     let id = UUID()
     let type: TokenType = .wall
-    var location: Location
-    var value = 1
     
-    init(location: Location) {
-        self.location = location
-    }
+    var value = 1
+    var location: Location = .zero
 }
 
 struct WallView: View {

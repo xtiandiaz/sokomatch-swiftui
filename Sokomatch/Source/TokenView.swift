@@ -29,7 +29,7 @@ struct TokenView: View {
             case is Water, is Fire: BlobView(value: token.value, color: token.type.color)
             case is Collectible: BlobView(value: token.value, color: token.type.color, scale: 0.25)
             case is Bomb: BombView()
-            case is Actor: ActorView()
+            case is Avatar: ActorView()
             case is Trigger: MarkerView(value: 0, color: Color.white)
             case let target as Target: MarkerView(value: token.value, color: target.requirement.color)
             default: Circle()

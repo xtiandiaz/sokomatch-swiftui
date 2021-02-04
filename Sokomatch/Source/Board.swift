@@ -60,19 +60,63 @@ class Board: ObservableObject {
         tokenLocations[location]
     }
     
-    func place(token: Token) {
-        guard isValid(location: token.location) else {
+    func place(token: Token, at location: Location) {
+        guard isValid(location: location) else {
+            return
+        }
+        var token = token
+        token.location = location
+        tokens[token.id] = token
+        tokenLocations[location] = token
+        
+        switch token {
+        case let avatar as Avatar:
+            self.avatar = avatar
+        default:
+            break
+        }
+    }
+    
+    func move(toward direction: Direction) {
+        guard let avatar = avatar else {
             return
         }
         
-        tokens[token.id] = token
-        tokenLocations[token.location] = token
+        move(tokenAtLocation: avatar.location, toward: direction)
     }
     
     func clear() {
         tokens.removeAll()
         tokenLocations.removeAll()
     }
+    
+    // MARK: Private
+    
+    private let eventSubject = PassthroughSubject<StageEvent, Never>()
+    
+    @Published
+    private var tokens = [UUID: Token]()
+    @Published
+    private var tokenLocations = [Location: Token]()
+    
+    private var avatar: Avatar?
+    
+    private func move(tokenAtLocation origin: Location, toward direction: Direction, ripple: Int = 0) {
+        guard
+            isValid(location: origin),
+            let token = token(at: origin),
+            token is Movable
+        else {
+            return
+        }
+        
+        move(token: token, from: origin, toward: direction, ripple: ripple)
+    }
+}
+
+// MARK: - Utilities
+
+extension Board {
     
     func randomLocation() -> Location? {
         var location: Location?
@@ -87,32 +131,6 @@ class Board: ObservableObject {
         } while attempts > 0
         
         return location
-    }
-    
-    // MARK: Private
-    
-    @Published
-    private var tokens = [UUID: Token]()
-    @Published
-    private var tokenLocations = [Location: Token]()
-    
-    private let eventSubject = PassthroughSubject<StageEvent, Never>()
-}
-
-// MARK: - Navigation
-
-extension Board {
-    
-    func move(tokenAtLocation origin: Location, toward direction: Direction, ripple: Int = 0) {
-        guard
-            isValid(location: origin),
-            let token = token(at: origin),
-            token is Movable
-        else {
-            return
-        }
-        
-        move(token: token, from: origin, toward: direction, ripple: ripple)
     }
     
     func isValid(location: Location) -> Bool {
@@ -209,16 +227,6 @@ extension Board {
     private func remove(token: Token) {
         tokens[token.id] = nil
         tokenLocations[token.location] = nil
-    }
-    
-    private func place(token: Token, at location: Location) {
-        guard isValid(location: location) else {
-            return
-        }
-        var token = token
-        token.location = location
-        tokens[token.id] = token
-        tokenLocations[location] = token
     }
 }
 

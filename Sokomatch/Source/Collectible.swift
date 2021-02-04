@@ -15,15 +15,14 @@ enum CollectibleType {
 
 struct Collectible: Token {
     
-    var id = UUID()
-    var type: TokenType = .collectible
-    var subtype: CollectibleType
+    let id = UUID()
+    let type: TokenType = .collectible
+    let subtype: CollectibleType
+    
     var value = 1
+    var location: Location = .zero
     
-    var location: Location
-    
-    init(location: Location, subtype: CollectibleType) {
-        self.location = location
+    init(subtype: CollectibleType) {
         self.subtype = subtype
     }
 }
@@ -31,7 +30,7 @@ struct Collectible: Token {
 extension Collectible: Interactable {
     
     func interact(with other: Interactable) -> Token? {
-        guard other.type == .actor else {
+        guard other.type == .avatar else {
             return nil
         }
         return add(-value)

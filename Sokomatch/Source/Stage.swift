@@ -80,18 +80,18 @@ class Stage: ObservableObject {
 extension Board {
     
     func populate() {
-        place(token: Actor(location: center))
-        place(token: Trigger(event: .goal, location: corners.randomElement()!))
+        place(token: Avatar(), at: center)
+        place(token: Trigger(event: .goal), at: corners.randomElement()!)
         
         for _ in 0..<Int.random(in: 1...3) {
             if let location = randomLocation() {
-                place(token: Collectible(location: location, subtype: .coin))
+                place(token: Collectible(subtype: .coin), at: location)
             }
         }
         
         for _ in 0..<Int.random(in: 0...2) {
             if let location = randomLocation() {
-                place(token: Wall(location: location))
+                place(token: Wall(), at: location)
             }
         }
     }

@@ -11,23 +11,22 @@ import Emerald
 
 struct Trigger: Token {
     
-    let event: StageEvent
-    var location: Location
-    
     let id = UUID()
     let type: TokenType = .trigger
-    var value = 1
+    let event: StageEvent
     
-    init(event: StageEvent, location: Location) {
+    var value = 1
+    var location: Location = .zero
+    
+    init(event: StageEvent) {
         self.event = event
-        self.location = location
     }
 }
 
 extension Trigger: Interactable {
     
     func interact(with other: Interactable) -> Token? {
-        guard other.type == .actor else {
+        guard other.type == .avatar else {
             return nil
         }
         return add(-value)

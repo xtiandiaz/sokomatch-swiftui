@@ -17,14 +17,14 @@ enum TokenType: UInt32 {
     case bomb
     case wall
     case trigger
-    case actor
+    case avatar
     case collectible
     
     var color: Color {
         switch self {
         case .fire: return Color.orange
         case .water: return Color.blue
-        case .actor, .trigger: return Color.white
+        case .avatar, .trigger: return Color.white
         case .collectible: return Color.yellow
         default: return Color.clear
         }
