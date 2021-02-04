@@ -71,7 +71,7 @@ class Stage: ObservableObject {
     
     private func board(withSize size: CGSize) -> Board {
         let length = {
-            Array(stride(from: 3, through: 7, by: 2)).randomElement()!
+            Array(stride(from: Board.minCols, through: Board.maxCols, by: 2)).randomElement()!
         }
         return Board(cols: length(), rows: length(), width: size.width)
     }
@@ -81,7 +81,9 @@ extension Board {
     
     func populate() {
         place(token: Avatar(), at: center)
-        place(token: Trigger(event: .goal), at: corners.randomElement()!)
+        
+        let doorwayLocation = edges.randomElement()!
+        place(token: Doorway(edge: edge(forLocation: doorwayLocation)!), at: doorwayLocation)
         
         for _ in 0..<Int.random(in: 1...3) {
             if let location = randomLocation() {

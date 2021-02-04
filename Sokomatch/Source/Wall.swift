@@ -21,7 +21,6 @@ struct Wall: Token {
 struct WallView: View {
     
     var body: some View {
-        Rectangle()
-            .fill(Color.black)
+        Color.purple.opacity(0.25)
     }
 }

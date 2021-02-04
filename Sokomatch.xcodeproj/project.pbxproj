@@ -18,6 +18,7 @@
 		859E4CB223F7FFDA00F4342C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 859E4CB023F7FFDA00F4342C /* LaunchScreen.storyboard */; };
 		85A41C0C258CFB1D00632089 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 85A41C0B258CFB1D00632089 /* Emerald */; };
 		85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A3625CB3DFB00CB1592 /* Collectible.swift */; };
+		85AB2A3B25CC826900CB1592 /* Doorway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A3A25CC826900CB1592 /* Doorway.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
@@ -47,6 +48,7 @@
 		859E4CB123F7FFDA00F4342C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		859E4CB323F7FFDA00F4342C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85AB2A3625CB3DFB00CB1592 /* Collectible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Collectible.swift; path = Source/Collectible.swift; sourceTree = "<group>"; };
+		85AB2A3A25CC826900CB1592 /* Doorway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Doorway.swift; path = Source/Doorway.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
 				85AB2A3625CB3DFB00CB1592 /* Collectible.swift */,
+				85AB2A3A25CC826900CB1592 /* Doorway.swift */,
 			);
 			name = Token;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				85B51DC2256A5EA500DDD44E /* Water.swift in Sources */,
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
 				85B51DD5256A739F00DDD44E /* Map.swift in Sources */,
+				85AB2A3B25CC826900CB1592 /* Doorway.swift in Sources */,
 				857402E725817C81000ABD86 /* Target.swift in Sources */,
 				85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,

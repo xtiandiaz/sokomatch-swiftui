@@ -22,7 +22,7 @@ extension Avatar: Interactable {
     
     func interact(with other: Interactable) -> Token? {
         switch other.type {
-        case .trigger:
+        case .doorway:
             return other.interact(with: self)
         case .collectible:
             return self
@@ -32,7 +32,7 @@ extension Avatar: Interactable {
     }
 }
 
-struct ActorView: View {
+struct AvatarView: View {
     
     var body: some View {
         Circle()

@@ -11,6 +11,10 @@ import CoreGraphics
 import Emerald
 import Combine
 
+enum Edge {
+    case top, left, bottom, right
+}
+
 struct BoardLayout {
     
     let cols: Int
@@ -21,13 +25,18 @@ struct BoardLayout {
 
 class Board: ObservableObject {
     
+    static let minCols = 5
+    static let maxCols = 9
+    
     let id = UUID()
     let cols: Int
     let rows: Int
     let tileSize: CGFloat
     
     let center: Location
-    let corners: [Location]
+    let corners: Set<Location>
+    let edges: Set<Location>
+    let safeArea: Set<Location>
     
     var onEvent: AnyPublisher<StageEvent, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -37,15 +46,34 @@ class Board: ObservableObject {
         self.cols = cols
         self.rows = rows
         
-        tileSize = width / 7
+        tileSize = width / CGFloat(Self.maxCols)
         
         center = Location(x: cols / 2, y: rows / 2)
+        
         corners = [
             Location(x: 0, y: 0),
             Location(x: cols - 1, y: 0),
             Location(x: 0, y: rows - 1),
             Location(x: cols - 1, y: rows - 1)
         ]
+        
+        var edges = Set<Location>()
+        var safeArea = Set<Location>()
+        
+        for y in 0..<rows {
+            for x in 0..<cols {
+                let location = Location(x: x, y: y)
+                
+                if x == 0 || x == cols - 1 || y == 0 || y == rows - 1 {
+                    edges.insert(location)
+                } else {
+                    safeArea.insert(location)
+                }
+            }
+        }
+        
+        self.edges = edges.subtracting(corners)
+        self.safeArea = safeArea
     }
     
     var tokenIds: [UUID] {
@@ -122,9 +150,8 @@ extension Board {
         var location: Location?
         var attempts = 3
         repeat {
-            let _location = Location(x: (0..<cols).randomElement()!, y: (0..<rows).randomElement()!)
-            if isAvailable(location: _location) {
-                location = _location
+            if let loc = safeArea.randomElement(), isAvailable(location: loc) {
+                location = loc
                 break
             }
             attempts -= 1
@@ -133,12 +160,33 @@ extension Board {
         return location
     }
     
+    func isValid(moveLocation location: Location) -> Bool {
+        isWithinSafeArea(location: location) || tokenLocations[location]?.type == .doorway
+    }
+    
     func isValid(location: Location) -> Bool {
         location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
     }
     
+    func isWithinSafeArea(location: Location) -> Bool {
+        location.x >= 1 && location.x < cols - 1 && location.y >= 1 && location.y < rows - 1
+    }
+    
     func isAvailable(location: Location) -> Bool {
         token(at: location) == nil
+    }
+    
+    func edge(forLocation location: Location) -> Edge? {
+        guard !corners.contains(location) else {
+            return nil
+        }
+        
+        if location.x == 0 { return .left }
+        if location .x >= cols - 1 { return .right}
+        if location.y == 0 { return .top }
+        if location.y >= rows - 1 { return .bottom }
+        
+        return nil
     }
     
     // MARK: Private
@@ -147,7 +195,7 @@ extension Board {
     private func move(token: Token, from origin: Location, toward direction: Direction, ripple: Int = 0) -> Location {
         let nextLocation = origin.shifted(toward: direction)
         
-        guard isValid(location: nextLocation) else {
+        guard isValid(moveLocation: nextLocation) else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * Double(ripple)) {
                 [weak self] in
                 withAnimation(.linear(duration: 0.1)) {
@@ -179,20 +227,16 @@ extension Board {
                         self.place(token: result, at: nextLocation)
                         
                         switch otherInteractable {
+                        case is Doorway:
+                            self.eventSubject.send(.goal)
                         case let collectible as Collectible:
                             self.eventSubject.send(.collectible(type: collectible.subtype, value: collectible.value))
                         default:
                             break
                         }
-                    } else {
-                        switch otherInteractable {
-                        case let trigger as Trigger:
-                            self.eventSubject.send(trigger.event)
-                        default:
-                            break
-                        }
                     }
                 }
+                
                 return nextLocation
             } else {
                 move(token: token, to: origin)

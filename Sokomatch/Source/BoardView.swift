@@ -17,6 +17,7 @@ struct BoardView: View {
         ZStack {
             Rectangle()
                 .fill(Color.purple.opacity(0.25))
+                .padding(board.tileSize)
                 .zIndex(-1)
             
             ForEach(board.tokenIds, id: \.self) { id in
@@ -28,7 +29,8 @@ struct BoardView: View {
         }
         .frame(width: board.width, height: board.height)
         .gesture(DragGesture(minimumDistance: board.tileSize / 3)
-            .onEnded { value in
+            .onEnded {
+                value in
                 let dir: Direction
                 let deltaX = value.translation.width
                 let deltaY = value.translation.height

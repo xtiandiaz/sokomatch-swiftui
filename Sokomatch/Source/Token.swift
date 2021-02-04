@@ -19,6 +19,7 @@ enum TokenType: UInt32 {
     case trigger
     case avatar
     case collectible
+    case doorway
     
     var color: Color {
         switch self {
