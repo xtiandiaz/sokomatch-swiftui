@@ -6,21 +6,20 @@
 //  Copyright © 2021 Berilio. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import Emerald
 
 enum CollectibleType {
-    case coin
+    case coin, key
 }
 
-struct Collectible: Token {
+struct Collectible: Token, Identifiable, Hashable {
     
     let id = UUID()
     let type: TokenType = .collectible
     let subtype: CollectibleType
     
     var value = 1
-    var location: Location = .zero
     
     init(subtype: CollectibleType) {
         self.subtype = subtype
@@ -29,10 +28,30 @@ struct Collectible: Token {
 
 extension Collectible: Interactable {
     
-    func interact(with other: Interactable) -> Token? {
-        guard other.type == .avatar else {
+    func canInteract(with other: Interactable) -> Bool {
+        other is Avatar
+    }
+    
+    func interact(with other: Interactable) -> Collectible? {
+        if other is Avatar {
             return nil
         }
-        return add(-value)
+        return self
+    }
+}
+
+struct CollectibleView: View {
+    
+    let collectible: Collectible
+    
+    var body: some View {
+        switch collectible.subtype {
+        case .coin:
+            Circle()
+                .fill(Color.yellow)
+                .scaleEffect(0.25)
+        case .key:
+            Text("🗝").font(.title)
+        }
     }
 }

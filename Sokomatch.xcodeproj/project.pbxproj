@@ -19,16 +19,19 @@
 		85A41C0C258CFB1D00632089 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 85A41C0B258CFB1D00632089 /* Emerald */; };
 		85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A3625CB3DFB00CB1592 /* Collectible.swift */; };
 		85AB2A3B25CC826900CB1592 /* Doorway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A3A25CC826900CB1592 /* Doorway.swift */; };
+		85AB2A3F25CE8B3300CB1592 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A3E25CE8B3300CB1592 /* Layer.swift */; };
+		85AB2A4325CE9E8F00CB1592 /* UIScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */; };
+		85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */; };
+		85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */; };
+		85AB2A5225D05B4700CB1592 /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */; };
+		85AB2A5625D1E2A700CB1592 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5525D1E2A700CB1592 /* Inventory.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
 		85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA9256A5E5A00DDD44E /* StageView.swift */; };
-		85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB0256A5EA400DDD44E /* Bomb.swift */; };
 		85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB1256A5EA500DDD44E /* Wall.swift */; };
-		85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB2256A5EA500DDD44E /* Fire.swift */; };
 		85B51DBE256A5EA500DDD44E /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB3256A5EA500DDD44E /* Token.swift */; };
 		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
-		85B51DC2256A5EA500DDD44E /* Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB7256A5EA500DDD44E /* Water.swift */; };
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
 		85B51DD5256A739F00DDD44E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD4256A739F00DDD44E /* Map.swift */; };
@@ -49,16 +52,19 @@
 		859E4CB323F7FFDA00F4342C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85AB2A3625CB3DFB00CB1592 /* Collectible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Collectible.swift; path = Source/Collectible.swift; sourceTree = "<group>"; };
 		85AB2A3A25CC826900CB1592 /* Doorway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Doorway.swift; path = Source/Doorway.swift; sourceTree = "<group>"; };
+		85AB2A3E25CE8B3300CB1592 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Layer.swift; path = Source/Layer.swift; sourceTree = "<group>"; };
+		85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIScreenExtensions.swift; path = Source/UIScreenExtensions.swift; sourceTree = "<group>"; };
+		85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvatarLayer.swift; path = Source/AvatarLayer.swift; sourceTree = "<group>"; };
+		85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectibleLayer.swift; path = Source/CollectibleLayer.swift; sourceTree = "<group>"; };
+		85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TerrainLayer.swift; path = Source/TerrainLayer.swift; sourceTree = "<group>"; };
+		85AB2A5525D1E2A700CB1592 /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Inventory.swift; path = Source/Inventory.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
 		85B51DA9256A5E5A00DDD44E /* StageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StageView.swift; path = Source/StageView.swift; sourceTree = "<group>"; };
-		85B51DB0256A5EA400DDD44E /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bomb.swift; path = Source/Bomb.swift; sourceTree = "<group>"; };
 		85B51DB1256A5EA500DDD44E /* Wall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Wall.swift; path = Source/Wall.swift; sourceTree = "<group>"; };
-		85B51DB2256A5EA500DDD44E /* Fire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fire.swift; path = Source/Fire.swift; sourceTree = "<group>"; };
 		85B51DB3256A5EA500DDD44E /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = Source/Token.swift; sourceTree = "<group>"; };
 		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
-		85B51DB7256A5EA500DDD44E /* Water.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Water.swift; path = Source/Water.swift; sourceTree = "<group>"; };
 		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
 		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
 		85B51DD4256A739F00DDD44E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Source/Map.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 		859E4CA423F7FFD900F4342C /* Sokomatch */ = {
 			isa = PBXGroup;
 			children = (
+				85AB2A4125CE9E7800CB1592 /* Extensions */,
 				850EB3E0258F694A00510705 /* Editor */,
 				85B51D9F256A5E3200DDD44E /* Game */,
 				85B51DA7256A5E4A00DDD44E /* Stage */,
@@ -128,6 +135,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		85AB2A4125CE9E7800CB1592 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		85B51D9A256A5E1500DDD44E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				85B51DA8256A5E5A00DDD44E /* Stage.swift */,
+				85AB2A5525D1E2A700CB1592 /* Inventory.swift */,
 				85B51DA9256A5E5A00DDD44E /* StageView.swift */,
 			);
 			name = Stage;
@@ -157,12 +173,9 @@
 			isa = PBXGroup;
 			children = (
 				857402E625817C81000ABD86 /* Target.swift */,
-				85B51DB0256A5EA400DDD44E /* Bomb.swift */,
 				85B51DB1256A5EA500DDD44E /* Wall.swift */,
-				85B51DB2256A5EA500DDD44E /* Fire.swift */,
 				850EB3CE258EABE900510705 /* Avatar.swift */,
 				850EB3D1258EAFF400510705 /* Trigger.swift */,
-				85B51DB7256A5EA500DDD44E /* Water.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
 				85AB2A3625CB3DFB00CB1592 /* Collectible.swift */,
@@ -177,6 +190,10 @@
 				85B51DCA256A5EB400DDD44E /* Board.swift */,
 				85B51DC8256A5EB400DDD44E /* BoardView.swift */,
 				85B51DD4256A739F00DDD44E /* Map.swift */,
+				85AB2A3E25CE8B3300CB1592 /* Layer.swift */,
+				85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */,
+				85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */,
+				85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */,
 			);
 			name = Board;
 			sourceTree = "<group>";
@@ -257,25 +274,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85AB2A5625D1E2A700CB1592 /* Inventory.swift in Sources */,
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
 				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
 				85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */,
+				85AB2A5225D05B4700CB1592 /* TerrainLayer.swift in Sources */,
+				85AB2A3F25CE8B3300CB1592 /* Layer.swift in Sources */,
 				85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
-				85B51DBD256A5EA500DDD44E /* Fire.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
+				85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
+				85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */,
 				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,
 				85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */,
-				85B51DC2256A5EA500DDD44E /* Water.swift in Sources */,
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
 				85B51DD5256A739F00DDD44E /* Map.swift in Sources */,
 				85AB2A3B25CC826900CB1592 /* Doorway.swift in Sources */,
+				85AB2A4325CE9E8F00CB1592 /* UIScreenExtensions.swift in Sources */,
 				857402E725817C81000ABD86 /* Target.swift in Sources */,
-				85B51DBB256A5EA500DDD44E /* Bomb.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
 				850EB3CF258EABE900510705 /* Avatar.swift in Sources */,
 			);

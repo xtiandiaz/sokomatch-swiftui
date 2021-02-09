@@ -9,48 +9,39 @@
 import SwiftUI
 import Emerald
 
-struct TokenView: View {
-    
-    private let token: Token
-    private let size: CGFloat
-    private let stepLength: CGFloat
-    
-    var position: CGPoint {
-        let location = token.location
-        return CGPoint(
-            x: CGFloat(location.x) * stepLength + stepLength / 2,
-            y: CGFloat(location.y) * stepLength + stepLength / 2)
-    }
-    
-    var body: some View {
-        ZStack {
-            switch token {
-            case is Wall: WallView()
-            case is Water, is Fire: BlobView(value: token.value, color: token.type.color)
-            case is Collectible: BlobView(value: token.value, color: token.type.color, scale: 0.25)
-            case let doorway as Doorway: DoorwayView(edge: doorway.edge)
-            case is Bomb: BombView()
-            case is Avatar: AvatarView()
-            case is Trigger: MarkerView(value: 0, color: Color.white)
-            case let target as Target: MarkerView(value: token.value, color: target.requirement.color)
-            default: Circle()
-            }
-        }
-        .frame(width: size, height: size)
-        .transition(.asymmetric(insertion: .scale, removal: .identity))
-        .position(position)
-    }
-    
-    init?(token: Token?, size: CGFloat, stepLength: CGFloat) {
-        guard let token = token else {
-            return nil
-        }
-        
-        self.token = token
-        self.size = size
-        self.stepLength = stepLength
-    }
-}
+//struct TokenView: View {
+//    
+//    let token: Token
+//    let size: CGFloat
+//    
+//    var color: Color {
+//        switch token.type {
+//        case .collectible: return Color.yellow
+//        case .avatar: return Color.white
+//        default: return Color.black
+//        }
+//    }
+//    
+//    var scale: CGFloat {
+//        switch token.type {
+//        case .collectible: return 0.25
+//        default: return 1
+//        }
+//    }
+//    
+//    var body: some View {
+//        ZStack {
+//            switch token {
+//            case is Wall: WallView()
+//            case is Collectible: BlobView(value: token.value, color: token.type.color, scale: 0.25)
+//            case let doorway as Doorway: DoorwayView(edge: doorway.edge)
+//            case let avatar as Avatar: AvatarView(avatar: avatar)
+//            default: Circle()
+//            }
+//        }
+//        .frame(width: size, height: size)
+//    }
+//}
 
 private struct BlobView: View {
     
@@ -121,9 +112,7 @@ private struct ValueView: View {
 struct Token_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TokenView(token: Water(location: Location.zero), size: 50, stepLength: 50)
             
-            BlobView(value: 4, color: Color.purple)
         }
         .previewLayout(.fixed(width: 200, height: 200))
         .background(Color(UIColor.systemBackground))

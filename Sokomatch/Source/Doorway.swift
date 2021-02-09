@@ -23,15 +23,19 @@ struct Doorway: Token {
     }
 }
 
-extension Doorway: Interactable {
-    
-    func interact(with other: Interactable) -> Token? {
-        guard other.type == .avatar else {
-            return nil
-        }
-        return self
-    }
-}
+//extension Doorway: Interactable {
+//    
+//    func canInteract(with other: Interactable) -> Bool {
+//        false
+//    }
+//    
+//    func interact(with other: Interactable) -> Token? {
+//        guard other.type == .avatar else {
+//            return nil
+//        }
+//        return self
+//    }
+//}
 
 struct DoorwayView: View {
     

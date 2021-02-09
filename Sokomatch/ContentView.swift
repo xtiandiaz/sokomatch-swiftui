@@ -10,11 +10,12 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var game: Game
+    @EnvironmentObject
+    var game: Game
     
     var body: some View {
         ZStack {
-            GameView(game: game)
+            GameView()
         }
         .frame(maxHeight: .infinity)
         .background(Color.black)
@@ -24,6 +25,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(Game())
+            .environmentObject(Game(inventory: Inventory()))
     }
 }

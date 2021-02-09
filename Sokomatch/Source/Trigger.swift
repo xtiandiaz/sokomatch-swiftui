@@ -23,12 +23,16 @@ struct Trigger: Token {
     }
 }
 
-extension Trigger: Interactable {
-    
-    func interact(with other: Interactable) -> Token? {
-        guard other.type == .avatar else {
-            return nil
-        }
-        return add(-value)
-    }
-}
+//extension Trigger: Interactable {
+//    
+//    func canInteract(with other: Interactable) -> Bool {
+//        false
+//    }
+//    
+//    func interact(with other: Interactable) -> Token? {
+//        guard other.type == .avatar else {
+//            return nil
+//        }
+//        return add(-value)
+//    }
+//}

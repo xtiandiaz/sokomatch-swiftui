@@ -11,7 +11,10 @@ import Combine
 
 struct GameView: View {
     
-    @ObservedObject var game: Game
+    @EnvironmentObject
+    var game: Game
+    @EnvironmentObject
+    var inventory: Inventory
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -28,6 +31,13 @@ struct GameView: View {
                 
                 Spacer()
                 
+                HStack {
+                    ForEach(inventory.items, id: \.id) {
+                        CollectibleView(collectible: $0)
+                    }
+                }
+                .frame(minHeight: 100)
+                
                 if let stage = game.stage {
                     StageView(stage: stage)
                 }
@@ -43,7 +53,13 @@ struct GameView: View {
 }
 
 struct GameView_Previews: PreviewProvider {
+    
+    let inventory = Inventory()
+    
     static var previews: some View {
-        GameView(game: Game())
+        
+        GameView()
+            .environmentObject(Game(inventory: Inventory()))
+            .environmentObject(Inventory())
     }
 }

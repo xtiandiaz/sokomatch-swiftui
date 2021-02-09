@@ -16,13 +16,16 @@ enum GameEvent {
 class Game: ObservableObject {
     
     @Published
-    var stage: Stage?
-    
+    private(set) var stage: Stage?
     @Published
-    var score = 0
+    private(set) var score = 0
+    
+    init(inventory: Inventory) {
+        self.inventory = inventory
+    }
     
     func setup(size: CGSize) {
-        stage = Stage()
+        stage = Stage(inventory: inventory)
         stage?.setup(size: size)
         
         stage?.onEvent.sink {
@@ -43,6 +46,8 @@ class Game: ObservableObject {
     }
     
     // MARK: Private
+    
+    private let inventory: Inventory
     
     private var cancellables = Set<AnyCancellable>()
 }

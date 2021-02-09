@@ -23,12 +23,16 @@ struct Target: Token {
     }
 }
 
-extension Target: Interactable {
-    
-    func interact(with other: Interactable) -> Token? {
-        guard other.type == requirement, other.value >= value else {
-            return nil
-        }
-        return add(-value)
-    }
-}
+//extension Target: Interactable {
+//    
+//    func canInteract(with other: Interactable) -> Bool {
+//        false
+//    }
+//    
+//    func interact(with other: Interactable) -> Token? {
+//        guard other.type == requirement, other.value >= value else {
+//            return nil
+//        }
+//        return add(-value)
+//    }
+//}

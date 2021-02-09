@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-enum TokenType: UInt32 {
+enum TokenType: String {
     
     case target
     case water
@@ -32,13 +32,11 @@ enum TokenType: UInt32 {
     }
 }
 
-
 protocol Token {
     
     var id: UUID { get }
     var type: TokenType { get }
     var value: Int { get set }
-    var location: Location { get set }
     
     func add(_ value: Int) -> Token
 }
@@ -52,11 +50,16 @@ extension Token {
     }
 }
 
-protocol Movable { }
+protocol Movable: Token {
+    
+    var location: Location { get set }
+}
 
 protocol Interactable: Token {
     
-    func interact(with other: Interactable) -> Token?
+    func canInteract(with other: Interactable) -> Bool
+    
+    func interact(with other: Interactable) -> Self?
 }
 
 protocol Shovable { }

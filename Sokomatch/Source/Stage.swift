@@ -18,7 +18,11 @@ enum StageEvent {
 class Stage: ObservableObject {
     
     @Published
-    var board: Board?
+    private(set) var board: Board?
+    
+    init(inventory: Inventory) {
+        self.inventory = inventory
+    }
     
     var onEvent: AnyPublisher<GameEvent, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -39,69 +43,26 @@ class Stage: ObservableObject {
     
     private let eventSubject = PassthroughSubject<GameEvent, Never>()
     
+    private let inventory: Inventory
+    
     private var size: CGSize = .zero
     
     private var cancellables = Set<AnyCancellable>()
     
     private func advance() {
-        board = board(withSize: size)
+        board = Board.create(withSize: size)
         board?.populate()
         
-        board?.onEvent.sink {
-            [weak self] in
-            guard let self = self else {
-                return
-            }
-            
-            switch $0 {
-            case .goal:
-                self.advance()
-            case .collectible(let type, let value):
-                self.collect(type: type, value: value)
-            }
-        }.store(in: &cancellables)
+        board?.onEvent.sink(receiveValue: onBoardEvent(_:)).store(in: &cancellables)
     }
     
-    private func collect(type: CollectibleType, value: Int) {
-        switch type {
-        case .coin:
-            eventSubject.send(.earnedScore(value: value))
-        }
-    }
-    
-    private func board(withSize size: CGSize) -> Board {
-        let length = {
-            Array(stride(from: Board.minCols, through: Board.maxCols, by: 2)).randomElement()!
-        }
-        return Board(cols: length(), rows: length(), width: size.width)
-    }
-}
-
-extension Board {
-    
-    func populate() {
-        place(token: Avatar(), at: center)
-        
-        let doorwayLocation = edges.randomElement()!
-        place(token: Doorway(edge: edge(forLocation: doorwayLocation)!), at: doorwayLocation)
-        
-        for _ in 0..<Int.random(in: 1...3) {
-            if let location = randomLocation() {
-                place(token: Collectible(subtype: .coin), at: location)
-            }
-        }
-        
-        for _ in 0..<Int.random(in: 0...2) {
-            if let location = randomLocation() {
-                place(token: Wall(), at: location)
+    private func onBoardEvent(_ event: BoardEvent) {
+        switch event {
+        case .collected(let collectible):
+            switch collectible.subtype {
+            case .coin: eventSubject.send(.earnedScore(value: collectible.value))
+            case .key: inventory.add(collectible)
             }
         }
     }
-}
-
-// MARK: - Templates
-
-extension Stage {
-    
-    static let preview = Stage()
 }

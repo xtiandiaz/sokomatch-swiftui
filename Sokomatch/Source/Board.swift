@@ -15,30 +15,32 @@ enum Edge {
     case top, left, bottom, right
 }
 
-struct BoardLayout {
-    
-    let cols: Int
-    let rows: Int
-    let size: CGSize
-    let tileSize: CGFloat
+enum BoardEvent {
+    case collected(Collectible)
 }
 
 class Board: ObservableObject {
     
     static let minCols = 5
     static let maxCols = 9
+    static let moveDuration: TimeInterval = 0.1
     
     let id = UUID()
     let cols: Int
     let rows: Int
-    let tileSize: CGFloat
+    let unitSize: CGFloat
     
     let center: Location
     let corners: Set<Location>
     let edges: Set<Location>
     let safeArea: Set<Location>
     
-    var onEvent: AnyPublisher<StageEvent, Never> {
+    let layers: [Layer]
+    var terrainLayer: TerrainLayer
+    var avatarLayer: AvatarLayer
+    var collectibleLayer: CollectibleLayer
+    
+    var onEvent: AnyPublisher<BoardEvent, Never> {
         eventSubject.eraseToAnyPublisher()
     }
     
@@ -46,7 +48,7 @@ class Board: ObservableObject {
         self.cols = cols
         self.rows = rows
         
-        tileSize = width / CGFloat(Self.maxCols)
+        unitSize = width / CGFloat(Self.maxCols)
         
         center = Location(x: cols / 2, y: rows / 2)
         
@@ -74,34 +76,50 @@ class Board: ObservableObject {
         
         self.edges = edges.subtracting(corners)
         self.safeArea = safeArea
-    }
-    
-    var tokenIds: [UUID] {
-        Array(tokens.keys)
-    }
-    
-    func token(id: UUID) -> Token? {
-        tokens[id]
-    }
-    
-    func token(at location: Location) -> Token? {
-        tokenLocations[location]
-    }
-    
-    func place(token: Token, at location: Location) {
-        guard isValid(location: location) else {
-            return
-        }
-        var token = token
-        token.location = location
-        tokens[token.id] = token
-        tokenLocations[location] = token
         
-        switch token {
-        case let avatar as Avatar:
-            self.avatar = avatar
-        default:
-            break
+        avatarLayer = AvatarLayer(locations: safeArea, unitSize: unitSize)
+        terrainLayer = TerrainLayer(locations: safeArea, unitSize: unitSize)
+        collectibleLayer = CollectibleLayer(locations: safeArea, unitSize: unitSize)
+        
+        layers = [avatarLayer, terrainLayer, collectibleLayer]
+        
+        collectibleLayer.onCollected.sink(receiveValue: onCollected(_:)).store(in: &cancellables)
+    }
+    
+    var width: CGFloat {
+        CGFloat(cols) * unitSize
+    }
+    
+    var height: CGFloat {
+        CGFloat(rows) * unitSize
+    }
+    
+    func populate() {
+        avatar = avatarLayer.create(at: center)
+        
+//        for _ in 1...diagonal/4 {
+//            if let location = randomAvailableLocation() {
+//                avatarLayer.create(at: location)
+//            }
+//        }
+        
+//        let doorwayLocation = edges.randomElement()!
+//        place(token: Doorway(edge: edge(forLocation: doorwayLocation)!), at: doorwayLocation)
+        
+        for _ in 1...diagonal/4 {
+            if let location = randomAvailableLocation() {
+                terrainLayer.create(at: location)
+            }
+        }
+        
+        for _ in 0..<Int.random(in: 1...3) {
+            if let location = randomAvailableLocation() {
+                collectibleLayer.create(.coin, at: location)
+            }
+        }
+        
+        if let location = randomAvailableLocation() {
+            collectibleLayer.create(.key, at: location)
         }
     }
     
@@ -109,48 +127,120 @@ class Board: ObservableObject {
         guard let avatar = avatar else {
             return
         }
-        
-        move(tokenAtLocation: avatar.location, toward: direction)
+        move(avatar: avatar, toward: direction)
     }
     
-    func clear() {
-        tokens.removeAll()
-        tokenLocations.removeAll()
+    func move(avatar: Avatar, toward direction: Direction) {
+        guard let origin = avatarLayer.location(for: avatar) else {
+            return
+        }
+        
+        move(token: avatar, from: origin, toward: direction)
+    }
+    
+    static func create(withSize size: CGSize) -> Board {
+        let length = {
+            (Self.minCols...Self.maxCols).randomElement()!
+        }
+        return Board(cols: length(), rows: length(), width: size.width)
+    }
+    
+    static func moveAnimation() -> Animation {
+        .linear(duration: moveDuration)
     }
     
     // MARK: Private
     
-    private let eventSubject = PassthroughSubject<StageEvent, Never>()
+    private let eventSubject = PassthroughSubject<BoardEvent, Never>()
     
-    @Published
-    private var tokens = [UUID: Token]()
-    @Published
-    private var tokenLocations = [Location: Token]()
+    private var cancellables = Set<AnyCancellable>()
     
     private var avatar: Avatar?
     
-    private func move(tokenAtLocation origin: Location, toward direction: Direction, ripple: Int = 0) {
-        guard
-            isValid(location: origin),
-            let token = token(at: origin),
-            token is Movable
-        else {
-            return
+    @discardableResult
+    private func move<T: Movable & Interactable>(
+        token: T,
+        from origin: Location,
+        toward direction: Direction
+    ) -> Location {
+        let nextLocation = origin.shifted(toward: direction)
+
+        if !isValid(location: nextLocation) {
+            withAnimation(Self.moveAnimation()) {
+                relocate(token: token, to: origin)
+            }
+            return origin
         }
         
-        move(token: token, from: origin, toward: direction, ripple: ripple)
+        if canInteract(with: token, at: nextLocation) {
+            
+            withAnimation(Self.moveAnimation()) {
+                relocate(token: token, to: nextLocation)
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
+                [weak self] in
+                self?.interact(with: token, at: nextLocation)
+            }
+            return nextLocation
+            
+        } else if isOccupied(location: nextLocation) {
+            
+            withAnimation(Self.moveAnimation()) {
+                relocate(token: token, to: origin)
+            }
+            return origin
+        }
+        
+        return move(token: token, from: nextLocation, toward: direction)
+    }
+    
+    private func relocate(token: Token, to location: Location) {
+        switch token {
+        case let avatar as Avatar:
+            avatarLayer.relocate(token: avatar, to: location)
+        default:
+            break
+        }
+    }
+    
+    private func onCollected(_ collectible: Collectible) {
+        eventSubject.send(.collected(collectible))
     }
 }
 
-// MARK: - Utilities
+extension Board: Layer {
+    
+    func canInteract(with source: Interactable, at location: Location) -> Bool {
+        layers.first { $0.canInteract(with: source, at: location) } != nil
+    }
+    
+    func interact(with source: Interactable, at location: Location) {
+        layers.forEach { $0.interact(with: source, at: location) }
+    }
+    
+    func clear() {
+        layers.forEach { $0.clear() }
+    }
+    
+    func isOccupied(location: Location) -> Bool {
+        layers.first { $0.isOccupied(location: location) } != nil
+    }
+    
+    func isValid(location: Location) -> Bool {
+        layers.first { !$0.isValid(location: location) } == nil
+    }
+}
 
 extension Board {
     
-    func randomLocation() -> Location? {
+    private func randomAvailableLocation() -> Location? {
         var location: Location?
         var attempts = 3
         repeat {
-            if let loc = safeArea.randomElement(), isAvailable(location: loc) {
+            if
+                let loc = safeArea.randomElement(),
+                (layers.first { $0.isOccupied(location: loc) } == nil)
+            {
                 location = loc
                 break
             }
@@ -160,152 +250,20 @@ extension Board {
         return location
     }
     
-    func isValid(moveLocation location: Location) -> Bool {
-        isWithinSafeArea(location: location) || tokenLocations[location]?.type == .doorway
-    }
-    
-    func isValid(location: Location) -> Bool {
-        location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
-    }
-    
-    func isWithinSafeArea(location: Location) -> Bool {
-        location.x >= 1 && location.x < cols - 1 && location.y >= 1 && location.y < rows - 1
-    }
-    
-    func isAvailable(location: Location) -> Bool {
-        token(at: location) == nil
-    }
-    
-    func edge(forLocation location: Location) -> Edge? {
+    private func edge(forLocation location: Location) -> Edge? {
         guard !corners.contains(location) else {
             return nil
         }
         
         if location.x == 0 { return .left }
-        if location .x >= cols - 1 { return .right}
+        if location.x >= cols - 1 { return .right}
         if location.y == 0 { return .top }
         if location.y >= rows - 1 { return .bottom }
         
         return nil
     }
     
-    // MARK: Private
-    
-    @discardableResult
-    private func move(token: Token, from origin: Location, toward direction: Direction, ripple: Int = 0) -> Location {
-        let nextLocation = origin.shifted(toward: direction)
-        
-        guard isValid(moveLocation: nextLocation) else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 * Double(ripple)) {
-                [weak self] in
-                withAnimation(.linear(duration: 0.1)) {
-                    self?.move(token: token, to: origin)
-                }
-            }
-            return origin
-        }
-        
-        guard isAvailable(location: nextLocation) else {
-            if
-                let other = self.token(at: nextLocation),
-                let interactable = token as? Interactable,
-                let otherInteractable = other as? Interactable,
-                let result = interactable.interact(with: otherInteractable)
-            {
-                place(token: token, at: nextLocation)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.remove(token: token)
-                    self.remove(token: other)
-                    
-                    if result.value > 0 {
-                        self.place(token: result, at: nextLocation)
-                        
-                        switch otherInteractable {
-                        case is Doorway:
-                            self.eventSubject.send(.goal)
-                        case let collectible as Collectible:
-                            self.eventSubject.send(.collectible(type: collectible.subtype, value: collectible.value))
-                        default:
-                            break
-                        }
-                    }
-                }
-                
-                return nextLocation
-            } else {
-                move(token: token, to: origin)
-                
-                if
-                    let other = self.token(at: nextLocation),
-                    other is Shovable
-                {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        [weak self] in
-                        withAnimation(.linear(duration: 0.1)) {
-                            self?.move(tokenAtLocation: nextLocation, toward: direction, ripple: ripple + 1)
-                        }
-                    }
-                }
-                
-                return origin
-            }
-        }
-        
-        return move(token: token, from: nextLocation, toward: direction)
+    private var diagonal: Int {
+        Int(sqrt(pow(Double(cols), 2) + pow(Double(rows), 2)))
     }
-    
-    private func move(token: Token, to location: Location) {
-        guard tokens[token.id] != nil, isValid(location: location) else {
-            return
-        }
-        remove(token: token)
-        place(token: token, at: location)
-    }
-    
-    private func remove(token: Token) {
-        tokens[token.id] = nil
-        tokenLocations[token.location] = nil
-    }
-}
-
-// MARK: - Layout
-
-extension Board {
-    
-    var width: CGFloat {
-        CGFloat(cols) * tileSize
-    }
-    
-    var height: CGFloat {
-        CGFloat(rows) * tileSize
-    }
-}
-
-extension View {
-    
-    func resolveLayout(forBoard board: Board) -> some View {
-        return backgroundPreferenceValue(SizePreferenceKey.self) {
-            pref in
-            GeometryReader {
-                proxy -> Color in
-                DispatchQueue.main.async {
-//                    board.layOut(size: proxy.size)
-                }
-                return Color.clear
-            }
-        }
-    }
-}
-
-// MARK: - Templates
-
-extension Board {
-    
-    static let preview = Board(cols: 6, rows: 6, width: 300)
 }

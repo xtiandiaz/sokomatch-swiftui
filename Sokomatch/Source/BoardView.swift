@@ -11,45 +11,27 @@ import Emerald
 
 struct BoardView: View {
     
-    @ObservedObject var board: Board
+    @ObservedObject
+    var board: Board
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             Rectangle()
                 .fill(Color.purple.opacity(0.25))
-                .padding(board.tileSize)
+                .padding(board.unitSize)
                 .zIndex(-1)
             
-            ForEach(board.tokenIds, id: \.self) { id in
-                TokenView(
-                    token: board.token(id: id),
-                    size: board.tileSize,
-                    stepLength: board.tileSize)
-            }
+            TerrainLayerView(layer: board.terrainLayer)
+            CollectibleLayerView(layer: board.collectibleLayer)
+            AvatarLayerView(layer: board.avatarLayer)
         }
         .frame(width: board.width, height: board.height)
-        .gesture(DragGesture(minimumDistance: board.tileSize / 3)
-            .onEnded {
-                value in
-                let dir: Direction
-                let deltaX = value.translation.width
-                let deltaY = value.translation.height
-                if abs(deltaX) > abs(deltaY) {
-                    dir = deltaX > 0 ? .right : .left
-                } else {
-                    dir = deltaY > 0 ? .up : .down
-                }
-
-                withAnimation(.linear(duration: 0.1)) {
-                    board.move(toward: dir)
-                }
-        })
         .id(board.id)
     }
 }
 
 struct Board_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView(board: Board.preview)
+        BoardView(board: Board(cols: 5, rows: 5, width: 300))
     }
 }
