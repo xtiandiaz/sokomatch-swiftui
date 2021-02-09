@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-class Avatar: ObservableObject, Token, Movable, Identifiable, Hashable {
+class Avatar: ObservableObject, Piece, Movable {
     
     let id = UUID()
     let type: TokenType = .avatar
@@ -19,21 +19,12 @@ class Avatar: ObservableObject, Token, Movable, Identifiable, Hashable {
     @Published
     var isFocused = true
     
-    var value = 1
-    
     init(location: Location) {
         self.location = location
     }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-}
-
-extension Avatar: Equatable {
-    
-    static func ==(lhs: Avatar, rhs: Avatar) -> Bool {
-        lhs.id == rhs.id
     }
 }
 

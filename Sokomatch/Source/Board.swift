@@ -158,7 +158,7 @@ class Board: ObservableObject {
     private var avatar: Avatar?
     
     @discardableResult
-    private func move<T: Movable & Interactable>(
+    private func move<T: Token & Movable & Interactable>(
         token: T,
         from origin: Location,
         toward direction: Direction
@@ -197,7 +197,7 @@ class Board: ObservableObject {
     private func relocate(token: Token, to location: Location) {
         switch token {
         case let avatar as Avatar:
-            avatarLayer.relocate(token: avatar, to: location)
+            avatarLayer.relocate(piece: avatar, to: location)
         default:
             break
         }

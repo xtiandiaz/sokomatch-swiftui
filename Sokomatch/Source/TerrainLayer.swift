@@ -14,7 +14,7 @@ class TerrainLayer: BoardLayer<Wall> {
     @discardableResult
     override func create(at location: Location) -> Wall {
         let wall = Wall()
-        place(token: wall, at: location)
+        place(piece: wall, at: location)
         return wall
     }
 }
@@ -25,7 +25,7 @@ struct TerrainLayerView: View {
     var layer: TerrainLayer
     
     var body: some View {
-        ForEach(layer.tokenLocations, id: \.self) {
+        ForEach(layer.pieceLocations, id: \.self) {
             WallView()
                 .position(layer.position(for: $0.location))
                 .frame(width: layer.unitSize, height: layer.unitSize)

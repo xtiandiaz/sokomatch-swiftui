@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-struct Wall: Token, Hashable, Identifiable {
+struct Wall: Piece {
     
     let id = UUID()
     let type: TokenType = .wall

@@ -36,18 +36,6 @@ protocol Token {
     
     var id: UUID { get }
     var type: TokenType { get }
-    var value: Int { get set }
-    
-    func add(_ value: Int) -> Token
-}
-
-extension Token {
-    
-    func add(_ value: Int) -> Token {
-        var result = self
-        result.value = self.value + value
-        return result
-    }
 }
 
 protocol Movable: Token {
@@ -58,8 +46,20 @@ protocol Movable: Token {
 protocol Interactable: Token {
     
     func canInteract(with other: Interactable) -> Bool
-    
     func interact(with other: Interactable) -> Self?
 }
 
-protocol Shovable { }
+protocol Piece: Token, Hashable, Identifiable {
+    
+}
+
+extension Piece {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}

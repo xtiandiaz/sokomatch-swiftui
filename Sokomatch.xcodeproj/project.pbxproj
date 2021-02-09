@@ -25,6 +25,7 @@
 		85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */; };
 		85AB2A5225D05B4700CB1592 /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */; };
 		85AB2A5625D1E2A700CB1592 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5525D1E2A700CB1592 /* Inventory.swift */; };
+		85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5825D3001600CB1592 /* TriggerLayer.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
@@ -58,6 +59,7 @@
 		85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectibleLayer.swift; path = Source/CollectibleLayer.swift; sourceTree = "<group>"; };
 		85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TerrainLayer.swift; path = Source/TerrainLayer.swift; sourceTree = "<group>"; };
 		85AB2A5525D1E2A700CB1592 /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Inventory.swift; path = Source/Inventory.swift; sourceTree = "<group>"; };
+		85AB2A5825D3001600CB1592 /* TriggerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriggerLayer.swift; path = Source/TriggerLayer.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				85AB2A3E25CE8B3300CB1592 /* Layer.swift */,
 				85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */,
 				85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */,
+				85AB2A5825D3001600CB1592 /* TriggerLayer.swift */,
 				85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */,
 			);
 			name = Board;
@@ -283,6 +286,7 @@
 				85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
+				85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
 				85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */,

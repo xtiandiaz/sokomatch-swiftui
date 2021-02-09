@@ -16,13 +16,14 @@ protocol Layer {
     
     func canInteract(with source: Interactable, at location: Location) -> Bool
     func interact(with source: Interactable, at location: Location)
+    
     func clear()
     
     func isOccupied(location: Location) -> Bool
     func isValid(location: Location) -> Bool
 }
 
-class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer, Map {
+class BoardLayer<P: Piece>: ObservableObject, Layer, Map {
     
     let id = UUID()
     let locations: Set<Location>
@@ -33,39 +34,39 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer, M
         self.unitSize = unitSize
     }
     
-    var tokens: [T] {
-        map.tokens
+    var pieces: [P] {
+        map.pieces
     }
     
-    var tokenLocations: [TokenLocation<T>] {
-        map.tokenLocations
+    var pieceLocations: [PieceLocation<P>] {
+        map.pieceLocations
     }
     
-    subscript(token: T) -> Location? {
+    subscript(token: P) -> Location? {
         map[token]
     }
     
-    subscript(location: Location) -> T? {
+    subscript(location: Location) -> P? {
         map[location]
     }
     
-    func create(at location: Location) -> T {
+    func create(at location: Location) -> P {
         fatalError("Not implemented")
     }
     
     @discardableResult
-    func place(token: T, at location: Location) -> T {
-        map.place(token: token, at: location)
+    func place(piece: P, at location: Location) -> P {
+        map.place(piece: piece, at: location)
     }
     
-    func relocate(token: T, to destination: Location) {
+    func relocate(piece: P, to destination: Location) {
         objectWillChange.send()
-        map.relocate(token: token, to: destination)
+        map.relocate(piece: piece, to: destination)
     }
     
-    func remove(token: T) {
+    func remove(piece: P) {
         objectWillChange.send()
-        map.remove(token: token)
+        map.remove(piece: piece)
     }
     
     func canInteract(with source: Interactable, at location: Location) -> Bool {
@@ -80,10 +81,10 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer, M
             return
         }
         
-        if let result = target.interact(with: source) as? T {
-            place(token: result, at: location)
+        if let result = target.interact(with: source) as? P {
+            place(piece: result, at: location)
         } else if let token = self[location] {
-            remove(token: token)
+            remove(piece: token)
         }
     }
     
@@ -100,7 +101,7 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer, M
         locations.contains(location)
     }
     
-    func location(for token: T) -> Location? {
+    func location(for token: P) -> Location? {
         map[token]
     }
     
@@ -112,5 +113,5 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer, M
     
     // MARK: Private
     
-    private var map = TokenMap<T>()
+    private var map = LayerMap<P>()
 }

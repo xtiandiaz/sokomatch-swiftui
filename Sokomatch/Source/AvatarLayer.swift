@@ -14,14 +14,14 @@ class AvatarLayer: BoardLayer<Avatar> {
     @discardableResult
     override func create(at location: Location) -> Avatar {
         let avatar = Avatar(location: location)
-        place(token: avatar, at: location)
+        place(piece: avatar, at: location)
         return avatar
     }
     
-    override func relocate(token: Avatar, to destination: Location) {
-        super.relocate(token: token, to: destination)
+    override func relocate(piece: Avatar, to destination: Location) {
+        super.relocate(piece: piece, to: destination)
         
-        token.location = destination
+        piece.location = destination
     }
 }
 
@@ -31,7 +31,7 @@ struct AvatarLayerView: View {
     var layer: AvatarLayer
     
     var body: some View {
-        ForEach(layer.tokens, id: \.self) {
+        ForEach(layer.pieces, id: \.self) {
             AvatarView(avatar: $0, positionForLocation: layer.position(for:))
                 .frame(width: layer.unitSize, height: layer.unitSize)
         }

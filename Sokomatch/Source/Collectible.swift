@@ -13,7 +13,7 @@ enum CollectibleType {
     case coin, key
 }
 
-struct Collectible: Token, Identifiable, Hashable {
+struct Collectible: Piece {
     
     let id = UUID()
     let type: TokenType = .collectible
@@ -33,10 +33,7 @@ extension Collectible: Interactable {
     }
     
     func interact(with other: Interactable) -> Collectible? {
-        if other is Avatar {
-            return nil
-        }
-        return self
+        other is Avatar ? nil : self
     }
 }
 

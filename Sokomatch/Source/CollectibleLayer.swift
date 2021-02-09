@@ -13,13 +13,13 @@ import Emerald
 class CollectibleLayer: BoardLayer<Collectible> {
     
     var onCollected: AnyPublisher<Collectible, Never> {
-        collectionSubject.eraseToAnyPublisher()
+        collectibleSubject.eraseToAnyPublisher()
     }
     
     @discardableResult
     func create(_ subtype: CollectibleType, at location: Location) -> Collectible {
         let collectible = Collectible(subtype: subtype)
-        place(token: collectible, at: location)
+        place(piece: collectible, at: location)
         return collectible
     }
     
@@ -29,13 +29,13 @@ class CollectibleLayer: BoardLayer<Collectible> {
         super.interact(with: source, at: location)
         
         if let collectible = collectible, self[location] == nil {
-            collectionSubject.send(collectible)
+            collectibleSubject.send(collectible)
         }
     }
     
     // MARK: Private
     
-    private let collectionSubject = PassthroughSubject<Collectible, Never>()
+    private let collectibleSubject = PassthroughSubject<Collectible, Never>()
 }
 
 struct CollectibleLayerView: View {
@@ -44,8 +44,8 @@ struct CollectibleLayerView: View {
     var layer: CollectibleLayer
     
     var body: some View {
-        ForEach(layer.tokenLocations, id: \.self) {
-            CollectibleView(collectible: $0.token)
+        ForEach(layer.pieceLocations, id: \.self) {
+            CollectibleView(collectible: $0.piece)
                 .position(layer.position(for: $0.location))
                 .frame(width: layer.unitSize, height: layer.unitSize)
         }

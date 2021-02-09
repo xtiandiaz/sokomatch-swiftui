@@ -9,30 +9,24 @@
 import SwiftUI
 import Emerald
 
-struct Trigger: Token {
+struct Trigger: Piece {
     
     let id = UUID()
     let type: TokenType = .trigger
-    let event: StageEvent
+    let event: BoardEvent
     
-    var value = 1
-    var location: Location = .zero
-    
-    init(event: StageEvent) {
+    init(event: BoardEvent) {
         self.event = event
     }
 }
 
-//extension Trigger: Interactable {
-//    
-//    func canInteract(with other: Interactable) -> Bool {
-//        false
-//    }
-//    
-//    func interact(with other: Interactable) -> Token? {
-//        guard other.type == .avatar else {
-//            return nil
-//        }
-//        return add(-value)
-//    }
-//}
+extension Trigger: Interactable {
+    
+    func canInteract(with other: Interactable) -> Bool {
+        other is Avatar
+    }
+    
+    func interact(with other: Interactable) -> Trigger? {
+        other is Avatar ? nil : self
+    }
+}
