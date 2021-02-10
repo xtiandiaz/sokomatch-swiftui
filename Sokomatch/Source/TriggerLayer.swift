@@ -12,11 +12,27 @@ import Emerald
 
 class TriggerLayer: BoardLayer<Trigger> {
     
-    var onTriggered: AnyPublisher<Trigger, Never> {
-        triggerSubject.eraseToAnyPublisher()
+    var onTriggered: AnyPublisher<BoardEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
+    func create(withEvent event: BoardEvent, at location: Location) {
+        place(token: Trigger(event: event), at: location)
+    }
+    
+    override func interact(with source: Interactable, at location: Location) {
+        super.interact(with: source, at: location)
+        
+        if let event = self[location]?.event {
+            eventSubject.send(event)
+        }
+    }
+    
+    override func isAvailable(location: Location) -> Bool {
+        true
     }
     
     // MARK: Private
     
-    private let triggerSubject = PassthroughSubject<Trigger, Never>()
+    private let eventSubject = PassthroughSubject<BoardEvent, Never>()
 }

@@ -19,12 +19,16 @@ class Avatar: ObservableObject, Piece, Movable {
     @Published
     var isFocused = true
     
+    var keys = Set<UUID>()
+    
     init(location: Location) {
         self.location = location
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+    func activate(mechanism: Mechanism) -> Bool {
+        switch mechanism.subtype {
+        case .lock(let key): return keys.contains(key)
+        }
     }
 }
 

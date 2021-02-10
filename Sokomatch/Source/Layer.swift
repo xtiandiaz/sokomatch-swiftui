@@ -19,54 +19,77 @@ protocol Layer {
     
     func clear()
     
-    func isOccupied(location: Location) -> Bool
-    func isValid(location: Location) -> Bool
+    func isAvailable(location: Location) -> Bool
+    func isObstructive(location: Location) -> Bool
 }
 
-class BoardLayer<P: Piece>: ObservableObject, Layer, Map {
+struct BoardSpot<T: Token & Hashable>: Hashable & Identifiable {
+    
+    let token: T
+    let location: Location
+    
+    var id: UUID { token.id }
+}
+
+class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
     
     let id = UUID()
-    let locations: Set<Location>
     let unitSize: CGFloat
     
-    required init(locations: Set<Location>, unitSize: CGFloat) {
-        self.locations = locations
+    required init(unitSize: CGFloat) {
         self.unitSize = unitSize
     }
     
-    var pieces: [P] {
-        map.pieces
+    var tokens: [T] {
+        Array(tokenAtLocation.values)
     }
     
-    var pieceLocations: [PieceLocation<P>] {
-        map.pieceLocations
+    var spots: [BoardSpot<T>] {
+        locationForToken.map { BoardSpot(token: $0.key, location: $0.value) }
     }
     
-    subscript(token: P) -> Location? {
-        map[token]
+    subscript(location: Location) -> T? {
+        tokenAtLocation[location]
     }
     
-    subscript(location: Location) -> P? {
-        map[location]
-    }
-    
-    func create(at location: Location) -> P {
-        fatalError("Not implemented")
+    subscript(piece: T) -> Location? {
+        locationForToken[piece]
     }
     
     @discardableResult
-    func place(piece: P, at location: Location) -> P {
-        map.place(piece: piece, at: location)
+    func place(token: T, at location: Location) -> T {
+        remove(tokenAtLocation: location)
+        locationForToken[token] = location
+        tokenAtLocation[location] = token
+        return token
     }
     
-    func relocate(piece: P, to destination: Location) {
+    func relocate(token: T, to destination: Location) {
         objectWillChange.send()
-        map.relocate(piece: piece, to: destination)
+        remove(token: token)
+        place(token: token, at: destination)
     }
     
-    func remove(piece: P) {
+    func remove(token: T) {
         objectWillChange.send()
-        map.remove(piece: piece)
+        if let location = locationForToken[token] {
+            tokenAtLocation[location] = nil
+        }
+        locationForToken[token] = nil
+    }
+    
+    func remove(tokenAtLocation location: Location) {
+        objectWillChange.send()
+        if let piece = tokenAtLocation[location] {
+            locationForToken[piece] = nil
+        }
+        tokenAtLocation[location] = nil
+    }
+    
+    func clear() {
+        objectWillChange.send()
+        locationForToken.removeAll()
+        tokenAtLocation.removeAll()
     }
     
     func canInteract(with source: Interactable, at location: Location) -> Bool {
@@ -81,28 +104,19 @@ class BoardLayer<P: Piece>: ObservableObject, Layer, Map {
             return
         }
         
-        if let result = target.interact(with: source) as? P {
-            place(piece: result, at: location)
+        if let result = target.interact(with: source) as? T {
+            place(token: result, at: location)
         } else if let token = self[location] {
-            remove(piece: token)
+            remove(token: token)
         }
     }
     
-    func clear() {
-        objectWillChange.send()
-        map.clear()
+    func isAvailable(location: Location) -> Bool {
+        tokenAtLocation[location] == nil
     }
     
-    func isOccupied(location: Location) -> Bool {
-        map.isOccupied(location: location)
-    }
-    
-    func isValid(location: Location) -> Bool {
-        locations.contains(location)
-    }
-    
-    func location(for token: P) -> Location? {
-        map[token]
+    func isObstructive(location: Location) -> Bool {
+        tokenAtLocation[location] != nil
     }
     
     func position(for location: Location) -> CGPoint {
@@ -113,5 +127,6 @@ class BoardLayer<P: Piece>: ObservableObject, Layer, Map {
     
     // MARK: Private
     
-    private var map = LayerMap<P>()
+    private var locationForToken = [T: Location]()
+    private var tokenAtLocation = [Location: T]()
 }

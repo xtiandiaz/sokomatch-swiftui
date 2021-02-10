@@ -19,7 +19,7 @@ class CollectibleLayer: BoardLayer<Collectible> {
     @discardableResult
     func create(_ subtype: CollectibleType, at location: Location) -> Collectible {
         let collectible = Collectible(subtype: subtype)
-        place(piece: collectible, at: location)
+        place(token: collectible, at: location)
         return collectible
     }
     
@@ -44,8 +44,8 @@ struct CollectibleLayerView: View {
     var layer: CollectibleLayer
     
     var body: some View {
-        ForEach(layer.pieceLocations, id: \.self) {
-            CollectibleView(collectible: $0.piece)
+        ForEach(layer.spots, id: \.self) {
+            CollectibleView(collectible: $0.token)
                 .position(layer.position(for: $0.location))
                 .frame(width: layer.unitSize, height: layer.unitSize)
         }

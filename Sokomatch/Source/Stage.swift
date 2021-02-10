@@ -63,6 +63,8 @@ class Stage: ObservableObject {
             case .coin: eventSubject.send(.earnedScore(value: collectible.value))
             case .key: inventory.add(collectible)
             }
+        case .reachedGoal:
+            advance()
         }
     }
 }

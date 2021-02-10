@@ -11,25 +11,11 @@ import Emerald
 
 enum TokenType: String {
     
-    case target
-    case water
-    case fire
-    case bomb
-    case wall
-    case trigger
     case avatar
     case collectible
-    case doorway
-    
-    var color: Color {
-        switch self {
-        case .fire: return Color.orange
-        case .water: return Color.blue
-        case .avatar, .trigger: return Color.white
-        case .collectible: return Color.yellow
-        default: return Color.clear
-        }
-    }
+    case trigger
+    case tile
+    case mechanism
 }
 
 protocol Token {

@@ -27,6 +27,6 @@ extension Trigger: Interactable {
     }
     
     func interact(with other: Interactable) -> Trigger? {
-        other is Avatar ? nil : self
+        self
     }
 }

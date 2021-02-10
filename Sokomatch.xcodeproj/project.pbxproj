@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		850EB3CF258EABE900510705 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3CE258EABE900510705 /* Avatar.swift */; };
 		850EB3D2258EAFF400510705 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3D1258EAFF400510705 /* Trigger.swift */; };
-		857402E725817C81000ABD86 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857402E625817C81000ABD86 /* Target.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
 		859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA923F7FFD900F4342C /* ContentView.swift */; };
@@ -23,26 +22,26 @@
 		85AB2A4325CE9E8F00CB1592 /* UIScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */; };
 		85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */; };
 		85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */; };
-		85AB2A5225D05B4700CB1592 /* TerrainLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */; };
+		85AB2A5225D05B4700CB1592 /* MapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5125D05B4700CB1592 /* MapLayer.swift */; };
 		85AB2A5625D1E2A700CB1592 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5525D1E2A700CB1592 /* Inventory.swift */; };
 		85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5825D3001600CB1592 /* TriggerLayer.swift */; };
+		85AB2A6225D4813100CB1592 /* Mechanism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6125D4813100CB1592 /* Mechanism.swift */; };
+		85AB2A6525D4838A00CB1592 /* MechanismLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6425D4838A00CB1592 /* MechanismLayer.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
 		85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA9256A5E5A00DDD44E /* StageView.swift */; };
-		85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB1256A5EA500DDD44E /* Wall.swift */; };
+		85B51DBC256A5EA500DDD44E /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB1256A5EA500DDD44E /* Tile.swift */; };
 		85B51DBE256A5EA500DDD44E /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB3256A5EA500DDD44E /* Token.swift */; };
 		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
-		85B51DD5256A739F00DDD44E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DD4256A739F00DDD44E /* Map.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		850EB3CE258EABE900510705 /* Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Avatar.swift; path = Source/Avatar.swift; sourceTree = "<group>"; };
 		850EB3D1258EAFF400510705 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trigger.swift; path = Source/Trigger.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
-		857402E625817C81000ABD86 /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Target.swift; path = Source/Target.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA523F7FFD900F4342C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859E4CA723F7FFD900F4342C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,19 +56,20 @@
 		85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIScreenExtensions.swift; path = Source/UIScreenExtensions.swift; sourceTree = "<group>"; };
 		85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvatarLayer.swift; path = Source/AvatarLayer.swift; sourceTree = "<group>"; };
 		85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectibleLayer.swift; path = Source/CollectibleLayer.swift; sourceTree = "<group>"; };
-		85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TerrainLayer.swift; path = Source/TerrainLayer.swift; sourceTree = "<group>"; };
+		85AB2A5125D05B4700CB1592 /* MapLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapLayer.swift; path = Source/MapLayer.swift; sourceTree = "<group>"; };
 		85AB2A5525D1E2A700CB1592 /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Inventory.swift; path = Source/Inventory.swift; sourceTree = "<group>"; };
 		85AB2A5825D3001600CB1592 /* TriggerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriggerLayer.swift; path = Source/TriggerLayer.swift; sourceTree = "<group>"; };
+		85AB2A6125D4813100CB1592 /* Mechanism.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Mechanism.swift; path = Source/Mechanism.swift; sourceTree = "<group>"; };
+		85AB2A6425D4838A00CB1592 /* MechanismLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MechanismLayer.swift; path = Source/MechanismLayer.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
 		85B51DA9256A5E5A00DDD44E /* StageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StageView.swift; path = Source/StageView.swift; sourceTree = "<group>"; };
-		85B51DB1256A5EA500DDD44E /* Wall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Wall.swift; path = Source/Wall.swift; sourceTree = "<group>"; };
+		85B51DB1256A5EA500DDD44E /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tile.swift; path = Source/Tile.swift; sourceTree = "<group>"; };
 		85B51DB3256A5EA500DDD44E /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Token.swift; path = Source/Token.swift; sourceTree = "<group>"; };
 		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
 		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
 		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
-		85B51DD4256A739F00DDD44E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Source/Map.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +116,7 @@
 				85B51D9F256A5E3200DDD44E /* Game */,
 				85B51DA7256A5E4A00DDD44E /* Stage */,
 				85B51DC7256A5EA900DDD44E /* Board */,
+				85AB2A5B25D4597D00CB1592 /* Layer */,
 				85B51DAF256A5E6400DDD44E /* Token */,
 				85B51D9A256A5E1500DDD44E /* Controllers */,
 				859E4CA523F7FFD900F4342C /* AppDelegate.swift */,
@@ -143,6 +144,18 @@
 				85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		85AB2A5B25D4597D00CB1592 /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */,
+				85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */,
+				85AB2A6425D4838A00CB1592 /* MechanismLayer.swift */,
+				85AB2A5825D3001600CB1592 /* TriggerLayer.swift */,
+				85AB2A5125D05B4700CB1592 /* MapLayer.swift */,
+			);
+			name = Layer;
 			sourceTree = "<group>";
 		};
 		85B51D9A256A5E1500DDD44E /* Controllers */ = {
@@ -174,10 +187,10 @@
 		85B51DAF256A5E6400DDD44E /* Token */ = {
 			isa = PBXGroup;
 			children = (
-				857402E625817C81000ABD86 /* Target.swift */,
-				85B51DB1256A5EA500DDD44E /* Wall.swift */,
+				85B51DB1256A5EA500DDD44E /* Tile.swift */,
 				850EB3CE258EABE900510705 /* Avatar.swift */,
 				850EB3D1258EAFF400510705 /* Trigger.swift */,
+				85AB2A6125D4813100CB1592 /* Mechanism.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
 				85AB2A3625CB3DFB00CB1592 /* Collectible.swift */,
@@ -191,12 +204,7 @@
 			children = (
 				85B51DCA256A5EB400DDD44E /* Board.swift */,
 				85B51DC8256A5EB400DDD44E /* BoardView.swift */,
-				85B51DD4256A739F00DDD44E /* Map.swift */,
 				85AB2A3E25CE8B3300CB1592 /* Layer.swift */,
-				85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */,
-				85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */,
-				85AB2A5825D3001600CB1592 /* TriggerLayer.swift */,
-				85AB2A5125D05B4700CB1592 /* TerrainLayer.swift */,
 			);
 			name = Board;
 			sourceTree = "<group>";
@@ -281,9 +289,10 @@
 				859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */,
 				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
 				85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */,
-				85AB2A5225D05B4700CB1592 /* TerrainLayer.swift in Sources */,
+				85AB2A5225D05B4700CB1592 /* MapLayer.swift in Sources */,
+				85AB2A6525D4838A00CB1592 /* MechanismLayer.swift in Sources */,
 				85AB2A3F25CE8B3300CB1592 /* Layer.swift in Sources */,
-				85B51DBC256A5EA500DDD44E /* Wall.swift in Sources */,
+				85B51DBC256A5EA500DDD44E /* Tile.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
 				85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */,
@@ -296,12 +305,11 @@
 				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,
 				85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */,
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
-				85B51DD5256A739F00DDD44E /* Map.swift in Sources */,
 				85AB2A3B25CC826900CB1592 /* Doorway.swift in Sources */,
 				85AB2A4325CE9E8F00CB1592 /* UIScreenExtensions.swift in Sources */,
-				857402E725817C81000ABD86 /* Target.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
 				850EB3CF258EABE900510705 /* Avatar.swift in Sources */,
+				85AB2A6225D4813100CB1592 /* Mechanism.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

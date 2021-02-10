@@ -16,13 +16,11 @@ struct BoardView: View {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Rectangle()
-                .fill(Color.purple.opacity(0.25))
-                .padding(board.unitSize)
-                .zIndex(-1)
+            Rectangle().fill(Color.clear)
             
-            TerrainLayerView(layer: board.terrainLayer)
+            MapLayerView(layer: board.mapLayer)
             CollectibleLayerView(layer: board.collectibleLayer)
+            MechanismLayerView(layer: board.mechanismLayer)
             AvatarLayerView(layer: board.avatarLayer)
         }
         .frame(width: board.width, height: board.height)

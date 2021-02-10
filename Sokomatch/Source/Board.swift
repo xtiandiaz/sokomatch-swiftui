@@ -12,11 +12,22 @@ import Emerald
 import Combine
 
 enum Edge {
+    
     case top, left, bottom, right
+    
+    var facingDirection: Direction {
+        switch self {
+        case .top: return .down
+        case .left: return .right
+        case .bottom: return .up
+        case .right: return .left
+        }
+    }
 }
 
 enum BoardEvent {
     case collected(Collectible)
+    case reachedGoal
 }
 
 class Board: ObservableObject {
@@ -35,12 +46,15 @@ class Board: ObservableObject {
     let edges: Set<Location>
     let safeArea: Set<Location>
     
-    let layers: [Layer]
-    var terrainLayer: TerrainLayer
-    var avatarLayer: AvatarLayer
-    var collectibleLayer: CollectibleLayer
+    let avatarLayer: AvatarLayer
+    let mapLayer: MapLayer
+    let collectibleLayer: CollectibleLayer
+    let mechanismLayer: MechanismLayer
+    let triggerLayer: TriggerLayer
     
-    var onEvent: AnyPublisher<BoardEvent, Never> {
+    let layers: [Layer]
+    
+    var onEvent: AnyPublisher<BoardEvent, Never> {  
         eventSubject.eraseToAnyPublisher()
     }
     
@@ -61,10 +75,13 @@ class Board: ObservableObject {
         
         var edges = Set<Location>()
         var safeArea = Set<Location>()
+        var locations = Set<Location>()
         
         for y in 0..<rows {
             for x in 0..<cols {
                 let location = Location(x: x, y: y)
+                
+                locations.insert(location)
                 
                 if x == 0 || x == cols - 1 || y == 0 || y == rows - 1 {
                     edges.insert(location)
@@ -77,13 +94,16 @@ class Board: ObservableObject {
         self.edges = edges.subtracting(corners)
         self.safeArea = safeArea
         
-        avatarLayer = AvatarLayer(locations: safeArea, unitSize: unitSize)
-        terrainLayer = TerrainLayer(locations: safeArea, unitSize: unitSize)
-        collectibleLayer = CollectibleLayer(locations: safeArea, unitSize: unitSize)
+        avatarLayer = AvatarLayer(unitSize: unitSize)
+        mapLayer = MapLayer(unitSize: unitSize)
+        collectibleLayer = CollectibleLayer(unitSize: unitSize)
+        mechanismLayer = MechanismLayer(unitSize: unitSize)
+        triggerLayer = TriggerLayer(unitSize: unitSize)
         
-        layers = [avatarLayer, terrainLayer, collectibleLayer]
+        layers = [mapLayer, collectibleLayer, avatarLayer, mechanismLayer, triggerLayer]
         
         collectibleLayer.onCollected.sink(receiveValue: onCollected(_:)).store(in: &cancellables)
+        triggerLayer.onTriggered.sink(receiveValue: eventSubject.send(_:)).store(in: &cancellables)
     }
     
     var width: CGFloat {
@@ -97,29 +117,38 @@ class Board: ObservableObject {
     func populate() {
         avatar = avatarLayer.create(at: center)
         
-//        for _ in 1...diagonal/4 {
-//            if let location = randomAvailableLocation() {
-//                avatarLayer.create(at: location)
-//            }
-//        }
+        for location in edges {
+            mapLayer.create(tile: .bound, at: location)
+        }
         
-//        let doorwayLocation = edges.randomElement()!
-//        place(token: Doorway(edge: edge(forLocation: doorwayLocation)!), at: doorwayLocation)
+        for location in safeArea {
+            mapLayer.create(tile: .floor, at: location)
+        }
         
-        for _ in 1...diagonal/4 {
-            if let location = randomAvailableLocation() {
-                terrainLayer.create(at: location)
+        var key: Collectible?
+        if let location = randomAvailableLocation(in: safeArea), Bool.random() {
+            key = collectibleLayer.create(.key, at: location)
+        }
+        
+        if let location = edges.randomElement(), let edge = edge(forLocation: location) {
+            mapLayer.create(tile: .passageway(edge), at: location)
+            triggerLayer.create(withEvent: .reachedGoal, at: location)
+            
+            if let key = key {
+                mechanismLayer.create(.lock(key: key.id), at: location.shifted(toward: edge.facingDirection))
             }
         }
         
         for _ in 0..<Int.random(in: 1...3) {
-            if let location = randomAvailableLocation() {
+            if let location = randomAvailableLocation(in: safeArea) {
                 collectibleLayer.create(.coin, at: location)
             }
         }
         
-        if let location = randomAvailableLocation() {
-            collectibleLayer.create(.key, at: location)
+        for _ in 1...diagonal/4 {
+            if let location = randomAvailableLocation(in: safeArea) {
+                mapLayer.create(tile: .block, at: location)
+            }
         }
     }
     
@@ -131,7 +160,7 @@ class Board: ObservableObject {
     }
     
     func move(avatar: Avatar, toward direction: Direction) {
-        guard let origin = avatarLayer.location(for: avatar) else {
+        guard let origin = avatarLayer[avatar] else {
             return
         }
         
@@ -183,7 +212,7 @@ class Board: ObservableObject {
             }
             return nextLocation
             
-        } else if isOccupied(location: nextLocation) {
+        } else if isObstructive(location: nextLocation) {
             
             withAnimation(Self.moveAnimation()) {
                 relocate(token: token, to: origin)
@@ -197,14 +226,23 @@ class Board: ObservableObject {
     private func relocate(token: Token, to location: Location) {
         switch token {
         case let avatar as Avatar:
-            avatarLayer.relocate(piece: avatar, to: location)
+            avatarLayer.relocate(token: avatar, to: location)
         default:
             break
         }
     }
     
     private func onCollected(_ collectible: Collectible) {
+        switch collectible.subtype {
+        case .key: avatar?.keys.insert(collectible.id)
+        default: break
+        }
+        
         eventSubject.send(.collected(collectible))
+    }
+    
+    private func isValid(location: Location) -> Bool {
+        location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
     }
 }
 
@@ -222,25 +260,22 @@ extension Board: Layer {
         layers.forEach { $0.clear() }
     }
     
-    func isOccupied(location: Location) -> Bool {
-        layers.first { $0.isOccupied(location: location) } != nil
+    func isAvailable(location: Location) -> Bool {
+        layers.first { !$0.isAvailable(location: location) } == nil
     }
     
-    func isValid(location: Location) -> Bool {
-        layers.first { !$0.isValid(location: location) } == nil
+    func isObstructive(location: Location) -> Bool {
+        layers.first { $0.isObstructive(location: location) } != nil
     }
 }
 
 extension Board {
     
-    private func randomAvailableLocation() -> Location? {
+    private func randomAvailableLocation(in locations: Set<Location>) -> Location? {
         var location: Location?
         var attempts = 3
         repeat {
-            if
-                let loc = safeArea.randomElement(),
-                (layers.first { $0.isOccupied(location: loc) } == nil)
-            {
+            if let loc = locations.randomElement(), isAvailable(location: loc) {
                 location = loc
                 break
             }

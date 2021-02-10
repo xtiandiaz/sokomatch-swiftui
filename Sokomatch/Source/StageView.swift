@@ -32,7 +32,7 @@ struct StageView: View {
             if abs(deltaX) > abs(deltaY) {
                 dir = deltaX > 0 ? .right : .left
             } else {
-                dir = deltaY > 0 ? .up : .down
+                dir = deltaY > 0 ? .down : .up
             }
 
             withAnimation(Board.moveAnimation()) {
