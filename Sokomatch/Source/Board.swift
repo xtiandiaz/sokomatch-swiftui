@@ -26,6 +26,8 @@ enum Edge {
 }
 
 enum BoardEvent {
+    
+    case unlocked(key: UUID)
     case collected(Collectible)
     case reachedGoal
 }
@@ -48,13 +50,13 @@ class Board: ObservableObject {
     
     let avatarLayer: AvatarLayer
     let mapLayer: MapLayer
+    let accessLayer: AccessLayer
     let collectibleLayer: CollectibleLayer
-    let mechanismLayer: MechanismLayer
     let triggerLayer: TriggerLayer
     
     let layers: [Layer]
     
-    var onEvent: AnyPublisher<BoardEvent, Never> {  
+    var onEvent: AnyPublisher<BoardEvent, Never> {
         eventSubject.eraseToAnyPublisher()
     }
     
@@ -96,14 +98,14 @@ class Board: ObservableObject {
         
         avatarLayer = AvatarLayer(unitSize: unitSize)
         mapLayer = MapLayer(unitSize: unitSize)
+        accessLayer = AccessLayer(unitSize: unitSize)
         collectibleLayer = CollectibleLayer(unitSize: unitSize)
-        mechanismLayer = MechanismLayer(unitSize: unitSize)
         triggerLayer = TriggerLayer(unitSize: unitSize)
         
-        layers = [mapLayer, collectibleLayer, avatarLayer, mechanismLayer, triggerLayer]
+        layers = [mapLayer, accessLayer, collectibleLayer, avatarLayer, triggerLayer]
         
         collectibleLayer.onCollected.sink(receiveValue: onCollected(_:)).store(in: &cancellables)
-        triggerLayer.onTriggered.sink(receiveValue: eventSubject.send(_:)).store(in: &cancellables)
+        triggerLayer.onTriggered.sink(receiveValue: onEvent(_:)).store(in: &cancellables)
     }
     
     var width: CGFloat {
@@ -135,7 +137,8 @@ class Board: ObservableObject {
             triggerLayer.create(withEvent: .reachedGoal, at: location)
             
             if let key = key {
-                mechanismLayer.create(.lock(key: key.id), at: location.shifted(toward: edge.facingDirection))
+                accessLayer.create(withKey: key.id, at: location)
+                triggerLayer.create(withKey: key.id, at: location.shifted(toward: edge.facingDirection))
             }
         }
         
@@ -182,9 +185,8 @@ class Board: ObservableObject {
     
     private let eventSubject = PassthroughSubject<BoardEvent, Never>()
     
-    private var cancellables = Set<AnyCancellable>()
-    
     private var avatar: Avatar?
+    private var cancellables = Set<AnyCancellable>()
     
     @discardableResult
     private func move<T: Token & Movable & Interactable>(
@@ -193,8 +195,8 @@ class Board: ObservableObject {
         toward direction: Direction
     ) -> Location {
         let nextLocation = origin.shifted(toward: direction)
-
-        if !isValid(location: nextLocation) {
+        
+        if !isValid(location: nextLocation) || isObstructive(location: nextLocation) {
             withAnimation(Self.moveAnimation()) {
                 relocate(token: token, to: origin)
             }
@@ -202,7 +204,6 @@ class Board: ObservableObject {
         }
         
         if canInteract(with: token, at: nextLocation) {
-            
             withAnimation(Self.moveAnimation()) {
                 relocate(token: token, to: nextLocation)
             }
@@ -211,13 +212,6 @@ class Board: ObservableObject {
                 self?.interact(with: token, at: nextLocation)
             }
             return nextLocation
-            
-        } else if isObstructive(location: nextLocation) {
-            
-            withAnimation(Self.moveAnimation()) {
-                relocate(token: token, to: origin)
-            }
-            return origin
         }
         
         return move(token: token, from: nextLocation, toward: direction)
@@ -234,11 +228,22 @@ class Board: ObservableObject {
     
     private func onCollected(_ collectible: Collectible) {
         switch collectible.subtype {
-        case .key: avatar?.keys.insert(collectible.id)
+        case .key: avatar?.addKey(collectible.id)
         default: break
         }
         
         eventSubject.send(.collected(collectible))
+    }
+    
+    private func onEvent(_ event: BoardEvent) {
+        switch event {
+        case .unlocked(let key):
+            accessLayer.unlock(withKey: key)
+        default:
+            break
+        }
+        
+        eventSubject.send(event)
     }
     
     private func isValid(location: Location) -> Bool {

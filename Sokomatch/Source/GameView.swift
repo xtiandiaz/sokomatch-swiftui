@@ -29,14 +29,14 @@ struct GameView: View {
                 Text("\(game.score)")
                     .font(.title)
                 
-                Spacer()
-                
-                HStack {
-                    ForEach(inventory.items, id: \.id) {
-                        CollectibleView(collectible: $0)
-                    }
-                }
-                .frame(minHeight: 100)
+//                Spacer()
+//
+//                HStack {
+//                    ForEach(inventory.items, id: \.id) {
+//                        CollectibleView(collectible: $0)
+//                    }
+//                }
+//                .frame(minHeight: 100)
                 
                 if let stage = game.stage {
                     StageView(stage: stage)

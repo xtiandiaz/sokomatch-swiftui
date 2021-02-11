@@ -9,14 +9,19 @@
 import SwiftUI
 import Emerald
 
+enum TriggerType {
+    
+    case event(BoardEvent), lock(key: UUID)
+}
+
 struct Trigger: Piece {
     
     let id = UUID()
     let type: TokenType = .trigger
-    let event: BoardEvent
+    let subtype: TriggerType
     
-    init(event: BoardEvent) {
-        self.event = event
+    init(subtype: TriggerType) {
+        self.subtype = subtype
     }
 }
 
@@ -27,6 +32,31 @@ extension Trigger: Interactable {
     }
     
     func interact(with other: Interactable) -> Trigger? {
-        self
+        guard let avatar = other as? Avatar else {
+            return self
+        }
+        
+        switch subtype {
+        case .lock(let key):
+            return avatar.hasKey(key) ? nil : self
+        default:
+            return self
+        }
+    }
+}
+
+struct TriggerView: View {
+    
+    let trigger: Trigger
+    
+    var body: some View {
+        switch trigger.subtype {
+        case .lock(_):
+            Image(systemName: "circles.hexagongrid.fill")
+                .font(.title)
+                .foregroundColor(Color.black).opacity(0.15)
+        default:
+            Color.clear
+        }
     }
 }

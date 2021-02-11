@@ -44,11 +44,9 @@ struct CollectibleView: View {
     var body: some View {
         switch collectible.subtype {
         case .coin:
-            Circle()
-                .fill(Color.yellow)
-                .scaleEffect(0.25)
+            Circle().fill(Color.yellow).scaleEffect(0.25)
         case .key:
-            Text("🗝").font(.title)
+            Image(systemName: "key.fill")
         }
     }
 }

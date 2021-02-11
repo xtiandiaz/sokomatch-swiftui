@@ -33,6 +33,10 @@ class CollectibleLayer: BoardLayer<Collectible> {
         }
     }
     
+    override func isObstructive(location: Location) -> Bool {
+        false
+    }
+    
     // MARK: Private
     
     private let collectibleSubject = PassthroughSubject<Collectible, Never>()

@@ -19,17 +19,21 @@ class Avatar: ObservableObject, Piece, Movable {
     @Published
     var isFocused = true
     
-    var keys = Set<UUID>()
-    
     init(location: Location) {
         self.location = location
     }
     
-    func activate(mechanism: Mechanism) -> Bool {
-        switch mechanism.subtype {
-        case .lock(let key): return keys.contains(key)
-        }
+    func addKey(_ key: UUID) {
+        keys.insert(key)
     }
+    
+    func hasKey(_ key: UUID) -> Bool {
+        keys.contains(key)
+    }
+    
+    // MARK: Private
+    
+    private var keys = Set<UUID>()
 }
 
 extension Avatar: Interactable {

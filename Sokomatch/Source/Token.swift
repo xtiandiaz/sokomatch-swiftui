@@ -16,6 +16,7 @@ enum TokenType: String {
     case trigger
     case tile
     case mechanism
+    case doorway
 }
 
 protocol Token {
@@ -36,10 +37,11 @@ protocol Interactable: Token {
 }
 
 protocol Piece: Token, Hashable, Identifiable {
-    
 }
 
 extension Piece {
+    
+    var id: UUID { id }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

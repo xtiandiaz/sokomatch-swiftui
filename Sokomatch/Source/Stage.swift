@@ -61,10 +61,12 @@ class Stage: ObservableObject {
         case .collected(let collectible):
             switch collectible.subtype {
             case .coin: eventSubject.send(.earnedScore(value: collectible.value))
-            case .key: inventory.add(collectible)
+            case .key: break//inventory.add(collectible)
             }
         case .reachedGoal:
             advance()
+        default:
+            break
         }
     }
 }

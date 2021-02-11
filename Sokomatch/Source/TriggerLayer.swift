@@ -17,22 +17,49 @@ class TriggerLayer: BoardLayer<Trigger> {
     }
     
     func create(withEvent event: BoardEvent, at location: Location) {
-        place(token: Trigger(event: event), at: location)
+        place(token: Trigger(subtype: .event(event)), at: location)
+    }
+    
+    func create(withKey key: UUID, at location: Location) {
+        place(token: Trigger(subtype: .lock(key: key)), at: location)
     }
     
     override func interact(with source: Interactable, at location: Location) {
+        let trigger = self[location]
+        
         super.interact(with: source, at: location)
         
-        if let event = self[location]?.event {
-            eventSubject.send(event)
+        if let trigger = trigger {
+            switch trigger.subtype {
+            case .event(let event):
+                eventSubject.send(event)
+            case .lock(let key):
+                if self[location] == nil {
+                    eventSubject.send(.unlocked(key: key))
+                }
+            }
         }
     }
     
-    override func isAvailable(location: Location) -> Bool {
-        true
+    override func isObstructive(location: Location) -> Bool {
+        false
     }
     
     // MARK: Private
     
     private let eventSubject = PassthroughSubject<BoardEvent, Never>()
+}
+
+struct TriggerLayerView: View {
+    
+    @ObservedObject
+    var layer: TriggerLayer
+    
+    var body: some View {
+        ForEach(layer.spots, id: \.self) {
+            TriggerView(trigger: $0.token)
+                .position(layer.position(for: $0.location))
+                .frame(width: layer.unitSize, height: layer.unitSize)
+        }
+    }
 }
