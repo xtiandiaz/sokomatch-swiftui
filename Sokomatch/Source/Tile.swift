@@ -13,6 +13,7 @@ enum TileType: Hashable {
     
     case bound
     case floor
+    case stickyFloor
     case block
     case abyss
     case passageway(Edge)
@@ -21,11 +22,11 @@ enum TileType: Hashable {
 struct Tile: Token, Hashable, Identifiable {
     
     let id = UUID()
-    let type: TokenType = .tile
-    let subtype: TileType
+    let token: TokenType = .map
+    let type: TileType
     
-    init(subtype: TileType) {
-        self.subtype = subtype
+    init(type: TileType) {
+        self.type = type
     }
 }
 
@@ -36,16 +37,35 @@ extension Tile: Equatable {
     }
 }
 
+extension Tile: Interactable {
+    
+    func canInteract(with other: Interactable) -> Bool {
+        other is Avatar && type == .stickyFloor
+    }
+    
+    func interact(with other: Interactable) -> Tile? {
+        self
+    }
+}
+
 struct TileView: View {
 
     let tile: Tile
 
     var body: some View {
-        switch tile.subtype {
+        switch tile.type {
         case .bound:
             Color.clear
         case .floor:
             Color.purple.opacity(0.25)
+        case .stickyFloor:
+            ZStack {
+                Color.purple.opacity(0.25)
+                
+                Image(systemName: "circle.grid.3x3.fill")
+                    .font(.title)
+                    .foregroundColor(Color.black).opacity(0.25)
+            }
         case .block:
             Color.purple.opacity(0.5)
         case .abyss:

@@ -26,6 +26,10 @@
 		85AB2A5625D1E2A700CB1592 /* Inventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5525D1E2A700CB1592 /* Inventory.swift */; };
 		85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5825D3001600CB1592 /* TriggerLayer.swift */; };
 		85AB2A6825D582FD00CB1592 /* AccessLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6725D582FD00CB1592 /* AccessLayer.swift */; };
+		85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6C25D6692200CB1592 /* BoardLayout.swift */; };
+		85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB46B25D6700000F1DB87 /* BoardEvent.swift */; };
+		85AEB47025D677A100F1DB87 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB46F25D677A100F1DB87 /* Location.swift */; };
+		85AEB47325D677D900F1DB87 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB47225D677D900F1DB87 /* Direction.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
@@ -59,6 +63,10 @@
 		85AB2A5525D1E2A700CB1592 /* Inventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Inventory.swift; path = Source/Inventory.swift; sourceTree = "<group>"; };
 		85AB2A5825D3001600CB1592 /* TriggerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriggerLayer.swift; path = Source/TriggerLayer.swift; sourceTree = "<group>"; };
 		85AB2A6725D582FD00CB1592 /* AccessLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccessLayer.swift; path = Source/AccessLayer.swift; sourceTree = "<group>"; };
+		85AB2A6C25D6692200CB1592 /* BoardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardLayout.swift; path = Source/BoardLayout.swift; sourceTree = "<group>"; };
+		85AEB46B25D6700000F1DB87 /* BoardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardEvent.swift; path = Source/BoardEvent.swift; sourceTree = "<group>"; };
+		85AEB46F25D677A100F1DB87 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Source/Location.swift; sourceTree = "<group>"; };
+		85AEB47225D677D900F1DB87 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Direction.swift; path = Source/Direction.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
@@ -109,6 +117,7 @@
 		859E4CA423F7FFD900F4342C /* Sokomatch */ = {
 			isa = PBXGroup;
 			children = (
+				85AEB46E25D6778A00F1DB87 /* Utils */,
 				85AB2A4125CE9E7800CB1592 /* Extensions */,
 				850EB3E0258F694A00510705 /* Editor */,
 				85B51D9F256A5E3200DDD44E /* Game */,
@@ -156,6 +165,15 @@
 			name = Layer;
 			sourceTree = "<group>";
 		};
+		85AEB46E25D6778A00F1DB87 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				85AEB46F25D677A100F1DB87 /* Location.swift */,
+				85AEB47225D677D900F1DB87 /* Direction.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		85B51D9A256A5E1500DDD44E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				85B51DCA256A5EB400DDD44E /* Board.swift */,
+				85AEB46B25D6700000F1DB87 /* BoardEvent.swift */,
+				85AB2A6C25D6692200CB1592 /* BoardLayout.swift */,
 				85B51DC8256A5EB400DDD44E /* BoardView.swift */,
 				85AB2A3E25CE8B3300CB1592 /* Layer.swift */,
 			);
@@ -289,15 +309,19 @@
 				85AB2A5225D05B4700CB1592 /* MapLayer.swift in Sources */,
 				85AB2A6825D582FD00CB1592 /* AccessLayer.swift in Sources */,
 				85AB2A3F25CE8B3300CB1592 /* Layer.swift in Sources */,
+				85AEB47325D677D900F1DB87 /* Direction.swift in Sources */,
 				85B51DBC256A5EA500DDD44E /* Tile.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
 				85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
+				85AEB47025D677A100F1DB87 /* Location.swift in Sources */,
+				85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */,
 				85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
+				85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */,
 				85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */,
 				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,
 				85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */,

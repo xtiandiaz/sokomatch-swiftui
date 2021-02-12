@@ -17,11 +17,11 @@ class TriggerLayer: BoardLayer<Trigger> {
     }
     
     func create(withEvent event: BoardEvent, at location: Location) {
-        place(token: Trigger(subtype: .event(event)), at: location)
+        place(token: Trigger(type: .event(event)), at: location)
     }
     
     func create(withKey key: UUID, at location: Location) {
-        place(token: Trigger(subtype: .lock(key: key)), at: location)
+        place(token: Trigger(type: .lock(key: key)), at: location)
     }
     
     override func interact(with source: Interactable, at location: Location) {
@@ -30,7 +30,7 @@ class TriggerLayer: BoardLayer<Trigger> {
         super.interact(with: source, at: location)
         
         if let trigger = trigger {
-            switch trigger.subtype {
+            switch trigger.type {
             case .event(let event):
                 eventSubject.send(event)
             case .lock(let key):
@@ -48,18 +48,4 @@ class TriggerLayer: BoardLayer<Trigger> {
     // MARK: Private
     
     private let eventSubject = PassthroughSubject<BoardEvent, Never>()
-}
-
-struct TriggerLayerView: View {
-    
-    @ObservedObject
-    var layer: TriggerLayer
-    
-    var body: some View {
-        ForEach(layer.spots, id: \.self) {
-            TriggerView(trigger: $0.token)
-                .position(layer.position(for: $0.location))
-                .frame(width: layer.unitSize, height: layer.unitSize)
-        }
-    }
 }

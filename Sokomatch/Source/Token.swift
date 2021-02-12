@@ -9,20 +9,19 @@
 import SwiftUI
 import Emerald
 
-enum TokenType: String {
+enum TokenType: String, Codable {
     
+    case map
     case avatar
     case collectible
     case trigger
-    case tile
-    case mechanism
     case doorway
 }
 
 protocol Token {
     
     var id: UUID { get }
-    var type: TokenType { get }
+    var token: TokenType { get }
 }
 
 protocol Movable: Token {
@@ -36,7 +35,8 @@ protocol Interactable: Token {
     func interact(with other: Interactable) -> Self?
 }
 
-protocol Piece: Token, Hashable, Identifiable {
+protocol Piece: Token, Codable, Hashable, Identifiable {
+
 }
 
 extension Piece {

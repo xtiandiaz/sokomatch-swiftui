@@ -59,9 +59,11 @@ class Stage: ObservableObject {
     private func onBoardEvent(_ event: BoardEvent) {
         switch event {
         case .collected(let collectible):
-            switch collectible.subtype {
-            case .coin: eventSubject.send(.earnedScore(value: collectible.value))
-            case .key: break//inventory.add(collectible)
+            switch collectible.type {
+            case .coin(let value):
+                eventSubject.send(.earnedScore(value: value))
+            case .key:
+                break//inventory.add(collectible)
             }
         case .reachedGoal:
             advance()

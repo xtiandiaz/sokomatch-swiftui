@@ -14,14 +14,71 @@ enum TriggerType {
     case event(BoardEvent), lock(key: UUID)
 }
 
+extension TriggerType: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case event, lock
+    }
+    
+    enum Error: Swift.Error {
+        case unknownValue
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        switch container.allKeys.first {
+        case .event:
+            self = .event(try container.decode(BoardEvent.self, forKey: .event))
+        case .lock:
+            self = .lock(key: try container.decode(UUID.self, forKey: .lock))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: container.codingPath,
+                    debugDescription: "Unable to decode \(Self.self)"
+                )
+            )
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        switch self {
+        case .event(let event):
+            try container.encode(event, forKey: .event)
+        case .lock(let key):
+            try container.encode(key, forKey: .lock)
+        }
+    }
+}
+
 struct Trigger: Piece {
     
     let id = UUID()
-    let type: TokenType = .trigger
-    let subtype: TriggerType
+    let token: TokenType = .trigger
+    let type: TriggerType
     
-    init(subtype: TriggerType) {
-        self.subtype = subtype
+    init(type: TriggerType) {
+        self.type = type
+    }
+}
+
+extension Trigger: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.decode(TriggerType.self, forKey: .type)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(type, forKey: .type)
     }
 }
 
@@ -36,27 +93,11 @@ extension Trigger: Interactable {
             return self
         }
         
-        switch subtype {
+        switch type {
         case .lock(let key):
             return avatar.hasKey(key) ? nil : self
         default:
             return self
-        }
-    }
-}
-
-struct TriggerView: View {
-    
-    let trigger: Trigger
-    
-    var body: some View {
-        switch trigger.subtype {
-        case .lock(_):
-            Image(systemName: "circles.hexagongrid.fill")
-                .font(.title)
-                .foregroundColor(Color.black).opacity(0.15)
-        default:
-            Color.clear
         }
     }
 }

@@ -19,7 +19,6 @@ struct BoardView: View {
             Rectangle().fill(Color.clear)
             
             MapLayerView(layer: board.mapLayer)
-            TriggerLayerView(layer: board.triggerLayer)
             AccessLayerView(layer: board.accessLayer)
             CollectibleLayerView(layer: board.collectibleLayer)
             AvatarLayerView(layer: board.avatarLayer)

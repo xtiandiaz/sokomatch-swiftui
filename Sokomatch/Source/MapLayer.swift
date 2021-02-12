@@ -12,7 +12,7 @@ import Emerald
 class MapLayer: BoardLayer<Tile> {
     
     func create(tile: TileType, at location: Location) {
-        place(token: Tile(subtype: tile), at: location)
+        place(token: Tile(type: tile), at: location)
     }
     
     override func isAvailable(location: Location) -> Bool {
@@ -20,7 +20,7 @@ class MapLayer: BoardLayer<Tile> {
     }
     
     override func isObstructive(location: Location) -> Bool {
-        switch self[location]?.subtype {
+        switch self[location]?.type {
         case .bound, .block: return true
         default: return false
         }

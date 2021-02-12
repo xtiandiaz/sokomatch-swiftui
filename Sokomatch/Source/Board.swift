@@ -25,13 +25,6 @@ enum Edge {
     }
 }
 
-enum BoardEvent {
-    
-    case unlocked(key: UUID)
-    case collected(Collectible)
-    case reachedGoal
-}
-
 class Board: ObservableObject {
     
     static let minCols = 5
@@ -43,6 +36,7 @@ class Board: ObservableObject {
     let rows: Int
     let unitSize: CGFloat
     
+    let locations: Set<Location>
     let center: Location
     let corners: Set<Location>
     let edges: Set<Location>
@@ -93,6 +87,7 @@ class Board: ObservableObject {
             }
         }
         
+        self.locations = locations
         self.edges = edges.subtracting(corners)
         self.safeArea = safeArea
         
@@ -136,15 +131,18 @@ class Board: ObservableObject {
             mapLayer.create(tile: .passageway(edge), at: location)
             triggerLayer.create(withEvent: .reachedGoal, at: location)
             
+            let entrance = location.shifted(toward: edge.facingDirection)
+            mapLayer.create(tile: .stickyFloor, at: entrance)
+            
             if let key = key {
                 accessLayer.create(withKey: key.id, at: location)
-                triggerLayer.create(withKey: key.id, at: location.shifted(toward: edge.facingDirection))
+                triggerLayer.create(withKey: key.id, at: entrance)
             }
         }
         
         for _ in 0..<Int.random(in: 1...3) {
             if let location = randomAvailableLocation(in: safeArea) {
-                collectibleLayer.create(.coin, at: location)
+                collectibleLayer.create(.coin(value: 1), at: location)
             }
         }
         
@@ -227,7 +225,7 @@ class Board: ObservableObject {
     }
     
     private func onCollected(_ collectible: Collectible) {
-        switch collectible.subtype {
+        switch collectible.type {
         case .key: avatar?.addKey(collectible.id)
         default: break
         }
@@ -247,7 +245,7 @@ class Board: ObservableObject {
     }
     
     private func isValid(location: Location) -> Bool {
-        location.x >= 0 && location.x < cols && location.y >= 0 && location.y < rows
+        locations.contains(location)
     }
 }
 

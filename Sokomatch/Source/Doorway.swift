@@ -12,7 +12,7 @@ import Emerald
 struct Doorway: Piece {
     
     let id = UUID()
-    let type: TokenType = .doorway
+    let token: TokenType = .doorway
     let key: UUID
     
     var isLocked = true

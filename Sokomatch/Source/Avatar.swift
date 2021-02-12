@@ -12,7 +12,7 @@ import Emerald
 class Avatar: ObservableObject, Piece, Movable {
     
     let id = UUID()
-    let type: TokenType = .avatar
+    let token: TokenType = .avatar
     
     @Published
     var location: Location
@@ -21,6 +21,13 @@ class Avatar: ObservableObject, Piece, Movable {
     
     init(location: Location) {
         self.location = location
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        location = (try? container.decode(Location.self, forKey: .location)) ?? .zero
+        isFocused = (try? container.decode(Bool.self, forKey: .isFocused)) ?? false
     }
     
     func addKey(_ key: UUID) {
@@ -34,6 +41,19 @@ class Avatar: ObservableObject, Piece, Movable {
     // MARK: Private
     
     private var keys = Set<UUID>()
+}
+
+extension Avatar: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case location, isFocused
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = try encoder.container(keyedBy: CodingKeys.self)
+        
+        
+    }
 }
 
 extension Avatar: Interactable {

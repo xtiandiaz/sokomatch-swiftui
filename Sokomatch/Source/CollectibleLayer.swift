@@ -17,8 +17,8 @@ class CollectibleLayer: BoardLayer<Collectible> {
     }
     
     @discardableResult
-    func create(_ subtype: CollectibleType, at location: Location) -> Collectible {
-        let collectible = Collectible(subtype: subtype)
+    func create(_ type: CollectibleType, at location: Location) -> Collectible {
+        let collectible = Collectible(type: type)
         place(token: collectible, at: location)
         return collectible
     }
