@@ -11,17 +11,22 @@ import Combine
 
 struct GameView: View {
     
+    static let viewportUWidth = 9
+    
     @EnvironmentObject
     var game: Game
     @EnvironmentObject
     var inventory: Inventory
     
+    @State
+    var unitSize: CGFloat?
+    
     var body: some View {
-        ZStack(alignment: .center) {
+        ZStack {
             GeometryReader {
                 proxy in
                 Color.clear.onAppear {
-                    game.setup(size: proxy.size)
+                    unitSize = proxy.size.width / CGFloat(Self.viewportUWidth)
                 }
             }
             
@@ -38,8 +43,8 @@ struct GameView: View {
 //                }
 //                .frame(minHeight: 100)
                 
-                if let stage = game.stage {
-                    StageView(stage: stage)
+                if let unitSize = unitSize {
+                    StageView(stage: game.stage, unitSize: unitSize)
                 }
                 
                 Spacer()

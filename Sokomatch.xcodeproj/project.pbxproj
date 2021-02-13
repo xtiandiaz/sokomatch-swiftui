@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		850EB3CF258EABE900510705 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3CE258EABE900510705 /* Avatar.swift */; };
 		850EB3D2258EAFF400510705 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3D1258EAFF400510705 /* Trigger.swift */; };
+		8597CA8B25D7D25E00D9ADE6 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597CA8A25D7D25E00D9ADE6 /* CGExtensions.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
 		859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA923F7FFD900F4342C /* ContentView.swift */; };
@@ -45,6 +46,7 @@
 		850EB3CE258EABE900510705 /* Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Avatar.swift; path = Source/Avatar.swift; sourceTree = "<group>"; };
 		850EB3D1258EAFF400510705 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trigger.swift; path = Source/Trigger.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
+		8597CA8A25D7D25E00D9ADE6 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CGExtensions.swift; path = Source/CGExtensions.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA523F7FFD900F4342C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859E4CA723F7FFD900F4342C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */,
+				8597CA8A25D7D25E00D9ADE6 /* CGExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
 				85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
+				8597CA8B25D7D25E00D9ADE6 /* CGExtensions.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
 				85AEB47025D677A100F1DB87 /* Location.swift in Sources */,
 				85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */,

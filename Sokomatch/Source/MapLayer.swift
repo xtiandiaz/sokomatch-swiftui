@@ -27,16 +27,18 @@ class MapLayer: BoardLayer<Tile> {
     }
 }
 
-struct MapLayerView: View {
+struct MapLayerView: BoardLayerView {
     
     @ObservedObject
     var layer: MapLayer
     
+    let unitSize: CGFloat
+    
     var body: some View {
         ForEach(layer.spots, id: \.self) {
             TileView(tile: $0.token)
-                .position(layer.position(for: $0.location))
-                .frame(width: layer.unitSize, height: layer.unitSize)
+                .frame(width: unitSize, height: unitSize)
+                .position(position(for: $0.location))
         }
     }
 }

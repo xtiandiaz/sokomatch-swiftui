@@ -75,12 +75,9 @@ struct AvatarView: View {
     @ObservedObject
     var avatar: Avatar
     
-    let positionForLocation: (Location) -> CGPoint
-    
     var body: some View {
         Circle()
             .fill(avatar.isFocused ? Color.white : Color.black)
             .overlay(Circle().strokeBorder(Color.white, lineWidth: 2))
-            .position(positionForLocation(avatar.location))
     }
 }

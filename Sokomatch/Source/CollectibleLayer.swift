@@ -42,16 +42,18 @@ class CollectibleLayer: BoardLayer<Collectible> {
     private let collectibleSubject = PassthroughSubject<Collectible, Never>()
 }
 
-struct CollectibleLayerView: View {
+struct CollectibleLayerView: BoardLayerView {
     
     @ObservedObject
     var layer: CollectibleLayer
     
+    let unitSize: CGFloat
+    
     var body: some View {
         ForEach(layer.spots, id: \.self) {
             CollectibleView(collectible: $0.token)
-                .position(layer.position(for: $0.location))
-                .frame(width: layer.unitSize, height: layer.unitSize)
+                .frame(width: unitSize, height: unitSize)
+                .position(position(for: $0.location))
         }
     }
 }

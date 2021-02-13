@@ -34,16 +34,18 @@ class AccessLayer: BoardLayer<Doorway> {
     }
 }
 
-struct AccessLayerView: View {
+struct AccessLayerView: BoardLayerView {
     
     @ObservedObject
     var layer: AccessLayer
     
+    let unitSize: CGFloat
+    
     var body: some View {
         ForEach(layer.spots, id: \.self) {
             DoorwayView(doorway: $0.token)
-                .position(layer.position(for: $0.location))
-                .frame(width: layer.unitSize, height: layer.unitSize)
+                .frame(width: unitSize, height: unitSize)
+                .position(position(for: $0.location))
         }
     }
 }

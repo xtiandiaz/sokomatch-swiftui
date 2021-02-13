@@ -12,7 +12,6 @@ import Emerald
 protocol Layer {
     
     var id: UUID { get }
-    var unitSize: CGFloat { get }
     
     func canInteract(with source: Interactable, at location: Location) -> Bool
     func interact(with source: Interactable, at location: Location)
@@ -34,11 +33,6 @@ struct BoardSpot<T: Token & Hashable>: Hashable & Identifiable {
 class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
     
     let id = UUID()
-    let unitSize: CGFloat
-    
-    required init(unitSize: CGFloat) {
-        self.unitSize = unitSize
-    }
     
     var tokens: [T] {
         Array(tokenAtLocation.values)
@@ -119,14 +113,25 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
         tokenAtLocation[location] != nil
     }
     
-    func position(for location: Location) -> CGPoint {
-        CGPoint(
-            x: CGFloat(location.x) * unitSize + unitSize / 2,
-            y: CGFloat(location.y) * unitSize + unitSize / 2)
-    }
-    
     // MARK: Private
     
     private var locationForToken = [T: Location]()
     private var tokenAtLocation = [Location: T]()
+}
+
+protocol BoardLayerView: View {
+    
+    var unitSize: CGFloat { get }
+    
+    func position(for location: Location) -> CGPoint
+}
+
+extension BoardLayerView {
+    
+    func position(for location: Location) -> CGPoint {
+        CGPoint(
+            x: CGFloat(location.x) * unitSize,
+            y: CGFloat(location.y) * unitSize
+        )
+    }
 }

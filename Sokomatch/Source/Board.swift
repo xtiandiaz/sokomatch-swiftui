@@ -27,14 +27,14 @@ enum Edge {
 
 class Board: ObservableObject {
     
-    static let minCols = 5
-    static let maxCols = 9
     static let moveDuration: TimeInterval = 0.1
+    
+    @Published
+    private(set) var playerLocation: Location = .zero
     
     let id = UUID()
     let cols: Int
     let rows: Int
-    let unitSize: CGFloat
     
     let locations: Set<Location>
     let center: Location
@@ -50,15 +50,9 @@ class Board: ObservableObject {
     
     let layers: [Layer]
     
-    var onEvent: AnyPublisher<BoardEvent, Never> {
-        eventSubject.eraseToAnyPublisher()
-    }
-    
-    init(cols: Int, rows: Int, width: CGFloat) {
+    init(cols: Int, rows: Int) {
         self.cols = cols
         self.rows = rows
-        
-        unitSize = width / CGFloat(Self.maxCols)
         
         center = Location(x: cols / 2, y: rows / 2)
         
@@ -91,11 +85,11 @@ class Board: ObservableObject {
         self.edges = edges.subtracting(corners)
         self.safeArea = safeArea
         
-        avatarLayer = AvatarLayer(unitSize: unitSize)
-        mapLayer = MapLayer(unitSize: unitSize)
-        accessLayer = AccessLayer(unitSize: unitSize)
-        collectibleLayer = CollectibleLayer(unitSize: unitSize)
-        triggerLayer = TriggerLayer(unitSize: unitSize)
+        avatarLayer = AvatarLayer()
+        mapLayer = MapLayer()
+        accessLayer = AccessLayer()
+        collectibleLayer = CollectibleLayer()
+        triggerLayer = TriggerLayer()
         
         layers = [mapLayer, accessLayer, collectibleLayer, avatarLayer, triggerLayer]
         
@@ -103,12 +97,8 @@ class Board: ObservableObject {
         triggerLayer.onTriggered.sink(receiveValue: onEvent(_:)).store(in: &cancellables)
     }
     
-    var width: CGFloat {
-        CGFloat(cols) * unitSize
-    }
-    
-    var height: CGFloat {
-        CGFloat(rows) * unitSize
+    var onEvent: AnyPublisher<BoardEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
     }
     
     func populate() {
@@ -158,6 +148,8 @@ class Board: ObservableObject {
             return
         }
         move(avatar: avatar, toward: direction)
+        
+        playerLocation = avatar.location
     }
     
     func move(avatar: Avatar, toward direction: Direction) {
@@ -168,11 +160,11 @@ class Board: ObservableObject {
         move(token: avatar, from: origin, toward: direction)
     }
     
-    static func create(withSize size: CGSize) -> Board {
+    static func create() -> Board {
         let length = {
-            (Self.minCols...Self.maxCols).randomElement()!
+            (5...9).randomElement()!
         }
-        return Board(cols: length(), rows: length(), width: size.width)
+        return Board(cols: length(), rows: length())
     }
     
     static func moveAnimation() -> Animation {

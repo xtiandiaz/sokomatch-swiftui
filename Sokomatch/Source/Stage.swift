@@ -22,16 +22,12 @@ class Stage: ObservableObject {
     
     init(inventory: Inventory) {
         self.inventory = inventory
+        
+        advance()
     }
     
     var onEvent: AnyPublisher<GameEvent, Never> {
         eventSubject.eraseToAnyPublisher()
-    }
-    
-    func setup(size: CGSize) {
-        self.size = size
-        
-        advance()
     }
     
     func reset() {
@@ -41,16 +37,13 @@ class Stage: ObservableObject {
     
     // MARK: Private
     
-    private let eventSubject = PassthroughSubject<GameEvent, Never>()
-    
     private let inventory: Inventory
-    
-    private var size: CGSize = .zero
+    private let eventSubject = PassthroughSubject<GameEvent, Never>()
     
     private var cancellables = Set<AnyCancellable>()
     
     private func advance() {
-        board = Board.create(withSize: size)
+        board = Board.create()
         board?.populate()
         
         board?.onEvent.sink(receiveValue: onBoardEvent(_:)).store(in: &cancellables)

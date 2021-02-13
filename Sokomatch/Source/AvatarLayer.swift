@@ -25,15 +25,18 @@ class AvatarLayer: BoardLayer<Avatar> {
     }
 }
 
-struct AvatarLayerView: View {
+struct AvatarLayerView: BoardLayerView {
     
     @ObservedObject
     var layer: AvatarLayer
     
+    let unitSize: CGFloat
+    
     var body: some View {
         ForEach(layer.tokens, id: \.self) {
-            AvatarView(avatar: $0, positionForLocation: layer.position(for:))
-                .frame(width: layer.unitSize, height: layer.unitSize)
+            AvatarView(avatar: $0)
+                .frame(width: unitSize, height: unitSize)
+                .position(position(for: $0.location))
         }
     }
 }

@@ -14,17 +14,18 @@ struct StageView: View {
     @ObservedObject
     var stage: Stage
     
+    let unitSize: CGFloat
+    
     var body: some View {
         ZStack {
-            Rectangle().fill(Color.black)
-                .aspectRatio(1, contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+            Color.black
             
             if let board = stage.board {
-                BoardView(board: board)
+                BoardView(board: board, unitSize: unitSize)
                     .transition(AnyTransition.opacity.animation(.default))
             }
         }
-        .gesture(DragGesture(minimumDistance: 20).onEnded {
+        .gesture(DragGesture(minimumDistance: unitSize / 2).onEnded {
             let dir: Direction
             let deltaX = $0.translation.width
             let deltaY = $0.translation.height
@@ -44,6 +45,6 @@ struct StageView: View {
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView(stage: Stage(inventory: Inventory()))
+        StageView(stage: Stage(inventory: Inventory()), unitSize: 30)
     }
 }

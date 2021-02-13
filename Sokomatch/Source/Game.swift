@@ -16,19 +16,16 @@ enum GameEvent {
 class Game: ObservableObject {
     
     @Published
-    private(set) var stage: Stage?
+    private(set) var stage: Stage
     @Published
     private(set) var score = 0
     
     init(inventory: Inventory) {
         self.inventory = inventory
-    }
-    
-    func setup(size: CGSize) {
-        stage = Stage(inventory: inventory)
-        stage?.setup(size: size)
         
-        stage?.onEvent.sink {
+        stage = Stage(inventory: inventory)
+        
+        stage.onEvent.sink {
             [weak self] in
             guard let self = self else {
                 return
@@ -42,7 +39,7 @@ class Game: ObservableObject {
     }
     
     func reset() {
-        stage?.reset()
+        stage.reset()
     }
     
     // MARK: Private
