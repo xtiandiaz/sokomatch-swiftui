@@ -67,7 +67,12 @@ struct TileView: View {
                     .foregroundColor(Color.black).opacity(0.25)
             }
         case .block:
-            Color.purple.opacity(0.5)
+            ZStack {
+                Color.purple.opacity(0.25)
+                Color.purple.opacity(0.5)
+                    .cornerRadius(4)
+                    .padding(1)
+            }
         case .abyss:
             Color.black
         case .passageway(let edge):

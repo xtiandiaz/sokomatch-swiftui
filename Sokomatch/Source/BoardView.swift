@@ -26,10 +26,21 @@ struct BoardView: View {
             }
             .offset(offset())
         }
+        .aspectRatio(1, contentMode: .fit)
+//        .background(Color.blue)
+//        .clipped()
         .id(board.id)
     }
     
     // MARK: Private
+    
+    private var viewportWidth: CGFloat {
+        CGFloat(GameView.viewportUWidth) * unitSize
+    }
+    
+    private var viewportHeight: CGFloat {
+        CGFloat(GameView.viewportUHeight) * unitSize
+    }
     
     private var tileOffset: CGSize {
         CGSize(widthAndHeight: unitSize * 0.5)
@@ -40,15 +51,25 @@ struct BoardView: View {
     }
     
     private func offset() -> CGSize {
-        tileOffset + CGSize(
-            width: CGFloat(GameView.viewportUWidth - board.cols) * 0.5,
-            height: CGFloat(GameView.viewportUWidth - board.rows) * 0.5
-        ) * unitSize
+        var offset: CGSize = .zero
         
-//        CGSize(
-//            width: (-CGFloat(board.playerLocation.x) + 4.5) * unitSize,
-//            height: (-CGFloat(board.playerLocation.y) + 4.5) * unitSize
-//        )
+        if board.cols <= GameView.viewportUWidth {
+            offset.width = CGFloat(GameView.viewportUWidth - board.cols) * unitSize / 2
+        } else {
+            let page = (board.playerLocation.x + 1) / GameView.viewportUWidth
+            let bleed = min(0, board.cols - GameView.viewportUWidth * (page + 1))
+            offset.width = -CGFloat(page) * viewportWidth - CGFloat(bleed) * unitSize
+        }
+        
+//        if board.rows <= GameView.viewportUHeight {
+            offset.height = CGFloat(GameView.viewportUHeight - board.rows) * unitSize / 2
+//        } else {
+//            let page = (board.playerLocation.y + 1) / GameView.viewportUHeight
+//            let bleed = min(0, board.rows - GameView.viewportUHeight * (page + 1))
+//            offset.height = -CGFloat(page) * viewportHeight - CGFloat(bleed) * unitSize
+//        }
+        
+        return tileOffset + offset
     }
 }
 

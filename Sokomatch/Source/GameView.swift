@@ -12,6 +12,7 @@ import Combine
 struct GameView: View {
     
     static let viewportUWidth = 9
+    static let viewportUHeight = 9
     
     @EnvironmentObject
     var game: Game
@@ -30,22 +31,12 @@ struct GameView: View {
                 }
             }
             
+            if let unitSize = unitSize {
+                StageView(stage: game.stage, unitSize: unitSize)
+            }
+            
             VStack {
-                Text("\(game.score)")
-                    .font(.title)
-                
-//                Spacer()
-//
-//                HStack {
-//                    ForEach(inventory.items, id: \.id) {
-//                        CollectibleView(collectible: $0)
-//                    }
-//                }
-//                .frame(minHeight: 100)
-                
-                if let unitSize = unitSize {
-                    StageView(stage: game.stage, unitSize: unitSize)
-                }
+                Text("\(game.score)").font(.title)
                 
                 Spacer()
                 
@@ -53,6 +44,7 @@ struct GameView: View {
                     game.reset()
                 }
             }
+            .padding()
         }
     }
 }

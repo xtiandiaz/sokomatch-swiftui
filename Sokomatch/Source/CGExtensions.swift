@@ -26,3 +26,10 @@ extension CGSize {
         CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
     }
 }
+
+extension CGPoint {
+    
+    static func /(lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+        CGPoint(x: lhs.x / rhs, y: lhs.y / rhs)
+    }
+}

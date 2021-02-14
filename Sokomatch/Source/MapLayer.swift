@@ -21,7 +21,7 @@ class MapLayer: BoardLayer<Tile> {
     
     override func isObstructive(location: Location) -> Bool {
         switch self[location]?.type {
-        case .bound, .block: return true
+        case .bound, .block, .abyss: return true
         default: return false
         }
     }

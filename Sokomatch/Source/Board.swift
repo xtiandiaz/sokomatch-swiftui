@@ -130,7 +130,7 @@ class Board: ObservableObject {
             }
         }
         
-        for _ in 0..<Int.random(in: 1...3) {
+        for _ in 0...diagonal/3 {
             if let location = randomAvailableLocation(in: safeArea) {
                 collectibleLayer.create(.coin(value: 1), at: location)
             }
@@ -139,6 +139,9 @@ class Board: ObservableObject {
         for _ in 1...diagonal/4 {
             if let location = randomAvailableLocation(in: safeArea) {
                 mapLayer.create(tile: .block, at: location)
+            }
+            if let location = randomAvailableLocation(in: safeArea) {
+                mapLayer.create(tile: .abyss, at: location)
             }
         }
     }
@@ -161,9 +164,7 @@ class Board: ObservableObject {
     }
     
     static func create() -> Board {
-        let length = {
-            (5...9).randomElement()!
-        }
+        let length = { (5...15).randomElement()! }
         return Board(cols: length(), rows: length())
     }
     

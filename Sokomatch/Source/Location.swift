@@ -6,7 +6,7 @@
 //  Copyright © 2021 Berilio. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 struct Location: Equatable, Hashable, Codable {
     
