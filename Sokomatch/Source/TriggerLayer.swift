@@ -17,31 +17,31 @@ class TriggerLayer: BoardLayer<Trigger> {
     }
     
     func create(withEvent event: BoardEvent, at location: Location) {
-        place(token: Trigger(type: .event(event)), at: location)
+        place(token: Trigger(type: .event(event), location: location))
     }
     
     func create(withKey key: UUID, at location: Location) {
-        place(token: Trigger(type: .lock(key: key)), at: location)
+        place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-    override func interact(with source: Interactable, at location: Location) {
-        let trigger = self[location]
-        
-        super.interact(with: source, at: location)
-        
-        if let trigger = trigger {
-            switch trigger.type {
-            case .event(let event):
-                eventSubject.send(event)
-            case .lock(let key):
-                if self[location] == nil {
-                    eventSubject.send(.unlocked(key: key))
-                }
-            }
-        }
-    }
+//    override func interact(with source: Interactable, at location: Location) {
+//        let trigger = self[location]
+//        
+//        super.interact(with: source, at: location)
+//        
+//        if let trigger = trigger {
+//            switch trigger.type {
+//            case .event(let event):
+//                eventSubject.send(event)
+//            case .lock(let key):
+//                if self[location] == nil {
+//                    eventSubject.send(.unlocked(key: key))
+//                }
+//            }
+//        }
+//    }
     
-    override func isObstructive(location: Location) -> Bool {
+    override func isObstructive(location: Location, for token: Token?) -> Bool {
         false
     }
     

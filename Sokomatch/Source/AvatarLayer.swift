@@ -17,12 +17,6 @@ class AvatarLayer: BoardLayer<Avatar> {
         place(token: avatar, at: location)
         return avatar
     }
-    
-    override func relocate(token: Avatar, to destination: Location) {
-        super.relocate(token: token, to: destination)
-        
-        token.location = destination
-    }
 }
 
 struct AvatarLayerView: BoardLayerView {

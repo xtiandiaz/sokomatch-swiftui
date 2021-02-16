@@ -14,28 +14,26 @@ enum TokenType: String, Codable {
     case map
     case avatar
     case collectible
+    case shovable
     case trigger
-    case doorway
+    case access
 }
 
 protocol Token {
     
     var id: UUID { get }
     var token: TokenType { get }
-}
-
-protocol Movable: Token {
-    
     var location: Location { get set }
-}
-
-protocol Interactable: Token {
     
-    func canInteract(with other: Interactable) -> Bool
-    func interact(with other: Interactable) -> Self?
+    func canInteract(with other: Token) -> Bool
+    func interact(with other: Token) -> Self?
 }
 
-protocol Piece: Token, Codable, Hashable, Identifiable {
+protocol Layerable: Token, Hashable, Identifiable {
+    
+}
+
+protocol Piece: Layerable, Codable {
 
 }
 
@@ -45,9 +43,5 @@ extension Piece {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-    }
-    
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
     }
 }

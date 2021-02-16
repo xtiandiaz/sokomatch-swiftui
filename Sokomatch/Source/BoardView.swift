@@ -21,6 +21,7 @@ struct BoardView: View {
             Group {
                 MapLayerView(layer: board.mapLayer, unitSize: unitSize)
                 AccessLayerView(layer: board.accessLayer, unitSize: unitSize)
+                ShovableLayerView(layer: board.shovableLayer, unitSize: unitSize)
                 CollectibleLayerView(layer: board.collectibleLayer, unitSize: unitSize)
                 AvatarLayerView(layer: board.avatarLayer, unitSize: unitSize)
             }

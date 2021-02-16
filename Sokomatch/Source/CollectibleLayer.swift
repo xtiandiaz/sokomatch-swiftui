@@ -18,22 +18,22 @@ class CollectibleLayer: BoardLayer<Collectible> {
     
     @discardableResult
     func create(_ type: CollectibleType, at location: Location) -> Collectible {
-        let collectible = Collectible(type: type)
-        place(token: collectible, at: location)
+        let collectible = Collectible(type: type, location: location)
+        place(token: collectible)
         return collectible
     }
     
-    override func interact(with source: Interactable, at location: Location) {
-        let collectible = self[location]
-        
-        super.interact(with: source, at: location)
-        
-        if let collectible = collectible, self[location] == nil {
-            collectibleSubject.send(collectible)
-        }
-    }
+//    override func interact(with source: Interactable, at location: Location) {
+//        let collectible = self[location]
+//
+//        super.interact(with: source, at: location)
+//
+//        if let collectible = collectible, self[location] == nil {
+//            collectibleSubject.send(collectible)
+//        }
+//    }
     
-    override func isObstructive(location: Location) -> Bool {
+    override func isObstructive(location: Location, for token: Token?) -> Bool {
         false
     }
     
@@ -50,8 +50,8 @@ struct CollectibleLayerView: BoardLayerView {
     let unitSize: CGFloat
     
     var body: some View {
-        ForEach(layer.spots, id: \.self) {
-            CollectibleView(collectible: $0.token)
+        ForEach(layer.tokens) {
+            CollectibleView(collectible: $0)
                 .frame(width: unitSize, height: unitSize)
                 .position(position(for: $0.location))
         }

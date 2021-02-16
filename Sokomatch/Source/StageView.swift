@@ -36,7 +36,7 @@ struct StageView: View {
                 dir = deltaY > 0 ? .down : .up
             }
 
-            withAnimation(Board.moveAnimation()) {
+            withAnimation(.linear(duration: 0.1)) {
                 stage.board?.move(toward: dir)
             }
         })

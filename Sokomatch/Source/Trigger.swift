@@ -14,6 +14,46 @@ enum TriggerType {
     case event(BoardEvent), lock(key: UUID)
 }
 
+struct Trigger: Piece {
+    
+    let id = UUID()
+    let token: TokenType = .trigger
+    let type: TriggerType
+    
+    var location: Location
+    
+    init(type: TriggerType, location: Location) {
+        self.type = type
+        self.location = location
+    }
+    
+    func canInteract(with other: Token) -> Bool {
+        other is Avatar
+    }
+    
+    func interact(with other: Token) -> Trigger? {
+        guard let avatar = other as? Avatar else {
+            return self
+        }
+        
+        switch type {
+        case .lock(let key):
+            return avatar.hasKey(key) ? nil : self
+        default:
+            return self
+        }
+    }
+}
+
+extension Trigger: Equatable {
+    
+    static func ==(lhs: Trigger, rhs: Trigger) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+// MARK: - Codable
+
 extension TriggerType: Codable {
     
     enum CodingKeys: String, CodingKey {
@@ -54,50 +94,22 @@ extension TriggerType: Codable {
     }
 }
 
-struct Trigger: Piece {
-    
-    let id = UUID()
-    let token: TokenType = .trigger
-    let type: TriggerType
-    
-    init(type: TriggerType) {
-        self.type = type
-    }
-}
-
 extension Trigger: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case type
+        case type, location
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
         type = try container.decode(TriggerType.self, forKey: .type)
+        location = try container.decode(Location.self, forKey: .location)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(type, forKey: .type)
-    }
-}
-
-extension Trigger: Interactable {
-    
-    func canInteract(with other: Interactable) -> Bool {
-        other is Avatar
-    }
-    
-    func interact(with other: Interactable) -> Trigger? {
-        guard let avatar = other as? Avatar else {
-            return self
-        }
         
-        switch type {
-        case .lock(let key):
-            return avatar.hasKey(key) ? nil : self
-        default:
-            return self
-        }
+        try container.encode(type, forKey: .type)
     }
 }

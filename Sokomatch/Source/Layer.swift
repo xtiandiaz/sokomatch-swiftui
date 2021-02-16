@@ -13,24 +13,18 @@ protocol Layer {
     
     var id: UUID { get }
     
-    func canInteract(with source: Interactable, at location: Location) -> Bool
-    func interact(with source: Interactable, at location: Location)
+    func canInteract(with token: Token, at location: Location) -> Bool
+    func interact<T: Token>(with token: T, at location: Location) -> T?
     
     func clear()
     
     func isAvailable(location: Location) -> Bool
-    func isObstructive(location: Location) -> Bool
+    func isObstructive(location: Location, for token: Token?) -> Bool
+    
+    func token(at location: Location) -> Token?
 }
 
-struct BoardSpot<T: Token & Hashable>: Hashable & Identifiable {
-    
-    let token: T
-    let location: Location
-    
-    var id: UUID { token.id }
-}
-
-class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
+class BoardLayer<T: Layerable>: ObservableObject, Layer {
     
     let id = UUID()
     
@@ -38,29 +32,32 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
         Array(tokenAtLocation.values)
     }
     
-    var spots: [BoardSpot<T>] {
-        locationForToken.map { BoardSpot(token: $0.key, location: $0.value) }
-    }
-    
     subscript(location: Location) -> T? {
         tokenAtLocation[location]
     }
     
-    subscript(piece: T) -> Location? {
-        locationForToken[piece]
+    subscript(token: T) -> Location? {
+        locationForToken[token]
     }
     
-    @discardableResult
-    func place(token: T, at location: Location) -> T {
+    func place(token: T) {
+        tokenAtLocation[token.location] = token
+        locationForToken[token] = token.location
+    }
+    
+    func place(token: T, at location: Location) {
         remove(tokenAtLocation: location)
+        
+        var token = token
+        token.location = location
+        
         locationForToken[token] = location
         tokenAtLocation[location] = token
-        return token
     }
     
     func relocate(token: T, to destination: Location) {
         objectWillChange.send()
-        remove(token: token)
+        remove(token: token)        
         place(token: token, at: destination)
     }
     
@@ -74,8 +71,8 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
     
     func remove(tokenAtLocation location: Location) {
         objectWillChange.send()
-        if let piece = tokenAtLocation[location] {
-            locationForToken[piece] = nil
+        if let token = tokenAtLocation[location] {
+            locationForToken[token] = nil
         }
         tokenAtLocation[location] = nil
     }
@@ -86,31 +83,37 @@ class BoardLayer<T: Token & Hashable & Identifiable>: ObservableObject, Layer {
         tokenAtLocation.removeAll()
     }
     
-    func canInteract(with source: Interactable, at location: Location) -> Bool {
-        guard let target = self[location] as? Interactable else {
+    func canInteract(with token: Token, at location: Location) -> Bool {
+        guard let target = self[location] else {
             return false
         }
-        return target.canInteract(with: source)
+        return target.canInteract(with: token) || token.canInteract(with: target)
     }
     
-    func interact(with source: Interactable, at location: Location) {
-        guard let target = self[location] as? Interactable else {
-            return
+    func interact<T: Token>(with token: T, at location: Location) -> T? {
+        guard let target = self[location] else {
+            return token
         }
         
-        if let result = target.interact(with: source) as? T {
+        if let result = target.interact(with: token) {
             place(token: result, at: location)
-        } else if let token = self[location] {
-            remove(token: token)
+        } else {
+            remove(token: target)
         }
+        
+        return token.interact(with: target)
     }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil
     }
     
-    func isObstructive(location: Location) -> Bool {
+    func isObstructive(location: Location, for token: Token?) -> Bool {
         tokenAtLocation[location] != nil
+    }
+    
+    func token(at location: Location) -> Token? {
+        self[location]
     }
     
     // MARK: Private

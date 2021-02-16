@@ -45,6 +45,7 @@ class Board: ObservableObject {
     let avatarLayer: AvatarLayer
     let mapLayer: MapLayer
     let accessLayer: AccessLayer
+    let shovableLayer: ShovableLayer
     let collectibleLayer: CollectibleLayer
     let triggerLayer: TriggerLayer
     
@@ -89,9 +90,10 @@ class Board: ObservableObject {
         mapLayer = MapLayer()
         accessLayer = AccessLayer()
         collectibleLayer = CollectibleLayer()
+        shovableLayer = ShovableLayer()
         triggerLayer = TriggerLayer()
         
-        layers = [mapLayer, accessLayer, collectibleLayer, avatarLayer, triggerLayer]
+        layers = [mapLayer, accessLayer, collectibleLayer, shovableLayer, avatarLayer, triggerLayer]
         
         collectibleLayer.onCollected.sink(receiveValue: onCollected(_:)).store(in: &cancellables)
         triggerLayer.onTriggered.sink(receiveValue: onEvent(_:)).store(in: &cancellables)
@@ -138,10 +140,10 @@ class Board: ObservableObject {
         
         for _ in 1...diagonal/4 {
             if let location = randomAvailableLocation(in: safeArea) {
-                mapLayer.create(tile: .block, at: location)
+                shovableLayer.create(.block, at: location)
             }
             if let location = randomAvailableLocation(in: safeArea) {
-                mapLayer.create(tile: .abyss, at: location)
+                mapLayer.create(tile: .pit, at: location)
             }
         }
     }
@@ -150,26 +152,15 @@ class Board: ObservableObject {
         guard let avatar = avatar else {
             return
         }
-        move(avatar: avatar, toward: direction)
+        
+        move(layer: avatarLayer, at: avatar.location, toward: direction)
         
         playerLocation = avatar.location
     }
     
-    func move(avatar: Avatar, toward direction: Direction) {
-        guard let origin = avatarLayer[avatar] else {
-            return
-        }
-        
-        move(token: avatar, from: origin, toward: direction)
-    }
-    
     static func create() -> Board {
-        let length = { (5...15).randomElement()! }
+        let length = { (5...9).randomElement()! }
         return Board(cols: length(), rows: length())
-    }
-    
-    static func moveAnimation() -> Animation {
-        .linear(duration: moveDuration)
     }
     
     // MARK: Private
@@ -179,29 +170,35 @@ class Board: ObservableObject {
     private var avatar: Avatar?
     private var cancellables = Set<AnyCancellable>()
     
-    @discardableResult
-    private func move<T: Token & Movable & Interactable>(
-        token: T,
-        from origin: Location,
+    private func move<T: Layerable>(
+        layer: BoardLayer<T>,
+        at location: Location,
         toward direction: Direction
-    ) -> Location {
+    ) {
+        guard let token = layer[location] else {
+            return
+        }
+        
+        let destination = move(token: token, from: location, toward: direction)
+        
+        if canInteract(with: token, at: destination) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
+                self.interact(with: layer, at: destination)
+            }
+        }
+    }
+    
+    @discardableResult
+    private func move(token: Token, from origin: Location, toward direction: Direction) -> Location {
         let nextLocation = origin.shifted(toward: direction)
         
-        if !isValid(location: nextLocation) || isObstructive(location: nextLocation) {
-            withAnimation(Self.moveAnimation()) {
-                relocate(token: token, to: origin)
-            }
+        if !isValid(location: nextLocation) || isObstructive(location: nextLocation, for: token) {
+            relocate(token: token, to: origin)
             return origin
         }
         
         if canInteract(with: token, at: nextLocation) {
-            withAnimation(Self.moveAnimation()) {
-                relocate(token: token, to: nextLocation)
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
-                [weak self] in
-                self?.interact(with: token, at: nextLocation)
-            }
+            relocate(token: token, to: nextLocation)
             return nextLocation
         }
         
@@ -212,6 +209,19 @@ class Board: ObservableObject {
         switch token {
         case let avatar as Avatar:
             avatarLayer.relocate(token: avatar, to: location)
+        case let shovable as Shovable:
+            shovableLayer.relocate(token: shovable, to: location)
+        default:
+            break
+        }
+    }
+    
+    private func remove(token: Token) {
+        switch token {
+        case let avatar as Avatar:
+            avatarLayer.remove(token: avatar)
+        case let shovable as Shovable:
+            shovableLayer.remove(token: shovable)
         default:
             break
         }
@@ -237,31 +247,40 @@ class Board: ObservableObject {
         eventSubject.send(event)
     }
     
-    private func isValid(location: Location) -> Bool {
-        locations.contains(location)
-    }
-}
-
-extension Board: Layer {
-    
-    func canInteract(with source: Interactable, at location: Location) -> Bool {
-        layers.first { $0.canInteract(with: source, at: location) } != nil
+    private func canInteract(with token: Token, at location: Location) -> Bool {
+        layers.first { $0.canInteract(with: token, at: location) } != nil
     }
     
-    func interact(with source: Interactable, at location: Location) {
-        layers.forEach { $0.interact(with: source, at: location) }
+    private func interact<T>(with layer: BoardLayer<T>, at location: Location) {
+        guard let source = layer[location] else {
+            return
+        }
+        
+        layers.forEach {
+            if let result = $0.interact(with: source, at: location) {
+                if result != source {
+                    layer.place(token: result, at: location)
+                }
+            } else {
+                layer.remove(tokenAtLocation: location)
+            }
+        }
     }
     
     func clear() {
         layers.forEach { $0.clear() }
     }
     
-    func isAvailable(location: Location) -> Bool {
+    private func isValid(location: Location) -> Bool {
+        locations.contains(location)
+    }
+    
+    private func isAvailable(location: Location) -> Bool {
         layers.first { !$0.isAvailable(location: location) } == nil
     }
     
-    func isObstructive(location: Location) -> Bool {
-        layers.first { $0.isObstructive(location: location) } != nil
+    private func isObstructive(location: Location, for token: Token?) -> Bool {
+        layers.first { $0.isObstructive(location: location, for: token) } != nil
     }
 }
 

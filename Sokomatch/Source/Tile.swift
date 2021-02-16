@@ -14,37 +14,41 @@ enum TileType: Hashable {
     case bound
     case floor
     case stickyFloor
-    case block
-    case abyss
+    case pit
+    case bridge
     case passageway(Edge)
 }
 
-struct Tile: Token, Hashable, Identifiable {
+struct Tile: Layerable {
     
     let id = UUID()
     let token: TokenType = .map
     let type: TileType
     
-    init(type: TileType) {
+    var location: Location
+    
+    init(type: TileType, location: Location) {
         self.type = type
-    }
-}
-
-extension Tile: Equatable {
-    
-    static func == (lhs: Tile, rhs: Tile) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-extension Tile: Interactable {
-    
-    func canInteract(with other: Interactable) -> Bool {
-        other is Avatar && type == .stickyFloor
+        self.location = location
     }
     
-    func interact(with other: Interactable) -> Tile? {
-        self
+    func canInteract(with other: Token) -> Bool {
+        switch type {
+        case .stickyFloor, .pit: return true
+        default: return false
+        }
+    }
+    
+    func interact(with other: Token) -> Tile? {
+        switch type {
+        case .pit:
+            switch other {
+            case let shovable as Shovable where shovable.type == .block:
+                return Tile(type: .bridge, location: location)
+            default: return self
+            }
+        default: return self
+        }
     }
 }
 
@@ -55,7 +59,7 @@ struct TileView: View {
     var body: some View {
         switch tile.type {
         case .bound:
-            Color.clear
+            Color.purple.opacity(0.4)
         case .floor:
             Color.purple.opacity(0.25)
         case .stickyFloor:
@@ -66,15 +70,10 @@ struct TileView: View {
                     .font(.title)
                     .foregroundColor(Color.black).opacity(0.25)
             }
-        case .block:
-            ZStack {
-                Color.purple.opacity(0.25)
-                Color.purple.opacity(0.5)
-                    .cornerRadius(4)
-                    .padding(1)
-            }
-        case .abyss:
+        case .pit:
             Color.black
+        case .bridge:
+            Color.purple.opacity(0.25).cornerRadius(4).padding(2)
         case .passageway(let edge):
             LinearGradient(
                 gradient: Gradient(colors: [Color.purple.opacity(0), Color.purple.opacity(0.25)]),

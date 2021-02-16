@@ -14,6 +14,51 @@ enum CollectibleType {
     case coin(value: Int), key
 }
 
+struct Collectible: Piece {
+    
+    let id = UUID()
+    let token: TokenType = .collectible
+    let type: CollectibleType
+    
+    var location: Location
+    
+    init(type: CollectibleType, location: Location) {
+        self.type = type
+        self.location = location
+    }
+    
+    func canInteract(with other: Token) -> Bool {
+        other is Avatar
+    }
+    
+    func interact(with other: Token) -> Collectible? {
+        other is Avatar ? nil : self
+    }
+}
+
+extension Collectible: Equatable {
+    
+    static func ==(lhs: Collectible, rhs: Collectible) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+struct CollectibleView: View {
+    
+    let collectible: Collectible
+    
+    var body: some View {
+        switch collectible.type {
+        case .coin:
+            Circle().fill(Color.yellow).scaleEffect(0.25)
+        case .key:
+            Image(systemName: "key.fill")
+        }
+    }
+}
+
+// MARK: - Codable
+
 extension CollectibleType: Codable {
     
     enum CodingKeys: CodingKey {
@@ -50,57 +95,22 @@ extension CollectibleType: Codable {
     }
 }
 
-struct Collectible: Piece {
-    
-    let id = UUID()
-    let token: TokenType = .collectible
-    let type: CollectibleType
-    
-    init(type: CollectibleType) {
-        self.type = type
-    }
-}
-
 extension Collectible: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case type, value
+        case type, value, location
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         type = try container.decode(CollectibleType.self, forKey: .type)
+        location = try container.decode(Location.self, forKey: .location)
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(type, forKey: .type)
-    }
-}
-
-extension Collectible: Interactable {
-    
-    func canInteract(with other: Interactable) -> Bool {
-        other is Avatar
-    }
-    
-    func interact(with other: Interactable) -> Collectible? {
-        other is Avatar ? nil : self
-    }
-}
-
-struct CollectibleView: View {
-    
-    let collectible: Collectible
-    
-    var body: some View {
-        switch collectible.type {
-        case .coin:
-            Circle().fill(Color.yellow).scaleEffect(0.25)
-        case .key:
-            Image(systemName: "key.fill")
-        }
     }
 }

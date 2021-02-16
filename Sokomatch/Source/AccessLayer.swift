@@ -9,27 +9,27 @@
 import SwiftUI
 import Emerald
 
-class AccessLayer: BoardLayer<Doorway> {
+class AccessLayer: BoardLayer<Access> {
     
     func unlock(withKey key: UUID) {
         guard
-            var doorway = (tokens.first { $0.key == key }),
-            let location = self[doorway]
+            var access = (tokens.first { $0.key == key }),
+            let location = self[access]
         else {
             return
         }
         
         objectWillChange.send()
         
-        doorway.isLocked = false
-        place(token: doorway, at: location)
+        access.isLocked = false
+        place(token: access, at: location)
     }
     
     func create(withKey key: UUID, at location: Location) {
-        place(token: Doorway(key: key), at: location)
+        place(token: Access(key: key, location: location))
     }
     
-    override func isObstructive(location: Location) -> Bool {
+    override func isObstructive(location: Location, for token: Token?) -> Bool {
         self[location]?.isLocked == true
     }
 }
@@ -42,8 +42,8 @@ struct AccessLayerView: BoardLayerView {
     let unitSize: CGFloat
     
     var body: some View {
-        ForEach(layer.spots, id: \.self) {
-            DoorwayView(doorway: $0.token)
+        ForEach(layer.tokens) {
+            AccessView(access: $0)
                 .frame(width: unitSize, height: unitSize)
                 .position(position(for: $0.location))
         }

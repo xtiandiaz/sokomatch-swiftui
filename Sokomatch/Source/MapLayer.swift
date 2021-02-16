@@ -12,16 +12,16 @@ import Emerald
 class MapLayer: BoardLayer<Tile> {
     
     func create(tile: TileType, at location: Location) {
-        place(token: Tile(type: tile), at: location)
+        place(token: Tile(type: tile, location: location))
     }
     
     override func isAvailable(location: Location) -> Bool {
-        !isObstructive(location: location)
+        self[location]?.type == .floor
     }
     
-    override func isObstructive(location: Location) -> Bool {
+    override func isObstructive(location: Location, for token: Token?) -> Bool {
         switch self[location]?.type {
-        case .bound, .block, .abyss: return true
+        case .bound: return true
         default: return false
         }
     }
@@ -35,8 +35,8 @@ struct MapLayerView: BoardLayerView {
     let unitSize: CGFloat
     
     var body: some View {
-        ForEach(layer.spots, id: \.self) {
-            TileView(tile: $0.token)
+        ForEach(layer.tokens) {
+            TileView(tile: $0)
                 .frame(width: unitSize, height: unitSize)
                 .position(position(for: $0.location))
         }

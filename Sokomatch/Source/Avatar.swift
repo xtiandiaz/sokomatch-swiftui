@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-class Avatar: ObservableObject, Piece, Movable {
+class Avatar: ObservableObject, Piece {
     
     let id = UUID()
     let token: TokenType = .avatar
@@ -38,35 +38,32 @@ class Avatar: ObservableObject, Piece, Movable {
         keys.contains(key)
     }
     
+    func canInteract(with other: Token) -> Bool {
+        switch other {
+        case is Collectible: return true
+        case let tile as Tile: return tile.type == .pit
+        default: return false
+        }
+    }
+    
+    func interact(with other: Token) -> Self? {
+        switch other {
+        case let tile as Tile where tile.type == .pit:
+            return nil
+        default:
+            return self
+        }
+    }
+    
     // MARK: Private
     
     private var keys = Set<UUID>()
 }
 
-extension Avatar: Codable {
+extension Avatar: Equatable {
     
-    enum CodingKeys: String, CodingKey {
-        case location, isFocused
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
-        
-        
-    }
-}
-
-extension Avatar: Interactable {
-    
-    func canInteract(with other: Interactable) -> Bool {
-        switch other {
-        case is Collectible: return true
-        default: return false
-        }
-    }
-    
-    func interact(with other: Interactable) -> Self? {
-        self
+    static func ==(lhs: Avatar, rhs: Avatar) -> Bool {
+        lhs.id == rhs.id
     }
 }
 
@@ -79,5 +76,17 @@ struct AvatarView: View {
         Circle()
             .fill(avatar.isFocused ? Color.white : Color.black)
             .overlay(Circle().strokeBorder(Color.white, lineWidth: 2))
+    }
+}
+
+// MARK: - Codable
+
+extension Avatar: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case location, isFocused
+    }
+    
+    func encode(to encoder: Encoder) throws {
     }
 }
