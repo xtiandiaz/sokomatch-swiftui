@@ -33,7 +33,7 @@ struct AccessView: View {
     
     var body: some View {
         if access.isLocked {
-            Image(systemName: "lock.fill")
+            Image(systemName: "lock.fill").resizableToFit().scaleEffect(0.4)
         }
     }
 }

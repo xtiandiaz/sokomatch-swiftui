@@ -11,23 +11,10 @@ import CoreGraphics
 import Emerald
 import Combine
 
-enum Edge {
-    
-    case top, left, bottom, right
-    
-    var facingDirection: Direction {
-        switch self {
-        case .top: return .down
-        case .left: return .right
-        case .bottom: return .up
-        case .right: return .left
-        }
-    }
-}
-
 class Board: ObservableObject {
     
     static let moveDuration: TimeInterval = 0.1
+    static let maxMoveSteps = 100
     
     @Published
     private(set) var playerLocation: Location = .zero
@@ -58,10 +45,10 @@ class Board: ObservableObject {
         center = Location(x: cols / 2, y: rows / 2)
         
         corners = [
-            Location(x: 0, y: 0),
-            Location(x: cols - 1, y: 0),
-            Location(x: 0, y: rows - 1),
-            Location(x: cols - 1, y: rows - 1)
+            Location(x: 0, y: 0, corners: .topLeft),
+            Location(x: cols - 1, y: 0, corners: .topRight),
+            Location(x: 0, y: rows - 1, corners: .bottomLeft),
+            Location(x: cols - 1, y: rows - 1, corners: .bottomRight)
         ]
         
         var edges = Set<Location>()
@@ -106,7 +93,7 @@ class Board: ObservableObject {
     func populate() {
         avatar = avatarLayer.create(at: center)
         
-        for location in edges {
+        for location in edges.union(corners) {
             mapLayer.create(tile: .bound, at: location)
         }
         
@@ -153,14 +140,33 @@ class Board: ObservableObject {
             return
         }
         
-        move(layer: avatarLayer, at: avatar.location, toward: direction)
+        move(
+            layer: avatarLayer,
+            at: avatar.location,
+            toward: direction,
+            maxSteps: avatar.isHovering ? 1 : Self.maxMoveSteps
+        )
         
         playerLocation = avatar.location
+    }
+    
+    func command1() {
+        withAnimation {
+            avatar?.isHovering.toggle()
+        }
+        
+        if let avatar = avatar, !avatar.isHovering {
+            interact(with: avatarLayer, at: avatar.location)
+        }
     }
     
     static func create() -> Board {
         let length = { (5...9).randomElement()! }
         return Board(cols: length(), rows: length())
+    }
+    
+    static func moveAnimation() -> Animation {
+        .linear(duration: moveDuration)
     }
     
     // MARK: Private
@@ -173,36 +179,54 @@ class Board: ObservableObject {
     private func move<T: Layerable>(
         layer: BoardLayer<T>,
         at location: Location,
-        toward direction: Direction
+        toward direction: Direction,
+        maxSteps: Int = Board.maxMoveSteps
     ) {
         guard let token = layer[location] else {
             return
         }
         
-        let destination = move(token: token, from: location, toward: direction)
+        let destination = move(token: token, from: location, toward: direction, maxSteps: maxSteps)
         
-        if canInteract(with: token, at: destination) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
+            if self.canInteract(with: token, at: destination) {
                 self.interact(with: layer, at: destination)
+            }
+            
+            if self.shovableLayer[destination.shifted(toward: direction)] != nil {
+                self.move(layer: self.shovableLayer, at: destination.shifted(toward: direction), toward: direction)
             }
         }
     }
     
     @discardableResult
-    private func move(token: Token, from origin: Location, toward direction: Direction) -> Location {
+    private func move(
+        token: Token,
+        from origin: Location,
+        toward direction: Direction,
+        maxSteps: Int = Board.maxMoveSteps
+    ) -> Location {
         let nextLocation = origin.shifted(toward: direction)
         
-        if !isValid(location: nextLocation) || isObstructive(location: nextLocation, for: token) {
-            relocate(token: token, to: origin)
+        if
+            !isValid(location: nextLocation) ||
+            isObstructive(location: nextLocation, for: token) ||
+            maxSteps <= 0
+        {
+            withAnimation(Self.moveAnimation()) {
+                relocate(token: token, to: origin)
+            }
             return origin
         }
         
         if canInteract(with: token, at: nextLocation) {
-            relocate(token: token, to: nextLocation)
+            withAnimation(Self.moveAnimation()) {
+                relocate(token: token, to: nextLocation)
+            }
             return nextLocation
         }
         
-        return move(token: token, from: nextLocation, toward: direction)
+        return move(token: token, from: nextLocation, toward: direction, maxSteps: maxSteps - 1)
     }
     
     private func relocate(token: Token, to location: Location) {
@@ -256,15 +280,14 @@ class Board: ObservableObject {
             return
         }
         
-        layers.forEach {
-            if let result = $0.interact(with: source, at: location) {
-                if result != source {
-                    layer.place(token: result, at: location)
+        layers
+            .filter { $0.canInteract(with: layer, at: location) }
+            .forEach {
+                if let target = $0.token(at: location) {
+                    layer.affect(with: target, at: location)
                 }
-            } else {
-                layer.remove(tokenAtLocation: location)
+                $0.affect(with: source, at: location)
             }
-        }
     }
     
     func clear() {

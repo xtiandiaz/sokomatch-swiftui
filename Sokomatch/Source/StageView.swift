@@ -19,11 +19,27 @@ struct StageView: View {
     var body: some View {
         ZStack {
             Color.black
+//            Image("forest")
+//                .resizable(resizingMode: .tile)
             
             if let board = stage.board {
                 BoardView(board: board, unitSize: unitSize)
                     .transition(AnyTransition.opacity.animation(.default))
             }
+            
+//            VStack {
+//                Spacer()
+//
+//                HStack {
+//                    VStack(spacing: .s) {
+//                        IconButton(icon: Image(systemName: "staroflife.fill"), onTapped: stage.reset)
+//                        IconButton(icon: Image(systemName: "cross.fill"), onTapped: stage.reset)
+//                    }
+//                    Spacer()
+//                }
+//                .frame(maxWidth: .infinity)
+//            }
+//            .padding(.m)
         }
         .gesture(DragGesture(minimumDistance: unitSize / 2).onEnded {
             let dir: Direction
@@ -36,9 +52,10 @@ struct StageView: View {
                 dir = deltaY > 0 ? .down : .up
             }
 
-            withAnimation(.linear(duration: 0.1)) {
-                stage.board?.move(toward: dir)
-            }
+            stage.board?.move(toward: dir)
+        })
+        .gesture(TapGesture(count: 2).onEnded {
+            stage.board?.command1()
         })
     }
 }

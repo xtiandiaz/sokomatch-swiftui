@@ -23,15 +23,11 @@ class CollectibleLayer: BoardLayer<Collectible> {
         return collectible
     }
     
-//    override func interact(with source: Interactable, at location: Location) {
-//        let collectible = self[location]
-//
-//        super.interact(with: source, at: location)
-//
-//        if let collectible = collectible, self[location] == nil {
-//            collectibleSubject.send(collectible)
-//        }
-//    }
+    override func onEffect(oldValue: Collectible?, newValue: Collectible?, location: Location) {
+        if let collectible = oldValue, newValue == nil {
+            collectibleSubject.send(collectible)
+        }
+    }
     
     override func isObstructive(location: Location, for token: Token?) -> Bool {
         false

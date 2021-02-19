@@ -19,6 +19,7 @@ struct ContentView: View {
         }
         .frame(maxHeight: .infinity)
         .background(Color.black)
+        .statusBar(hidden: true)
     }
 }
 

@@ -24,22 +24,20 @@ class TriggerLayer: BoardLayer<Trigger> {
         place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-//    override func interact(with source: Interactable, at location: Location) {
-//        let trigger = self[location]
-//        
-//        super.interact(with: source, at: location)
-//        
-//        if let trigger = trigger {
-//            switch trigger.type {
-//            case .event(let event):
-//                eventSubject.send(event)
-//            case .lock(let key):
-//                if self[location] == nil {
-//                    eventSubject.send(.unlocked(key: key))
-//                }
-//            }
-//        }
-//    }
+    override func onEffect(oldValue: Trigger?, newValue: Trigger?, location: Location) {
+        guard let trigger = oldValue else {
+            return
+        }
+        
+        switch trigger.type {
+        case .event(let event):
+            eventSubject.send(event)
+        case .lock(let key) where newValue == nil:
+            eventSubject.send(.unlocked(key: key))
+        default:
+            break
+        }
+    }
     
     override func isObstructive(location: Location, for token: Token?) -> Bool {
         false

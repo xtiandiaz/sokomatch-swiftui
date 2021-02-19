@@ -36,15 +36,21 @@ struct GameView: View {
             }
             
             VStack {
-                Text("\(game.score)").font(.title)
+                HStack {
+                    IconButton(
+                        icon: Image(systemName: "repeat"),
+                        iconColor: .white,
+                        backgroundColor: .clear,
+                        onTapped: game.reset
+                    )
+                    Spacer()
+                    Text("\(game.score)").font(.largeTitle)
+                }
+                .frame(maxWidth: .infinity)
                 
                 Spacer()
-                
-                Button("Reset") {
-                    game.reset()
-                }
             }
-            .padding()
+            .padding(EdgeInsets(top: .xs, leading: .xs, bottom: 0, trailing: .m))
         }
     }
 }

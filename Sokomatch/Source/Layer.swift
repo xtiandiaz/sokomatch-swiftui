@@ -14,7 +14,8 @@ protocol Layer {
     var id: UUID { get }
     
     func canInteract(with token: Token, at location: Location) -> Bool
-    func interact<T: Token>(with token: T, at location: Location) -> T?
+    func canInteract(with other: Layer, at location: Location) -> Bool
+    func affect(with token: Token, at location: Location)
     
     func clear()
     
@@ -83,6 +84,13 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         tokenAtLocation.removeAll()
     }
     
+    func canInteract(with other: Layer, at location: Location) -> Bool {
+        guard let source = other.token(at: location) else {
+            return false
+        }
+        return canInteract(with: source, at: location)
+    }
+    
     func canInteract(with token: Token, at location: Location) -> Bool {
         guard let target = self[location] else {
             return false
@@ -90,19 +98,21 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         return target.canInteract(with: token) || token.canInteract(with: target)
     }
     
-    func interact<T: Token>(with token: T, at location: Location) -> T? {
+    func affect(with token: Token, at location: Location) {
         guard let target = self[location] else {
-            return token
+            return
         }
         
         if let result = target.interact(with: token) {
             place(token: result, at: location)
+            onEffect(oldValue: target, newValue: result, location: location)
         } else {
             remove(token: target)
+            onEffect(oldValue: target, newValue: nil, location: location)
         }
-        
-        return token.interact(with: target)
     }
+    
+    func onEffect(oldValue: T?, newValue: T?, location: Location) { }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil

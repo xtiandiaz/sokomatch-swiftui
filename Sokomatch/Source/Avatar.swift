@@ -18,6 +18,8 @@ class Avatar: ObservableObject, Piece {
     var location: Location
     @Published
     var isFocused = true
+    @Published
+    var isHovering = false
     
     init(location: Location) {
         self.location = location
@@ -41,14 +43,14 @@ class Avatar: ObservableObject, Piece {
     func canInteract(with other: Token) -> Bool {
         switch other {
         case is Collectible: return true
-        case let tile as Tile: return tile.type == .pit
+        case let tile as Tile: return tile.type == .pit && !isHovering
         default: return false
         }
     }
     
     func interact(with other: Token) -> Self? {
         switch other {
-        case let tile as Tile where tile.type == .pit:
+        case let tile as Tile where tile.type == .pit && !isHovering:
             return nil
         default:
             return self
@@ -71,11 +73,32 @@ struct AvatarView: View {
     
     @ObservedObject
     var avatar: Avatar
+    @State
+    private var propellerRotation: Double = 0
     
     var body: some View {
-        Circle()
-            .fill(avatar.isFocused ? Color.white : Color.black)
-            .overlay(Circle().strokeBorder(Color.white, lineWidth: 2))
+        ZStack {
+            Circle()
+                .fill(avatar.isFocused ? Color.white : Color.black)
+//                .overlay(Circle().strokeBorder(Color.white, lineWidth: 2))
+                .padding(1)
+                .scaleEffect(avatar.isHovering ? 1.1 : 1)
+                .zIndex(0)
+            
+            if avatar.isHovering {
+                Propeller(petalCount: 5, petalBreadth: Angle(degrees: 30))
+                    .fill(Color.black)
+                    .scaleEffect(0.75)
+                    .rotationEffect(Angle(degrees: propellerRotation))
+                    .animation(Animation.linear(duration: 0.5).repeatForever(autoreverses: false))
+                    .transition(AnyTransition.scale.animation(.default))
+                    .zIndex(1)
+                    .onReceive(avatar.$isHovering) {
+                        propellerRotation = $0 ? 360 : 0
+                    }
+            }
+        }
+        .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
     }
 }
 

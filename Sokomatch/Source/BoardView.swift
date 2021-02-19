@@ -28,8 +28,6 @@ struct BoardView: View {
             .offset(offset())
         }
         .aspectRatio(1, contentMode: .fit)
-//        .background(Color.blue)
-//        .clipped()
         .id(board.id)
     }
     

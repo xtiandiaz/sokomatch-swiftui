@@ -59,24 +59,29 @@ struct TileView: View {
     var body: some View {
         switch tile.type {
         case .bound:
-            Color.purple.opacity(0.4)
+            Color.wall.cornerRadius(8, corners: tile.location.corners)
         case .floor:
-            Color.purple.opacity(0.25)
+            Color.ground
         case .stickyFloor:
             ZStack {
-                Color.purple.opacity(0.25)
+                Color.ground
                 
                 Image(systemName: "circle.grid.3x3.fill")
                     .font(.title)
                     .foregroundColor(Color.black).opacity(0.25)
             }
         case .pit:
-            Color.black
+            Color.clear
+//            Color.ground.mask(
+//                Color.white.overlay(Color.black.cornerRadius(4).padding(1))
+//                    .compositingGroup()
+//                    .luminanceToAlpha())
         case .bridge:
-            Color.purple.opacity(0.25).cornerRadius(4).padding(2)
+//            Color.ground.overlay(RoundedRectangle(cornerRadius: 4).strokeBorder(Color.black, lineWidth: 1))
+            Color.ground.cornerRadius(4).padding(1)
         case .passageway(let edge):
             LinearGradient(
-                gradient: Gradient(colors: [Color.purple.opacity(0), Color.purple.opacity(0.25)]),
+                gradient: Gradient(colors: [Color.ground.opacity(0), Color.ground]),
                 startPoint: edge.gradientStartPoint,
                 endPoint: edge.gradientEndPoint)
         }

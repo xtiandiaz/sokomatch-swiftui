@@ -52,7 +52,7 @@ struct CollectibleView: View {
         case .coin:
             Circle().fill(Color.yellow).scaleEffect(0.25)
         case .key:
-            Image(systemName: "key.fill")
+            Image(systemName: "key.fill").resizableToFit().scaleEffect(0.5)
         }
     }
 }

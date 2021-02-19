@@ -68,7 +68,7 @@ struct ShovableView: View {
     let shovable: Shovable
     
     var body: some View {
-        Color.purple.cornerRadius(4).padding(2)
+        Color.block.cornerRadius(4).padding(2)
             .transition(.asymmetric(insertion: .identity, removal: .opacity))
     }
 }

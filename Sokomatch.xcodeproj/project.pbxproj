@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		850EB3CF258EABE900510705 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3CE258EABE900510705 /* Avatar.swift */; };
 		850EB3D2258EAFF400510705 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850EB3D1258EAFF400510705 /* Trigger.swift */; };
+		85625C3D25DEC2910031E380 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C3C25DEC2910031E380 /* Utils.swift */; };
+		85625C4225DEC3FD0031E380 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C4125DEC3FD0031E380 /* ViewExtensions.swift */; };
+		85625C4525DEDF160031E380 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C4425DEDF150031E380 /* Shapes.swift */; };
+		85625C4825DEE1280031E380 /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C4725DEE1280031E380 /* Controls.swift */; };
+		85625C4B25DEE9160031E380 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C4A25DEE9160031E380 /* ImageExtensions.swift */; };
 		85744F1225D9911C000737C3 /* ComparableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1125D9911C000737C3 /* ComparableExtensions.swift */; };
 		85744F1525DAEA0B000737C3 /* ShovableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1425DAEA0B000737C3 /* ShovableLayer.swift */; };
 		85744F1825DAEA30000737C3 /* Shovable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1725DAEA30000737C3 /* Shovable.swift */; };
@@ -32,8 +37,6 @@
 		85AB2A6825D582FD00CB1592 /* AccessLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6725D582FD00CB1592 /* AccessLayer.swift */; };
 		85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6C25D6692200CB1592 /* BoardLayout.swift */; };
 		85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB46B25D6700000F1DB87 /* BoardEvent.swift */; };
-		85AEB47025D677A100F1DB87 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB46F25D677A100F1DB87 /* Location.swift */; };
-		85AEB47325D677D900F1DB87 /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB47225D677D900F1DB87 /* Direction.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
 		85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA8256A5E5A00DDD44E /* Stage.swift */; };
@@ -43,11 +46,17 @@
 		85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DB6256A5EA500DDD44E /* TokenView.swift */; };
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
+		85FF46A625DEB59B00797CEF /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF46A525DEB59B00797CEF /* ColorExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		850EB3CE258EABE900510705 /* Avatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Avatar.swift; path = Source/Avatar.swift; sourceTree = "<group>"; };
 		850EB3D1258EAFF400510705 /* Trigger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trigger.swift; path = Source/Trigger.swift; sourceTree = "<group>"; };
+		85625C3C25DEC2910031E380 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Source/Utils.swift; sourceTree = "<group>"; };
+		85625C4125DEC3FD0031E380 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewExtensions.swift; path = Source/ViewExtensions.swift; sourceTree = "<group>"; };
+		85625C4425DEDF150031E380 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Shapes.swift; path = Source/Shapes.swift; sourceTree = "<group>"; };
+		85625C4725DEE1280031E380 /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Controls.swift; path = Source/Controls.swift; sourceTree = "<group>"; };
+		85625C4A25DEE9160031E380 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageExtensions.swift; path = Source/ImageExtensions.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
 		85744F1125D9911C000737C3 /* ComparableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComparableExtensions.swift; path = Source/ComparableExtensions.swift; sourceTree = "<group>"; };
 		85744F1425DAEA0B000737C3 /* ShovableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShovableLayer.swift; path = Source/ShovableLayer.swift; sourceTree = "<group>"; };
@@ -73,8 +82,6 @@
 		85AB2A6725D582FD00CB1592 /* AccessLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccessLayer.swift; path = Source/AccessLayer.swift; sourceTree = "<group>"; };
 		85AB2A6C25D6692200CB1592 /* BoardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardLayout.swift; path = Source/BoardLayout.swift; sourceTree = "<group>"; };
 		85AEB46B25D6700000F1DB87 /* BoardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardEvent.swift; path = Source/BoardEvent.swift; sourceTree = "<group>"; };
-		85AEB46F25D677A100F1DB87 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Source/Location.swift; sourceTree = "<group>"; };
-		85AEB47225D677D900F1DB87 /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Direction.swift; path = Source/Direction.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
 		85B51DA8256A5E5A00DDD44E /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stage.swift; path = Source/Stage.swift; sourceTree = "<group>"; };
@@ -84,6 +91,7 @@
 		85B51DB6256A5EA500DDD44E /* TokenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TokenView.swift; path = Source/TokenView.swift; sourceTree = "<group>"; };
 		85B51DC8256A5EB400DDD44E /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoardView.swift; path = Source/BoardView.swift; sourceTree = "<group>"; };
 		85B51DCA256A5EB400DDD44E /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Board.swift; path = Source/Board.swift; sourceTree = "<group>"; };
+		85FF46A525DEB59B00797CEF /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorExtensions.swift; path = Source/ColorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,7 +165,10 @@
 			isa = PBXGroup;
 			children = (
 				85AB2A4225CE9E8F00CB1592 /* UIScreenExtensions.swift */,
+				85625C4125DEC3FD0031E380 /* ViewExtensions.swift */,
+				85625C4A25DEE9160031E380 /* ImageExtensions.swift */,
 				8597CA8A25D7D25E00D9ADE6 /* CGExtensions.swift */,
+				85FF46A525DEB59B00797CEF /* ColorExtensions.swift */,
 				85744F1125D9911C000737C3 /* ComparableExtensions.swift */,
 			);
 			name = Extensions;
@@ -179,8 +190,9 @@
 		85AEB46E25D6778A00F1DB87 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				85AEB46F25D677A100F1DB87 /* Location.swift */,
-				85AEB47225D677D900F1DB87 /* Direction.swift */,
+				85625C3C25DEC2910031E380 /* Utils.swift */,
+				85625C4425DEDF150031E380 /* Shapes.swift */,
+				85625C4725DEE1280031E380 /* Controls.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -321,21 +333,25 @@
 				85AB2A5225D05B4700CB1592 /* MapLayer.swift in Sources */,
 				85AB2A6825D582FD00CB1592 /* AccessLayer.swift in Sources */,
 				85AB2A3F25CE8B3300CB1592 /* Layer.swift in Sources */,
-				85AEB47325D677D900F1DB87 /* Direction.swift in Sources */,
 				85B51DBC256A5EA500DDD44E /* Tile.swift in Sources */,
+				85625C3D25DEC2910031E380 /* Utils.swift in Sources */,
 				85B51DC1256A5EA500DDD44E /* TokenView.swift in Sources */,
 				850EB3D2258EAFF400510705 /* Trigger.swift in Sources */,
+				85FF46A625DEB59B00797CEF /* ColorExtensions.swift in Sources */,
 				85744F1225D9911C000737C3 /* ComparableExtensions.swift in Sources */,
 				85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */,
 				85B51DA4256A5E4400DDD44E /* Game.swift in Sources */,
+				85625C4B25DEE9160031E380 /* ImageExtensions.swift in Sources */,
 				8597CA8B25D7D25E00D9ADE6 /* CGExtensions.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
-				85AEB47025D677A100F1DB87 /* Location.swift in Sources */,
+				85625C4825DEE1280031E380 /* Controls.swift in Sources */,
 				85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */,
 				85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */,
+				85625C4225DEC3FD0031E380 /* ViewExtensions.swift in Sources */,
+				85625C4525DEDF160031E380 /* Shapes.swift in Sources */,
 				85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */,
 				85B51DCD256A5EB400DDD44E /* Board.swift in Sources */,
 				85B51DAC256A5E5A00DDD44E /* StageView.swift in Sources */,
