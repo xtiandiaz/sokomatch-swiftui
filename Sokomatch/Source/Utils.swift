@@ -8,9 +8,18 @@
 
 import UIKit
 
-enum Direction: Int {
+enum Direction: Int, CaseIterable {
     
     case up, left, down, right
+    
+    var opposite: Direction {
+        switch self {
+        case .up: return .down
+        case .left: return .right
+        case .down: return .up
+        case .right: return .left
+        }
+    }
 }
 
 enum Edge {

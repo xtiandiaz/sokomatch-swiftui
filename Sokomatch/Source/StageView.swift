@@ -55,7 +55,7 @@ struct StageView: View {
             stage.board?.move(toward: dir)
         })
         .gesture(TapGesture(count: 2).onEnded {
-            stage.board?.command1()
+            stage.board?.command2()
         })
     }
 }

@@ -160,6 +160,20 @@ class Board: ObservableObject {
         }
     }
     
+    func command2() {
+        guard let center = avatar?.location else {
+            return
+        }
+        
+        for dir in Direction.allCases {
+            guard let token = first(in: shovableLayer, from: center, toward: dir) else {
+                continue
+            }
+            
+            move(layer: shovableLayer, at: token.location, toward: dir.opposite)
+        }
+    }
+    
     static func create() -> Board {
         let length = { (5...9).randomElement()! }
         return Board(cols: length(), rows: length())
@@ -173,7 +187,8 @@ class Board: ObservableObject {
     
     private let eventSubject = PassthroughSubject<BoardEvent, Never>()
     
-    private var avatar: Avatar?
+    private weak var avatar: Avatar?
+    
     private var cancellables = Set<AnyCancellable>()
     
     private func move<T: Layerable>(
@@ -304,6 +319,24 @@ class Board: ObservableObject {
     
     private func isObstructive(location: Location, for token: Token?) -> Bool {
         layers.first { $0.isObstructive(location: location, for: token) } != nil
+    }
+    
+    private func first<T: Layerable>(
+        in layer: BoardLayer<T>,
+        from origin: Location,
+        toward direction: Direction
+    ) -> T? {
+        let nextLocation = origin.shifted(toward: direction)
+        
+        guard isValid(location: nextLocation) else {
+            return nil
+        }
+        
+        if let token = layer[nextLocation] {
+            return token
+        }
+        
+        return first(in: layer, from: nextLocation, toward: direction)
     }
 }
 
