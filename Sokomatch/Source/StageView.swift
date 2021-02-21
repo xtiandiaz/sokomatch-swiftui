@@ -19,27 +19,11 @@ struct StageView: View {
     var body: some View {
         ZStack {
             Color.black
-//            Image("forest")
-//                .resizable(resizingMode: .tile)
             
             if let board = stage.board {
                 BoardView(board: board, unitSize: unitSize)
                     .transition(AnyTransition.opacity.animation(.default))
             }
-            
-//            VStack {
-//                Spacer()
-//
-//                HStack {
-//                    VStack(spacing: .s) {
-//                        IconButton(icon: Image(systemName: "staroflife.fill"), onTapped: stage.reset)
-//                        IconButton(icon: Image(systemName: "cross.fill"), onTapped: stage.reset)
-//                    }
-//                    Spacer()
-//                }
-//                .frame(maxWidth: .infinity)
-//            }
-//            .padding(.m)
         }
         .gesture(DragGesture(minimumDistance: unitSize / 2).onEnded {
             let dir: Direction
@@ -62,6 +46,6 @@ struct StageView: View {
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView(stage: Stage(inventory: Inventory()), unitSize: 30)
+        StageView(stage: Stage(), unitSize: 30)
     }
 }

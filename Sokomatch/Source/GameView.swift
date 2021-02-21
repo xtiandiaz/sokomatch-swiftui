@@ -17,7 +17,7 @@ struct GameView: View {
     @EnvironmentObject
     var game: Game
     @EnvironmentObject
-    var inventory: Inventory
+    var inventory: Slot
     
     @State
     var unitSize: CGFloat?
@@ -43,26 +43,42 @@ struct GameView: View {
                         backgroundColor: .clear,
                         onTapped: game.reset
                     )
+                    
                     Spacer()
-                    Text("\(game.score)").font(.largeTitle)
+                    
+                    Text("\(game.score)").font(.title)
                 }
-                .frame(maxWidth: .infinity)
                 
                 Spacer()
             }
-            .padding(EdgeInsets(top: .xs, leading: .xs, bottom: 0, trailing: .m))
+            .padding(EdgeInsets(top: .xs, leading: .xxs, bottom: 0, trailing: .m))
+            
+            VStack {
+                
+                VStack(spacing: .xxs) {
+                    Image(systemName: "arrow.up").opacity(0.25)
+                    
+                    SlotView(slot: inventory).frame(width: .xxl)
+                    
+                    Image(systemName: "arrow.down").opacity(0.25)
+                }
+                
+                Spacer()
+            }
+            .padding(.top, .xxs)
         }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     
-    let inventory = Inventory()
-    
     static var previews: some View {
         
+        let inventory = Slot()
+        
         GameView()
-            .environmentObject(Game(inventory: Inventory()))
-            .environmentObject(Inventory())
+            .environmentObject(Game(inventory: inventory))
+            .environmentObject(inventory)
+            .colorScheme(.dark)
     }
 }

@@ -13,4 +13,5 @@ extension Color {
     static let wall = Color(UIColor(named: "wall")!)
     static let ground = Color(UIColor(named: "ground")!)
     static let block = Color(UIColor(named: "block")!)
+    static let grayDark = Color(UIColor(named: "grayDark")!)
 }

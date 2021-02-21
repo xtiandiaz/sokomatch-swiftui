@@ -11,6 +11,7 @@ import Combine
 import Emerald
 
 enum StageEvent {
+    
     case goal
     case collectible(type: CollectibleType, value: Int)
 }
@@ -20,9 +21,7 @@ class Stage: ObservableObject {
     @Published
     private(set) var board: Board?
     
-    init(inventory: Inventory) {
-        self.inventory = inventory
-        
+    init() {
         advance()
     }
     
@@ -37,7 +36,6 @@ class Stage: ObservableObject {
     
     // MARK: Private
     
-    private let inventory: Inventory
     private let eventSubject = PassthroughSubject<GameEvent, Never>()
     
     private var cancellables = Set<AnyCancellable>()
@@ -56,7 +54,9 @@ class Stage: ObservableObject {
             case .coin(let value):
                 eventSubject.send(.earnedScore(value: value))
             case .key:
-                break//inventory.add(collectible)
+                break
+            case .card(let type, let value):
+                eventSubject.send(.collectedCard(type: type, value: value))
             }
         case .reachedGoal:
             advance()

@@ -133,6 +133,10 @@ class Board: ObservableObject {
                 mapLayer.create(tile: .pit, at: location)
             }
         }
+        
+        if diagonal > 7, let location = randomAvailableLocation(in: safeArea) {
+            collectibleLayer.create(.card(type: .random(), value: 1), at: location)
+        }
     }
     
     func move(toward direction: Direction) {

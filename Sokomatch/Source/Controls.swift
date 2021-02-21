@@ -18,7 +18,7 @@ struct IconButton: View {
     var body: some View {
         Button(action: onTapped) {
             icon
-                .resizable()
+                .resizableToFit()
                 .frame(width: .m, height: .m)
                 .foregroundColor(iconColor)
                 .padding(.s)

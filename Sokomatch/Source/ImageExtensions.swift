@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Image {
     
-    func resizableToFit() -> some View {
-        resizable().aspectRatio(contentMode: .fit)
+    func resizableToFit(aspectRatio: CGFloat? = nil) -> some View {
+        resizable().aspectRatio(aspectRatio, contentMode: .fit)
     }
 }

@@ -10,7 +10,9 @@ import Combine
 import CoreGraphics
 
 enum GameEvent {
+    
     case earnedScore(value: Int)
+    case collectedCard(type: CardType, value: Int)
 }
 
 class Game: ObservableObject {
@@ -20,21 +22,14 @@ class Game: ObservableObject {
     @Published
     private(set) var score = 0
     
-    init(inventory: Inventory) {
+    init(inventory: Slot) {
         self.inventory = inventory
         
-        stage = Stage(inventory: inventory)
+        stage = Stage()
         
         stage.onEvent.sink {
             [weak self] in
-            guard let self = self else {
-                return
-            }
-            
-            switch $0 {
-            case .earnedScore(let value):
-                self.score += value
-            }
+            self?.onEvent($0)
         }.store(in: &cancellables)
     }
     
@@ -44,7 +39,16 @@ class Game: ObservableObject {
     
     // MARK: Private
     
-    private let inventory: Inventory
+    private let inventory: Slot
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private func onEvent(_ event: GameEvent) {
+        switch event {
+        case .earnedScore(let value):
+            score += value
+        case .collectedCard(let type, let value):
+            inventory.push(card: Card(type: type, value: value))
+        }
+    }
 }

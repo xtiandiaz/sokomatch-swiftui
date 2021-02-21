@@ -11,7 +11,9 @@ import Emerald
 
 enum CollectibleType {
     
-    case coin(value: Int), key
+    case coin(value: Int)
+    case key
+    case card(type: CardType, value: Int)
 }
 
 struct Collectible: Piece {
@@ -53,7 +55,28 @@ struct CollectibleView: View {
             Circle().fill(Color.yellow).scaleEffect(0.25)
         case .key:
             Image(systemName: "key.fill").resizableToFit().scaleEffect(0.5)
+        case .card(_, _):
+            ZStack {
+                Image(systemName: "questionmark")
+                    .resizableToFit()
+                    .foregroundColor(Color.black)
+            }
+            .padding(.xxs)
+            .background(Color.white.cornerRadius(4))
+            .aspectRatio(SlotView.aspectRatio, contentMode: .fit)
+            .scaleEffect(0.5)
         }
+    }
+}
+
+struct CollectibleView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        CollectibleView(
+            collectible: .init(type: .card(type: .random(), value: 1), location: .zero)
+        )
+        .frame(width: 30, height: 30, alignment: .center)
+        .background(Color.black)
     }
 }
 
@@ -91,6 +114,9 @@ extension CollectibleType: Codable {
             try container.encode(value, forKey: .coin)
         case .key:
             try container.encode(true, forKey: .key)
+        case .card(let type, let value):
+//            try container.encode(value, forKey: .)
+            break
         }
     }
 }
