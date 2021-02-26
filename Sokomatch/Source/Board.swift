@@ -39,6 +39,10 @@ class Board: ObservableObject {
     
     let layers: [Layer]
     
+    var onEvent: AnyPublisher<BoardEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
     init(cols: Int, rows: Int) {
         self.cols = cols
         self.rows = rows
@@ -84,12 +88,15 @@ class Board: ObservableObject {
         
         layers = [mapLayer, accessLayer, collectibleLayer, shovableLayer, avatarLayer, triggerLayer, droppableLayer]
         
-        collectibleLayer.onCollected.sink(receiveValue: onCollected(_:)).store(in: &cancellables)
-        triggerLayer.onTriggered.sink(receiveValue: onEvent(_:)).store(in: &cancellables)
-    }
-    
-    var onEvent: AnyPublisher<BoardEvent, Never> {
-        eventSubject.eraseToAnyPublisher()
+        collectibleLayer.onCollected.sink {
+            [weak self] in
+            self?.onCollected($0)
+        }.store(in: &cancellables)
+
+        triggerLayer.onTriggered.sink {
+            [weak self] in
+            self?.onEvent($0)
+        }.store(in: &cancellables)
     }
     
     func populate() {
@@ -226,6 +233,11 @@ class Board: ObservableObject {
         let destination = move(token: token, from: location, toward: direction, maxSteps: maxSteps)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
+            [weak self] in
+            guard let self = self else {
+                return
+            }
+            
             if self.canInteract(with: token, at: destination) {
                 self.interact(with: layer, at: destination)
             }

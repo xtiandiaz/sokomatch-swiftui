@@ -22,7 +22,10 @@ class Stage: ObservableObject {
     private(set) var board: Board?
     
     init(inventory: Slot) {
-        inventory.onExecuted.sink { self.board?.execute(card: $0) }.store(in: &cancellables)
+        inventory.onExecuted.sink {
+            [weak self] in
+            self?.board?.execute(card: $0)
+        }.store(in: &cancellables)
         
         advance()
     }
@@ -46,7 +49,10 @@ class Stage: ObservableObject {
         board = Board.create()
         board?.populate()
         
-        board?.onEvent.sink(receiveValue: onBoardEvent(_:)).store(in: &cancellables)
+        board?.onEvent.sink {
+            [weak self] in
+            self?.onBoardEvent($0)
+        }.store(in: &cancellables)
     }
     
     private func onBoardEvent(_ event: BoardEvent) {

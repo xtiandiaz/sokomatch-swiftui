@@ -57,8 +57,7 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
     }
     
     func relocate(token: T, to destination: Location) {
-        objectWillChange.send()
-        remove(token: token)        
+        remove(token: token)
         place(token: token, at: destination)
     }
     
@@ -112,7 +111,7 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         }
     }
     
-    func onTokenChanged(from: T?, to: T?, at: Location) { }
+    func onTokenChanged(from: T?, to: T?, at location: Location) { }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil

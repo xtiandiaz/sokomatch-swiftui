@@ -13,7 +13,10 @@ enum BoardEvent {
     case unlocked(key: UUID)
     case collected(Collectible)
     case reachedGoal
+    case death
 }
+
+// MARK: - Codable
 
 extension BoardEvent: Codable {
     
@@ -51,6 +54,8 @@ extension BoardEvent: Codable {
             try container.encode(collectible, forKey: .collected)
         case .reachedGoal:
             try container.encode(true, forKey: .reachedGoal)
+        default:
+            break
         }
     }
 }

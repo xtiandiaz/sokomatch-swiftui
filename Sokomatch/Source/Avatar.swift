@@ -21,6 +21,10 @@ class Avatar: ObservableObject, Layerable {
     @Published
     var isHovering = false
     
+    deinit {
+        print("dead")
+    }
+    
     init(location: Location) {
         self.location = location
     }
@@ -60,13 +64,6 @@ class Avatar: ObservableObject, Layerable {
     // MARK: Private
     
     private var keys = Set<UUID>()
-}
-
-extension Avatar: Equatable {
-    
-    static func ==(lhs: Avatar, rhs: Avatar) -> Bool {
-        lhs.id == rhs.id
-    }
 }
 
 struct AvatarView: View {

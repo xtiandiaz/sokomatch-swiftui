@@ -11,8 +11,13 @@ import Combine
 
 class Slot: ObservableObject {
     
-    private(set) lazy var onDeferred: AnyPublisher<Card, Never> = deferralSubject.eraseToAnyPublisher()
-    private(set) lazy var onExecuted: AnyPublisher<Card, Never> = executionSubject.eraseToAnyPublisher()
+    var onDeferred: AnyPublisher<Card, Never> {
+        deferralSubject.eraseToAnyPublisher()
+    }
+    
+    var onExecuted: AnyPublisher<Card, Never> {
+        executionSubject.eraseToAnyPublisher()
+    }
     
     var cards: [Card] {
         _cards

@@ -40,6 +40,10 @@ class Bomb: Droppable, ObservableObject {
     @Published
     private(set) var isDetonated = false
     
+    deinit {
+        print("Boom; gone")
+    }
+    
     init(location: Location) {
         super.init(type: .bomb, location: location)
     }
