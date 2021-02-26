@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-struct Access: Piece {
+struct Access: Layerable {
     
     let id = UUID()
     let token: TokenType = .access

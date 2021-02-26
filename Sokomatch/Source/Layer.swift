@@ -105,14 +105,14 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         
         if let result = target.interact(with: token) {
             place(token: result, at: location)
-            onEffect(oldValue: target, newValue: result, location: location)
+            onTokenChanged(from: target, to: result, at: location)
         } else {
             remove(token: target)
-            onEffect(oldValue: target, newValue: nil, location: location)
+            onTokenChanged(from: target, to: nil, at: location)
         }
     }
     
-    func onEffect(oldValue: T?, newValue: T?, location: Location) { }
+    func onTokenChanged(from: T?, to: T?, at: Location) { }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil
@@ -137,6 +137,7 @@ protocol BoardLayerView: View {
     var unitSize: CGFloat { get }
     
     func position(for location: Location) -> CGPoint
+    func offset(for location: Location) -> CGSize
 }
 
 extension BoardLayerView {
@@ -145,6 +146,13 @@ extension BoardLayerView {
         CGPoint(
             x: CGFloat(location.x) * unitSize,
             y: CGFloat(location.y) * unitSize
+        )
+    }
+    
+    func offset(for location: Location) -> CGSize {
+        CGSize(
+            width: CGFloat(location.x) * unitSize,
+            height: CGFloat(location.y) * unitSize
         )
     }
 }

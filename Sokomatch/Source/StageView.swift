@@ -39,13 +39,13 @@ struct StageView: View {
             stage.board?.move(toward: dir)
         })
         .gesture(TapGesture(count: 2).onEnded {
-            stage.board?.command2()
+            stage.board?.command3()
         })
     }
 }
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView(stage: Stage(), unitSize: 30)
+        StageView(stage: Stage(inventory: Slot()), unitSize: 30)
     }
 }

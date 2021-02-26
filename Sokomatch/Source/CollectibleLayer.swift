@@ -12,9 +12,7 @@ import Emerald
 
 class CollectibleLayer: BoardLayer<Collectible> {
     
-    var onCollected: AnyPublisher<Collectible, Never> {
-        collectibleSubject.eraseToAnyPublisher()
-    }
+    private(set) lazy var onCollected: AnyPublisher<Collectible, Never> = collectibleSubject.eraseToAnyPublisher()
     
     @discardableResult
     func create(_ type: CollectibleType, at location: Location) -> Collectible {
@@ -23,8 +21,8 @@ class CollectibleLayer: BoardLayer<Collectible> {
         return collectible
     }
     
-    override func onEffect(oldValue: Collectible?, newValue: Collectible?, location: Location) {
-        if let collectible = oldValue, newValue == nil {
+    override func onTokenChanged(from: Collectible?, to: Collectible?, at: Location) {
+        if let collectible = from, to == nil {
             collectibleSubject.send(collectible)
         }
     }

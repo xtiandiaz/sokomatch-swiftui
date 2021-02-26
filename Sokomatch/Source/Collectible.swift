@@ -16,7 +16,7 @@ enum CollectibleType {
     case card(type: CardType, value: Int)
 }
 
-struct Collectible: Piece {
+struct Collectible: Layerable {
     
     let id = UUID()
     let token: TokenType = .collectible

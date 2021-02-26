@@ -24,15 +24,15 @@ class TriggerLayer: BoardLayer<Trigger> {
         place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-    override func onEffect(oldValue: Trigger?, newValue: Trigger?, location: Location) {
-        guard let trigger = oldValue else {
+    override func onTokenChanged(from: Trigger?, to: Trigger?, at: Location) {
+        guard let trigger = from else {
             return
         }
         
         switch trigger.type {
         case .event(let event):
             eventSubject.send(event)
-        case .lock(let key) where newValue == nil:
+        case .lock(let key) where to == nil:
             eventSubject.send(.unlocked(key: key))
         default:
             break

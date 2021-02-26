@@ -14,7 +14,7 @@ enum TriggerType {
     case event(BoardEvent), lock(key: UUID)
 }
 
-struct Trigger: Piece {
+struct Trigger: Layerable {
     
     let id = UUID()
     let token: TokenType = .trigger
@@ -42,13 +42,6 @@ struct Trigger: Piece {
         default:
             return self
         }
-    }
-}
-
-extension Trigger: Equatable {
-    
-    static func ==(lhs: Trigger, rhs: Trigger) -> Bool {
-        lhs.id == rhs.id
     }
 }
 

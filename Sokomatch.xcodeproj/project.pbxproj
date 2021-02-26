@@ -16,6 +16,8 @@
 		85625C4B25DEE9160031E380 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C4A25DEE9160031E380 /* ImageExtensions.swift */; };
 		85625C5025E2A2930031E380 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C4F25E2A2930031E380 /* Card.swift */; };
 		85625C5325E2A4280031E380 /* Slot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C5225E2A4280031E380 /* Slot.swift */; };
+		85625C5B25E6F6070031E380 /* DroppableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C5A25E6F6060031E380 /* DroppableLayer.swift */; };
+		85625C5E25E6F6260031E380 /* Droppable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C5D25E6F6260031E380 /* Droppable.swift */; };
 		85744F1225D9911C000737C3 /* ComparableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1125D9911C000737C3 /* ComparableExtensions.swift */; };
 		85744F1525DAEA0B000737C3 /* ShovableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1425DAEA0B000737C3 /* ShovableLayer.swift */; };
 		85744F1825DAEA30000737C3 /* Shovable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1725DAEA30000737C3 /* Shovable.swift */; };
@@ -60,6 +62,8 @@
 		85625C4A25DEE9160031E380 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageExtensions.swift; path = Source/ImageExtensions.swift; sourceTree = "<group>"; };
 		85625C4F25E2A2930031E380 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Card.swift; path = Source/Card.swift; sourceTree = "<group>"; };
 		85625C5225E2A4280031E380 /* Slot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Slot.swift; path = Source/Slot.swift; sourceTree = "<group>"; };
+		85625C5A25E6F6060031E380 /* DroppableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DroppableLayer.swift; path = Source/DroppableLayer.swift; sourceTree = "<group>"; };
+		85625C5D25E6F6260031E380 /* Droppable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Droppable.swift; path = Source/Droppable.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
 		85744F1125D9911C000737C3 /* ComparableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComparableExtensions.swift; path = Source/ComparableExtensions.swift; sourceTree = "<group>"; };
 		85744F1425DAEA0B000737C3 /* ShovableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShovableLayer.swift; path = Source/ShovableLayer.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 			children = (
 				85AB2A4A25CFEB0000CB1592 /* AvatarLayer.swift */,
 				85AB2A4D25CFEB6300CB1592 /* CollectibleLayer.swift */,
+				85625C5A25E6F6060031E380 /* DroppableLayer.swift */,
 				85AB2A5825D3001600CB1592 /* TriggerLayer.swift */,
 				85AB2A5125D05B4700CB1592 /* MapLayer.swift */,
 				85AB2A6725D582FD00CB1592 /* AccessLayer.swift */,
@@ -235,6 +240,7 @@
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
 				85AB2A3625CB3DFB00CB1592 /* Collectible.swift */,
+				85625C5D25E6F6260031E380 /* Droppable.swift */,
 				85744F1725DAEA30000737C3 /* Shovable.swift */,
 				85AB2A3A25CC826900CB1592 /* Access.swift */,
 			);
@@ -333,6 +339,7 @@
 				85B51DBE256A5EA500DDD44E /* Token.swift in Sources */,
 				85AB2A3725CB3DFB00CB1592 /* Collectible.swift in Sources */,
 				85AB2A5225D05B4700CB1592 /* MapLayer.swift in Sources */,
+				85625C5B25E6F6070031E380 /* DroppableLayer.swift in Sources */,
 				85AB2A6825D582FD00CB1592 /* AccessLayer.swift in Sources */,
 				85AB2A3F25CE8B3300CB1592 /* Layer.swift in Sources */,
 				85B51DBC256A5EA500DDD44E /* Tile.swift in Sources */,
@@ -351,6 +358,7 @@
 				85625C4825DEE1280031E380 /* Controls.swift in Sources */,
 				85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */,
 				85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */,
+				85625C5E25E6F6260031E380 /* Droppable.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */,

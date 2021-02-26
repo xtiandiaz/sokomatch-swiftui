@@ -21,7 +21,9 @@ class Stage: ObservableObject {
     @Published
     private(set) var board: Board?
     
-    init() {
+    init(inventory: Slot) {
+        inventory.onExecuted.sink { self.board?.execute(card: $0) }.store(in: &cancellables)
+        
         advance()
     }
     

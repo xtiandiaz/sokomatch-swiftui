@@ -12,7 +12,7 @@ enum ShovableType: String, Codable {
     case block
 }
 
-struct Shovable: Piece {
+struct Shovable: Layerable {
     
     let id = UUID()
     let token: TokenType = .shovable

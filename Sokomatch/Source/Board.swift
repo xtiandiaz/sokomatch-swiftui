@@ -35,6 +35,7 @@ class Board: ObservableObject {
     let shovableLayer: ShovableLayer
     let collectibleLayer: CollectibleLayer
     let triggerLayer: TriggerLayer
+    let droppableLayer: DroppableLayer
     
     let layers: [Layer]
     
@@ -79,8 +80,9 @@ class Board: ObservableObject {
         collectibleLayer = CollectibleLayer()
         shovableLayer = ShovableLayer()
         triggerLayer = TriggerLayer()
+        droppableLayer = DroppableLayer()
         
-        layers = [mapLayer, accessLayer, collectibleLayer, shovableLayer, avatarLayer, triggerLayer]
+        layers = [mapLayer, accessLayer, collectibleLayer, shovableLayer, avatarLayer, triggerLayer, droppableLayer]
         
         collectibleLayer.onCollected.sink(receiveValue: onCollected(_:)).store(in: &cancellables)
         triggerLayer.onTriggered.sink(receiveValue: onEvent(_:)).store(in: &cancellables)
@@ -154,6 +156,13 @@ class Board: ObservableObject {
         playerLocation = avatar.location
     }
     
+    func execute(card: Card) {
+        switch card.type {
+        case .attraction: command2()
+        case .hover: command1()
+        }
+    }
+    
     func command1() {
         withAnimation {
             avatar?.isHovering.toggle()
@@ -176,6 +185,15 @@ class Board: ObservableObject {
             
             move(layer: shovableLayer, at: token.location, toward: dir.opposite)
         }
+    }
+    
+    func command3() {
+        guard let location = avatar?.location else {
+            return
+        }
+        
+        let bomb = droppableLayer.place(Bomb(location: location))
+        bomb.detonate(after: 2.0)
     }
     
     static func create() -> Board {

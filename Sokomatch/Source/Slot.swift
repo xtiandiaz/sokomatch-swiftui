@@ -7,8 +7,12 @@
 //
 
 import SwiftUI
+import Combine
 
 class Slot: ObservableObject {
+    
+    private(set) lazy var onDeferred: AnyPublisher<Card, Never> = deferralSubject.eraseToAnyPublisher()
+    private(set) lazy var onExecuted: AnyPublisher<Card, Never> = executionSubject.eraseToAnyPublisher()
     
     var cards: [Card] {
         _cards
@@ -35,16 +39,29 @@ class Slot: ObservableObject {
     }
     
     func deferOne() {
-        guard !_cards.isEmpty else {
+        guard let card = pop() else {
             return
         }
         
-        _cards.insert(pop()!, at: 0)
+        _cards.insert(card, at: 0)
+        
+        deferralSubject.send(card)
+    }
+    
+    func executeOne() {
+        guard let card = pop() else {
+            return
+        }
+        
+        executionSubject.send(card)
     }
     
     // MARK: Private
     
     private var _cards = [Card]()
+    
+    private let deferralSubject = PassthroughSubject<Card, Never>()
+    private let executionSubject = PassthroughSubject<Card, Never>()
 }
 
 struct SlotView: View {
@@ -55,18 +72,37 @@ struct SlotView: View {
     @ObservedObject
     var slot: Slot
     
+    @State
+    private var topCardOffsetY: CGFloat = 0
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: Self.cornerRadius)
                 .stroke(Color.white.opacity(0.15), lineWidth: 4)
                 .aspectRatio(Self.aspectRatio, contentMode: .fit)
+                .zIndex(-1)
             
             ForEach(Array(slot.cards.enumerated()), id: \.element) {
                 CardView(card: $1)
                     .offset(x: 0, y: -CGFloat($0) * .xxxs)
+                    .offset(x: 0, y: $0 == slot.cards.count-1 ? topCardOffsetY : 0)
                     .zIndex(Double($0))
             }
         }
+        .gesture(
+            DragGesture(minimumDistance: 0).onChanged {
+                topCardOffsetY = $0.translation.height
+            }.onEnded {
+                _ in
+                if topCardOffsetY < -.l {
+                    slot.deferOne()
+                } else if topCardOffsetY >= .l {
+                    slot.executeOne()
+                }
+                
+                topCardOffsetY = 0
+            }
+        )
     }
 }
 

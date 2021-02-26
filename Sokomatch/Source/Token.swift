@@ -17,6 +17,7 @@ enum TokenType: String, Codable {
     case shovable
     case trigger
     case access
+    case droppable
 }
 
 protocol Token {
@@ -33,15 +34,15 @@ protocol Layerable: Token, Hashable, Identifiable {
     
 }
 
-protocol Piece: Layerable, Codable {
-
-}
-
-extension Piece {
+extension Layerable {
     
     var id: UUID { id }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 }

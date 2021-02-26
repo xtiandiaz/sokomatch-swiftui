@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-class Avatar: ObservableObject, Piece {
+class Avatar: ObservableObject, Layerable {
     
     let id = UUID()
     let token: TokenType = .avatar

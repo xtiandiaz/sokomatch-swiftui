@@ -56,11 +56,11 @@ struct GameView: View {
             VStack {
                 
                 VStack(spacing: .xxs) {
-                    Image(systemName: "arrow.up").opacity(0.25)
+                    Image(systemName: "arrow.up").opacity(0.25).zIndex(-1)
                     
                     SlotView(slot: inventory).frame(width: .xxl)
                     
-                    Image(systemName: "arrow.down").opacity(0.25)
+                    Image(systemName: "arrow.down").opacity(0.25).zIndex(-1)
                 }
                 
                 Spacer()

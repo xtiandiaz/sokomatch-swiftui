@@ -25,7 +25,7 @@ class Game: ObservableObject {
     init(inventory: Slot) {
         self.inventory = inventory
         
-        stage = Stage()
+        stage = Stage(inventory: inventory)
         
         stage.onEvent.sink {
             [weak self] in

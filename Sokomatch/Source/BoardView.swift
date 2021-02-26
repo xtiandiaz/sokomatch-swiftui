@@ -18,15 +18,15 @@ struct BoardView: View {
     
     var body: some View {
         ZStack {
-            Group {
-                MapLayerView(layer: board.mapLayer, unitSize: unitSize)
-                AccessLayerView(layer: board.accessLayer, unitSize: unitSize)
-                ShovableLayerView(layer: board.shovableLayer, unitSize: unitSize)
-                CollectibleLayerView(layer: board.collectibleLayer, unitSize: unitSize)
-                AvatarLayerView(layer: board.avatarLayer, unitSize: unitSize)
-            }
-            .offset(offset())
+            MapLayerView(layer: board.mapLayer, unitSize: unitSize)
+            AccessLayerView(layer: board.accessLayer, unitSize: unitSize)
+            ShovableLayerView(layer: board.shovableLayer, unitSize: unitSize)
+            CollectibleLayerView(layer: board.collectibleLayer, unitSize: unitSize)
+            AvatarLayerView(layer: board.avatarLayer, unitSize: unitSize)
+            DroppableLayerView(layer: board.droppableLayer, unitSize: unitSize)
+                .zIndex(100)
         }
+        .offset(offset())
         .aspectRatio(1, contentMode: .fit)
         .id(board.id)
     }
@@ -47,6 +47,11 @@ struct BoardView: View {
     
     private var size: CGSize {
         CGSize(width: CGFloat(board.cols) * unitSize, height: CGFloat(board.rows) * unitSize)
+    }
+    
+    private func position() -> CGPoint {
+        let offset = self.offset()
+        return CGPoint(x: offset.width, y: offset.height)
     }
     
     private func offset() -> CGSize {
