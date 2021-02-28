@@ -18,20 +18,35 @@ enum StageEvent {
 
 class Stage: ObservableObject {
     
+    @Inject
+    private(set) var controlManager: ControlManager
+    @Inject
+    private(set) var inventory: Slot
+    
     @Published
     private(set) var board: Board?
     
-    init(inventory: Slot) {
+    var onEvent: AnyPublisher<GameEvent, Never> {
+        eventSubject.eraseToAnyPublisher()
+    }
+    
+    init() {
+        controlManager.onSwipe.sink {
+            [weak self] in
+            self?.board?.move(toward: $0)
+        }.store(in: &cancellables)
+        
+        controlManager.onDoubleTap.sink {
+            [weak self] in
+            self?.board?.command3()
+        }.store(in: &cancellables)
+        
         inventory.onExecuted.sink {
             [weak self] in
             self?.board?.execute(card: $0)
         }.store(in: &cancellables)
         
         advance()
-    }
-    
-    var onEvent: AnyPublisher<GameEvent, Never> {
-        eventSubject.eraseToAnyPublisher()
     }
     
     func reset() {
@@ -64,7 +79,7 @@ class Stage: ObservableObject {
             case .key:
                 break
             case .card(let type, let value):
-                eventSubject.send(.collectedCard(type: type, value: value))
+                inventory.push(card: Card(type: type, value: value))
             }
         case .reachedGoal:
             advance()

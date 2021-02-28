@@ -20,7 +20,7 @@ enum TokenType: String, Codable {
     case droppable
 }
 
-protocol Token {
+protocol Token: Configurable {
     
     var id: UUID { get }
     var token: TokenType { get }

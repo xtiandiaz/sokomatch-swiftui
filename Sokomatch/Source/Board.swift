@@ -29,10 +29,10 @@ class Board: ObservableObject {
     let edges: Set<Location>
     let safeArea: Set<Location>
     
+    let backgroundLayer: MapLayer
+    let foregroundLayer: MapLayer
     let avatarLayer: AvatarLayer
-    let mapLayer: MapLayer
     let accessLayer: AccessLayer
-    let shovableLayer: ShovableLayer
     let collectibleLayer: CollectibleLayer
     let triggerLayer: TriggerLayer
     let droppableLayer: DroppableLayer
@@ -78,15 +78,15 @@ class Board: ObservableObject {
         self.edges = edges.subtracting(corners)
         self.safeArea = safeArea
         
+        backgroundLayer = MapLayer()
+        foregroundLayer = MapLayer()
         avatarLayer = AvatarLayer()
-        mapLayer = MapLayer()
         accessLayer = AccessLayer()
         collectibleLayer = CollectibleLayer()
-        shovableLayer = ShovableLayer()
         triggerLayer = TriggerLayer()
         droppableLayer = DroppableLayer()
         
-        layers = [mapLayer, accessLayer, collectibleLayer, shovableLayer, avatarLayer, triggerLayer, droppableLayer]
+        layers = [backgroundLayer, foregroundLayer, accessLayer, collectibleLayer, avatarLayer, triggerLayer, droppableLayer]
         
         collectibleLayer.onCollected.sink {
             [weak self] in
@@ -97,17 +97,22 @@ class Board: ObservableObject {
             [weak self] in
             self?.onEvent($0)
         }.store(in: &cancellables)
+        
+        droppableLayer.onEvent.sink {
+            [weak self] in
+            self?.onEvent($0)
+        }.store(in: &cancellables)
     }
     
     func populate() {
         avatar = avatarLayer.create(at: center)
         
         for location in edges.union(corners) {
-            mapLayer.create(tile: .bound, at: location)
+            backgroundLayer.create(.bound, at: location)
         }
         
         for location in safeArea {
-            mapLayer.create(tile: .floor, at: location)
+            backgroundLayer.create(.floor, at: location)
         }
         
         var key: Collectible?
@@ -116,11 +121,11 @@ class Board: ObservableObject {
         }
         
         if let location = edges.randomElement(), let edge = edge(forLocation: location) {
-            mapLayer.create(tile: .passageway(edge), at: location)
+            backgroundLayer.create(.passageway(edge), at: location)
             triggerLayer.create(withEvent: .reachedGoal, at: location)
             
             let entrance = location.shifted(toward: edge.facingDirection)
-            mapLayer.create(tile: .stickyFloor, at: entrance)
+            backgroundLayer.create(.stickyFloor, at: entrance)
             
             if let key = key {
                 accessLayer.create(withKey: key.id, at: location)
@@ -136,10 +141,10 @@ class Board: ObservableObject {
         
         for _ in 1...diagonal/4 {
             if let location = randomAvailableLocation(in: safeArea) {
-                shovableLayer.create(.block, at: location)
+                foregroundLayer.create(.block, at: location)
             }
             if let location = randomAvailableLocation(in: safeArea) {
-                mapLayer.create(tile: .pit, at: location)
+                backgroundLayer.create(.pit, at: location)
             }
         }
         
@@ -153,45 +158,43 @@ class Board: ObservableObject {
             return
         }
         
-        move(
-            layer: avatarLayer,
-            at: avatar.location,
-            toward: direction,
-            maxSteps: avatar.isHovering ? 1 : Self.maxMoveSteps
-        )
+        move(layer: avatarLayer, at: avatar.location, toward: direction)
         
         playerLocation = avatar.location
     }
     
     func execute(card: Card) {
-        switch card.type {
-        case .attraction: command2()
-        case .hover: command1()
-        }
-    }
-    
-    func command1() {
-        withAnimation {
-            avatar?.isHovering.toggle()
-        }
-        
-        if let avatar = avatar, !avatar.isHovering {
-            interact(with: avatarLayer, at: avatar.location)
-        }
-    }
-    
-    func command2() {
-        guard let center = avatar?.location else {
+        guard let avatar = avatar else {
             return
         }
         
-        for dir in Direction.allCases {
-            guard let token = first(in: shovableLayer, from: center, toward: dir) else {
-                continue
+        switch card.type {
+        case .ability(let ability):
+            switch ability {
+            case .magnesis:
+                for dir in Direction.allCases {
+                    guard let token = first(in: foregroundLayer, from: avatar.location, toward: dir) else {
+                        continue
+                    }
+                    move(layer: foregroundLayer, at: token.location, toward: dir.opposite)
+                }
+            }
+        case .mode(let mode):
+            withAnimation {
+                avatar.mode = mode
             }
             
-            move(layer: shovableLayer, at: token.location, toward: dir.opposite)
+            switch mode {
+            case .normal:
+                interact(with: avatarLayer, at: avatar.location)
+            default:
+                break
+            }
         }
+    }
+    
+    func clear() {
+        layers.forEach { $0.clear() }
     }
     
     func command3() {
@@ -199,8 +202,9 @@ class Board: ObservableObject {
             return
         }
         
-        let bomb = droppableLayer.place(Bomb(location: location))
-        bomb.detonate(after: 2.0)
+        droppableLayer.place(Bomb(location: location)).configure {
+            $0.detonate(after: 2.0)
+        }
     }
     
     static func create() -> Board {
@@ -230,7 +234,7 @@ class Board: ObservableObject {
             return
         }
         
-        let destination = move(token: token, from: location, toward: direction, maxSteps: maxSteps)
+        let destination = move(token: token, in: layer, from: location, toward: direction, maxSteps: maxSteps)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
             [weak self] in
@@ -242,15 +246,16 @@ class Board: ObservableObject {
                 self.interact(with: layer, at: destination)
             }
             
-            if self.shovableLayer[destination.shifted(toward: direction)] != nil {
-                self.move(layer: self.shovableLayer, at: destination.shifted(toward: direction), toward: direction)
+            if self.avatar?.mode == .mighty, self.foregroundLayer[destination.shifted(toward: direction)] != nil {
+                self.move(layer: self.foregroundLayer, at: destination.shifted(toward: direction), toward: direction)
             }
         }
     }
     
     @discardableResult
-    private func move(
-        token: Token,
+    private func move<T: Layerable>(
+        token: T,
+        in layer: BoardLayer<T>,
         from origin: Location,
         toward direction: Direction,
         maxSteps: Int = Board.maxMoveSteps
@@ -263,61 +268,27 @@ class Board: ObservableObject {
             maxSteps <= 0
         {
             withAnimation(Self.moveAnimation()) {
-                relocate(token: token, to: origin)
+                layer.relocate(token: token, to: origin)
             }
             return origin
         }
         
         if canInteract(with: token, at: nextLocation) {
             withAnimation(Self.moveAnimation()) {
-                relocate(token: token, to: nextLocation)
+                layer.relocate(token: token, to: nextLocation)
             }
             return nextLocation
         }
         
-        return move(token: token, from: nextLocation, toward: direction, maxSteps: maxSteps - 1)
+        return move(token: token, in: layer, from: nextLocation, toward: direction, maxSteps: maxSteps - 1)
     }
     
-    private func relocate(token: Token, to location: Location) {
-        switch token {
-        case let avatar as Avatar:
-            avatarLayer.relocate(token: avatar, to: location)
-        case let shovable as Shovable:
-            shovableLayer.relocate(token: shovable, to: location)
-        default:
-            break
-        }
+    private func remove(in layers: [Layer], at locations: [Location]) {
+        locations.forEach { remove(in: layers, at: $0) }
     }
     
-    private func remove(token: Token) {
-        switch token {
-        case let avatar as Avatar:
-            avatarLayer.remove(token: avatar)
-        case let shovable as Shovable:
-            shovableLayer.remove(token: shovable)
-        default:
-            break
-        }
-    }
-    
-    private func onCollected(_ collectible: Collectible) {
-        switch collectible.type {
-        case .key: avatar?.addKey(collectible.id)
-        default: break
-        }
-        
-        eventSubject.send(.collected(collectible))
-    }
-    
-    private func onEvent(_ event: BoardEvent) {
-        switch event {
-        case .unlocked(let key):
-            accessLayer.unlock(withKey: key)
-        default:
-            break
-        }
-        
-        eventSubject.send(event)
+    private func remove(in layers: [Layer], at location: Location) {
+        layers.forEach { $0.remove(tokenAtLocation: location) }
     }
     
     private func canInteract(with token: Token, at location: Location) -> Bool {
@@ -339,8 +310,26 @@ class Board: ObservableObject {
             }
     }
     
-    func clear() {
-        layers.forEach { $0.clear() }
+    private func onCollected(_ collectible: Collectible) {
+        switch collectible.type {
+        case .key: avatar?.addKey(collectible.id)
+        default: break
+        }
+        
+        eventSubject.send(.collected(collectible))
+    }
+    
+    private func onEvent(_ event: BoardEvent) {
+        switch event {
+        case .unlocked(let key):
+            accessLayer.unlock(withKey: key)
+        case .explosion(let location):
+            remove(in: [avatarLayer, foregroundLayer], at: area(around: location, withRadius: 1))
+        default:
+            break
+        }
+        
+        eventSubject.send(event)
     }
     
     private func isValid(location: Location) -> Bool {
@@ -405,5 +394,25 @@ extension Board {
     
     private var diagonal: Int {
         Int(sqrt(pow(Double(cols), 2) + pow(Double(rows), 2)))
+    }
+    
+    private func area(around center: Location, withRadius radius: Int) -> [Location] {
+        guard radius > 0 else {
+            return [center]
+        }
+        
+        var locations = [Location]()
+        
+        for y in -radius...radius {
+            for x in -radius...radius {
+                let location = center.shifted(byX: x, y: y)
+                
+                if self.locations.contains(location) {
+                    locations.append(location)
+                }
+            }
+        }
+        
+        return locations
     }
 }

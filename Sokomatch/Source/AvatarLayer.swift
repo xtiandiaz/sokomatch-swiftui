@@ -22,7 +22,7 @@ class AvatarLayer: BoardLayer<Avatar> {
         return avatar
     }
     
-    override func onTokenChanged(from: Avatar?, to: Avatar?, at: Location) {
+    override func onTokenMorphed(from: Avatar?, to: Avatar?, at: Location) {
         if to == nil {
             deathSubject.send(true)
         }

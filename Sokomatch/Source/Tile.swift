@@ -7,13 +7,13 @@
 //
 
 import SwiftUI
-import Emerald
 
 enum TileType: Hashable {
     
     case bound
     case floor
     case stickyFloor
+    case block
     case pit
     case bridge
     case passageway(Edge)
@@ -34,19 +34,25 @@ struct Tile: Layerable {
     
     func canInteract(with other: Token) -> Bool {
         switch type {
-        case .stickyFloor, .pit: return true
+        case .stickyFloor: return true
+        case .pit:
+            switch other {
+            case let avatar as Avatar: return avatar.mode != .ghost
+            default: return true
+            }
         default: return false
         }
     }
     
     func interact(with other: Token) -> Tile? {
         switch type {
-        case .pit:
-            switch other {
-            case let shovable as Shovable where shovable.type == .block:
-                return Tile(type: .bridge, location: location)
+        case .pit where other is Tile:
+            switch (other as! Tile).type {
+            case .block: return Tile(type: .bridge, location: location)
             default: return self
             }
+        case .block where other is Tile:
+            return (other as! Tile).type  == .pit ? nil : self
         default: return self
         }
     }
@@ -70,6 +76,8 @@ struct TileView: View {
                     .font(.title)
                     .foregroundColor(Color.black).opacity(0.25)
             }
+        case .block:
+            Color.block.cornerRadius(4).padding(2)
         case .pit:
             Color.clear
 //            Color.ground.mask(

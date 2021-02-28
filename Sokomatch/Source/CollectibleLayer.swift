@@ -23,7 +23,7 @@ class CollectibleLayer: BoardLayer<Collectible> {
         return collectible
     }
     
-    override func onTokenChanged(from: Collectible?, to: Collectible?, at location: Location) {
+    override func onTokenMorphed(from: Collectible?, to: Collectible?, at location: Location) {
         if let collectible = from, to == nil {
             collectibleSubject.send(collectible)
         }

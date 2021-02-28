@@ -27,6 +27,7 @@ struct ShovableLayerView: BoardLayerView {
             ShovableView(shovable: $0)
                 .frame(width: unitSize, height: unitSize)
                 .position(position(for: $0.location))
+                .id($0.id)
         }
     }
 }

@@ -12,7 +12,6 @@ import CoreGraphics
 enum GameEvent {
     
     case earnedScore(value: Int)
-    case collectedCard(type: CardType, value: Int)
 }
 
 class Game: ObservableObject {
@@ -22,10 +21,8 @@ class Game: ObservableObject {
     @Published
     private(set) var score = 0
     
-    init(inventory: Slot) {
-        self.inventory = inventory
-        
-        stage = Stage(inventory: inventory)
+    init() {
+        stage = Stage()
         
         stage.onEvent.sink {
             [weak self] in
@@ -39,16 +36,12 @@ class Game: ObservableObject {
     
     // MARK: Private
     
-    private let inventory: Slot
-    
     private var cancellables = Set<AnyCancellable>()
     
     private func onEvent(_ event: GameEvent) {
         switch event {
         case .earnedScore(let value):
             score += value
-        case .collectedCard(let type, let value):
-            inventory.push(card: Card(type: type, value: value))
         }
     }
 }

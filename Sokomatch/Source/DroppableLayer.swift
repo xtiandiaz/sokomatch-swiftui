@@ -11,6 +11,10 @@ import Combine
 
 class DroppableLayer: BoardLayer<Droppable> {
     
+    var onEvent: AnyPublisher<BoardEvent, Never> {
+        reactionSubject.eraseToAnyPublisher()
+    }
+    
     func place<T: Droppable>(_ droppable: T) -> T {
         objectWillChange.send()
         
@@ -31,7 +35,17 @@ class DroppableLayer: BoardLayer<Droppable> {
         return droppable
     }
     
+    override func remove(token: Droppable) {
+        super.remove(token: token)
+        
+        switch token.type {
+        case .bomb: reactionSubject.send(.explosion(at: token.location))
+        }
+    }
+    
     // MARK: Private
+    
+    private let reactionSubject = PassthroughSubject<BoardEvent, Never>()
     
     private var cancellables = Set<AnyCancellable>()
 }

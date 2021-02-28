@@ -7,21 +7,28 @@
 //
 
 import SwiftUI
-import Emerald
 
 class MapLayer: BoardLayer<Tile> {
     
-    func create(tile: TileType, at location: Location) {
+    func create(_ tile: TileType, at location: Location) {
         place(token: Tile(type: tile, location: location))
     }
     
     override func isAvailable(location: Location) -> Bool {
-        self[location]?.type == .floor
+        switch self[location]?.type {
+        case nil, .floor: return true
+        default: return false
+        }
     }
     
     override func isObstructive(location: Location, for token: Token?) -> Bool {
         switch self[location]?.type {
         case .bound: return true
+        case .block:
+            switch token {
+            case let avatar as Avatar: return avatar.mode != .ghost
+            default: return true
+            }
         default: return false
         }
     }

@@ -10,22 +10,18 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject
-    var game: Game
-    
     var body: some View {
         ZStack {
             GameView()
         }
         .frame(maxHeight: .infinity)
         .background(Color.black)
-        .statusBar(hidden: true)
+//        .statusBar(hidden: true)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(Game(inventory: Slot()))
     }
 }

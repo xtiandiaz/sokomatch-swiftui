@@ -12,6 +12,7 @@ enum BoardEvent {
     
     case unlocked(key: UUID)
     case collected(Collectible)
+    case explosion(at: Location)
     case reachedGoal
     case death
 }

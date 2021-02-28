@@ -17,35 +17,15 @@ struct StageView: View {
     let unitSize: CGFloat
     
     var body: some View {
-        ZStack {
-            Color.black
-            
-            if let board = stage.board {
-                BoardView(board: board, unitSize: unitSize)
-                    .transition(AnyTransition.opacity.animation(.default))
-            }
+        if let board = stage.board {
+            BoardView(board: board, unitSize: unitSize)
+                .transition(AnyTransition.opacity.animation(.default))
         }
-        .gesture(DragGesture(minimumDistance: unitSize / 2).onEnded {
-            let dir: Direction
-            let deltaX = $0.translation.width
-            let deltaY = $0.translation.height
-
-            if abs(deltaX) > abs(deltaY) {
-                dir = deltaX > 0 ? .right : .left
-            } else {
-                dir = deltaY > 0 ? .down : .up
-            }
-
-            stage.board?.move(toward: dir)
-        })
-        .gesture(TapGesture(count: 2).onEnded {
-            stage.board?.command3()
-        })
     }
 }
 
 struct StageView_Previews: PreviewProvider {
     static var previews: some View {
-        StageView(stage: Stage(inventory: Slot()), unitSize: 30)
+        StageView(stage: Stage(), unitSize: 30)
     }
 }

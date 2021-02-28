@@ -41,6 +41,16 @@ struct Shovable: Layerable {
     }
 }
 
+struct ShovableView: View {
+    
+    let shovable: Shovable
+    
+    var body: some View {
+        Color.block.cornerRadius(4).padding(2)
+//            .transition(AnyTransition.asymmetric(insertion: .identity, removal: .opacity).animation(.default))
+    }
+}
+
 // MARK: - Codable
 
 extension Shovable: Codable {
@@ -60,15 +70,5 @@ extension Shovable: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(type, forKey: .type)
-    }
-}
-
-struct ShovableView: View {
-    
-    let shovable: Shovable
-    
-    var body: some View {
-        Color.block.cornerRadius(4).padding(2)
-            .transition(.asymmetric(insertion: .identity, removal: .opacity))
     }
 }

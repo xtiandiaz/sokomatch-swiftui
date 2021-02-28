@@ -17,6 +17,8 @@ protocol Layer {
     func canInteract(with other: Layer, at location: Location) -> Bool
     func affect(with token: Token, at location: Location)
     
+    func remove(tokenAtLocation location: Location)
+    
     func clear()
     
     func isAvailable(location: Location) -> Bool
@@ -104,14 +106,14 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         
         if let result = target.interact(with: token) {
             place(token: result, at: location)
-            onTokenChanged(from: target, to: result, at: location)
+            onTokenMorphed(from: target, to: result, at: location)
         } else {
             remove(token: target)
-            onTokenChanged(from: target, to: nil, at: location)
+            onTokenMorphed(from: target, to: nil, at: location)
         }
     }
     
-    func onTokenChanged(from: T?, to: T?, at location: Location) { }
+    func onTokenMorphed(from: T?, to: T?, at location: Location) { }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil

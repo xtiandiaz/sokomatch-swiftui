@@ -14,10 +14,13 @@ struct GameView: View {
     static let viewportUWidth = 9
     static let viewportUHeight = 9
     
-    @EnvironmentObject
-    var game: Game
-    @EnvironmentObject
-    var inventory: Slot
+    @Inject
+    private var controlManager: ControlManager
+    @Inject
+    private var inventory: Slot
+    
+    @StateObject
+    var game = Game()
     
     @State
     var unitSize: CGFloat?
@@ -26,13 +29,9 @@ struct GameView: View {
         ZStack {
             GeometryReader {
                 proxy in
-                Color.clear.onAppear {
+                Color.black.onAppear {
                     unitSize = proxy.size.width / CGFloat(Self.viewportUWidth)
                 }
-            }
-            
-            if let unitSize = unitSize {
-                StageView(stage: game.stage, unitSize: unitSize)
             }
             
             VStack {
@@ -48,25 +47,30 @@ struct GameView: View {
                     
                     Text("\(game.score)").font(.title)
                 }
+                .padding(EdgeInsets(top: 0, leading: .xs, bottom: 0, trailing: .m))
                 
-                Spacer()
-            }
-            .padding(EdgeInsets(top: .xs, leading: .xxs, bottom: 0, trailing: .m))
-            
-            VStack {
-                
-                VStack(spacing: .xxs) {
-                    Image(systemName: "arrow.up").opacity(0.25).zIndex(-1)
-                    
-                    SlotView(slot: inventory).frame(width: .xxl)
-                    
-                    Image(systemName: "arrow.down").opacity(0.25).zIndex(-1)
+                if let unitSize = unitSize {
+                    StageView(stage: game.stage, unitSize: unitSize)
                 }
                 
+                HStack {
+                    VStack(spacing: .xxs) {
+                        Image(systemName: "arrow.up").opacity(0.25).zIndex(-1)
+                        
+                        SlotView(slot: inventory).frame(width: .xxl)
+                        
+                        Image(systemName: "arrow.down").opacity(0.25).zIndex(-1)
+                    }
+                    
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: .s, leading: .m, bottom: 0, trailing: .m))
+
                 Spacer()
             }
-            .padding(.top, .xxs)
         }
+        .gesture(controlManager.swipeGesture)
+        .gesture(controlManager.doubleTapGesture)
     }
 }
 
@@ -74,11 +78,8 @@ struct GameView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        let inventory = Slot()
-        
         GameView()
-            .environmentObject(Game(inventory: inventory))
-            .environmentObject(inventory)
+            .environmentObject(Game())
             .colorScheme(.dark)
     }
 }

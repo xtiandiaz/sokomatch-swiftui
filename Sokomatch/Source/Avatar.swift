@@ -9,6 +9,18 @@
 import SwiftUI
 import Emerald
 
+enum AvatarAbility {
+    
+    case magnesis
+}
+
+enum AvatarMode {
+    
+    case normal
+    case mighty
+    case ghost
+}
+
 class Avatar: ObservableObject, Layerable {
     
     let id = UUID()
@@ -17,9 +29,7 @@ class Avatar: ObservableObject, Layerable {
     @Published
     var location: Location
     @Published
-    var isFocused = true
-    @Published
-    var isHovering = false
+    var mode: AvatarMode = .normal
     
     deinit {
         print("dead")
@@ -33,7 +43,6 @@ class Avatar: ObservableObject, Layerable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         location = (try? container.decode(Location.self, forKey: .location)) ?? .zero
-        isFocused = (try? container.decode(Bool.self, forKey: .isFocused)) ?? false
     }
     
     func addKey(_ key: UUID) {
@@ -47,14 +56,14 @@ class Avatar: ObservableObject, Layerable {
     func canInteract(with other: Token) -> Bool {
         switch other {
         case is Collectible: return true
-        case let tile as Tile: return tile.type == .pit && !isHovering
+        case let tile as Tile: return tile.type == .pit && mode != .ghost
         default: return false
         }
     }
     
     func interact(with other: Token) -> Self? {
         switch other {
-        case let tile as Tile where tile.type == .pit && !isHovering:
+        case let tile as Tile where tile.type == .pit && mode != .ghost:
             return nil
         default:
             return self
@@ -76,24 +85,23 @@ struct AvatarView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(avatar.isFocused ? Color.white : Color.black)
-//                .overlay(Circle().strokeBorder(Color.white, lineWidth: 2))
                 .padding(1)
-                .scaleEffect(avatar.isHovering ? 1.1 : 1)
+                .if(avatar.mode == .ghost) { $0.opacity(0.5) }
+                .if(avatar.mode == .mighty) { $0.shadow(color: Color.white, radius: 20, x: 0, y: 0) }
                 .zIndex(0)
             
-            if avatar.isHovering {
-                Propeller(petalCount: 5, petalBreadth: Angle(degrees: 30))
-                    .fill(Color.black)
-                    .scaleEffect(0.75)
-                    .rotationEffect(Angle(degrees: propellerRotation))
-                    .animation(Animation.linear(duration: 0.5).repeatForever(autoreverses: false))
-                    .transition(AnyTransition.scale.animation(.default))
-                    .zIndex(1)
-                    .onReceive(avatar.$isHovering) {
-                        propellerRotation = $0 ? 360 : 0
-                    }
-            }
+//            if avatar.isHovering {
+//                Propeller(petalCount: 5, petalBreadth: Angle(degrees: 30))
+//                    .fill(Color.black)
+//                    .scaleEffect(0.75)
+//                    .rotationEffect(Angle(degrees: propellerRotation))
+//                    .animation(Animation.linear(duration: 0.5).repeatForever(autoreverses: false))
+//                    .transition(AnyTransition.scale.animation(.default))
+//                    .zIndex(1)
+//                    .onReceive(avatar.$isHovering) {
+//                        propellerRotation = $0 ? 360 : 0
+//                    }
+//            }
         }
         .transition(AnyTransition.opacity.animation(.linear(duration: 0.2)))
     }

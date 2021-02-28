@@ -109,15 +109,15 @@ extension CollectibleType: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        switch self {
-        case .coin(let value):
-            try container.encode(value, forKey: .coin)
-        case .key:
-            try container.encode(true, forKey: .key)
-        case .card(let type, let value):
-//            try container.encode(value, forKey: .)
-            break
-        }
+//        switch self {
+//        case .coin(let value):
+//            try container.encode(value, forKey: .coin)
+//        case .key:
+//            try container.encode(true, forKey: .key)
+//        case .card(let type, let value):
+////            try container.encode(value, forKey: .)
+//            break
+//        }
     }
 }
 

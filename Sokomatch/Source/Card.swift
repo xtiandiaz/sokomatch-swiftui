@@ -8,26 +8,32 @@
 
 import SwiftUI
 
-enum CardType: CaseIterable {
+enum CardType: Hashable {
     
-    case hover, attraction
+    case ability(AvatarAbility), mode(AvatarMode)
     
     var color: Color {
-        switch self {
-        case .hover: return .grayDark
-        case .attraction: return .grayDark
-        }
+        .grayDark
     }
     
-    var content: String {
+    var content: String? {
         switch self {
-        case .attraction: return "🧲"
-        case .hover: return "👻"
+        case .ability(let ability):
+            switch ability {
+            case .magnesis:
+                return "🧲"
+            }
+        case .mode(let mode):
+            switch mode {
+            case .ghost: return "👻"
+            case .mighty: return "💪"
+            default: return nil
+            }
         }
     }
     
     static func random() -> CardType {
-        Self.allCases.randomElement()!
+        [.ability(.magnesis), .mode(.ghost), .mode(.mighty)].randomElement()!
     }
 }
 
@@ -40,6 +46,10 @@ struct Card: Identifiable, Hashable {
     init(type: CardType, value: Int = 1) {
         self.type = type
         self.value = value
+    }
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        lhs.id == rhs.id
     }
 }
 
@@ -59,9 +69,9 @@ struct CardView: View {
                 .shadow(radius: 4).shadow(radius: 4)
                 .zIndex(0)
             
-            Text(card.type.content)
-                .font(.largeTitle)
-                .zIndex(1)
+            if let content = card.type.content {
+                Text(content).font(.largeTitle).zIndex(1)
+            }
         }
         .transition(AnyTransition.opacity.combined(with: .scale).animation(.default))
     }

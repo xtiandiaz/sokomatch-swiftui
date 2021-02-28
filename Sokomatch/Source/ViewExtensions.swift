@@ -13,6 +13,15 @@ extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
     }
+    
+    @ViewBuilder
+    func `if`<T: View>(_ condition: Bool, then content: (Self) -> T) -> some View {
+        if condition {
+            content(self)
+        } else {
+            self
+        }
+    }
 }
 
 struct RoundedCorner: Shape {

@@ -76,6 +76,10 @@ struct Location: Equatable, Hashable {
         }
     }
     
+    public func shifted(byX x: Int, y: Int) -> Location {
+        Location(x: self.x + x, y: self.y + y)
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(x)
         hasher.combine(y)
