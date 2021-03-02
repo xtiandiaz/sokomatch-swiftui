@@ -13,18 +13,14 @@ protocol Layer {
     
     var id: UUID { get }
     
-    func canInteract(with token: Token, at location: Location) -> Bool
-    func canInteract(with other: Layer, at location: Location) -> Bool
     func affect(with token: Token, at location: Location)
-    
     func remove(tokenAtLocation location: Location)
     
     func clear()
     
-    func isAvailable(location: Location) -> Bool
-    func isObstructive(location: Location, for token: Token?) -> Bool
-    
     func token(at location: Location) -> Token?
+    
+    func isAvailable(location: Location) -> Bool
 }
 
 class BoardLayer<T: Layerable>: ObservableObject, Layer {
@@ -85,35 +81,21 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         tokenAtLocation.removeAll()
     }
     
-    func canInteract(with other: Layer, at location: Location) -> Bool {
-        guard let source = other.token(at: location) else {
-            return false
-        }
-        return canInteract(with: source, at: location)
-    }
-    
-    func canInteract(with token: Token, at location: Location) -> Bool {
-        guard let target = self[location] else {
-            return false
-        }
-        return target.canInteract(with: token) || token.canInteract(with: target)
-    }
-    
     func affect(with token: Token, at location: Location) {
         guard let target = self[location] else {
             return
         }
         
-        if let result = target.interact(with: token) {
+        if let result = target.affect(with: token) {
             place(token: result, at: location)
-            onTokenMorphed(from: target, to: result, at: location)
+            onTokenChanged(from: target, to: result, at: location)
         } else {
             remove(token: target)
-            onTokenMorphed(from: target, to: nil, at: location)
+            onTokenChanged(from: target, to: nil, at: location)
         }
     }
     
-    func onTokenMorphed(from: T?, to: T?, at location: Location) { }
+    func onTokenChanged(from: T?, to: T?, at location: Location) { }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil

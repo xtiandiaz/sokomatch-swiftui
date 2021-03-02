@@ -12,19 +12,14 @@ import Emerald
 struct Access: Layerable {
     
     let id = UUID()
-    let token: TokenType = .access
+    let category: TokenCategory = .boundary
     let key: UUID
     
     var location: Location
     var isLocked = true
     
-    func canInteract(with other: Token) -> Bool {
-        false
-    }
-    
-    func interact(with other: Token) -> Access? {
-        self
-    }
+    let collisionMask: [TokenCategory] = []
+    let interactionMask: [TokenCategory] = []
 }
 
 struct AccessView: View {

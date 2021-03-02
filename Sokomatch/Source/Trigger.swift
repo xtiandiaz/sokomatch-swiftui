@@ -17,21 +17,20 @@ enum TriggerType {
 struct Trigger: Layerable {
     
     let id = UUID()
-    let token: TokenType = .trigger
+    let category: TokenCategory = .trigger
     let type: TriggerType
     
     var location: Location
+    
+    let collisionMask: [TokenCategory] = []
+    let interactionMask: [TokenCategory] = [.avatar]
     
     init(type: TriggerType, location: Location) {
         self.type = type
         self.location = location
     }
     
-    func canInteract(with other: Token) -> Bool {
-        other is Avatar
-    }
-    
-    func interact(with other: Token) -> Trigger? {
+    func affect(with other: Token) -> Trigger? {
         guard let avatar = other as? Avatar else {
             return self
         }

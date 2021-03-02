@@ -16,21 +16,20 @@ enum DroppableType {
 class Droppable: Layerable {
     
     let id = UUID()
-    let token: TokenType = .droppable
+    let category: TokenCategory = .droppable
     let type: DroppableType
     
     var location: Location
+    
+    let collisionMask: [TokenCategory] = []
+    let interactionMask: [TokenCategory] = []
     
     init(type: DroppableType, location: Location) {
         self.type = type
         self.location = location
     }
     
-    func canInteract(with other: Token) -> Bool {
-        false
-    }
-    
-    func interact(with other: Token) -> Self? {
+    func affect(with other: Token) -> Self? {
         return self
     }
 }

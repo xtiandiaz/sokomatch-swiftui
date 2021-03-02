@@ -24,7 +24,7 @@ class TriggerLayer: BoardLayer<Trigger> {
         place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-    override func onTokenMorphed(from: Trigger?, to: Trigger?, at: Location) {
+    override func onTokenChanged(from: Trigger?, to: Trigger?, at: Location) {
         guard let trigger = from else {
             return
         }

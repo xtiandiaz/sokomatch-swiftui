@@ -19,22 +19,21 @@ enum CollectibleType {
 struct Collectible: Layerable {
     
     let id = UUID()
-    let token: TokenType = .collectible
+    let category: TokenCategory = .collectible
     let type: CollectibleType
     
     var location: Location
+    
+    let collisionMask: [TokenCategory] = []
+    let interactionMask: [TokenCategory] = [.avatar]
     
     init(type: CollectibleType, location: Location) {
         self.type = type
         self.location = location
     }
     
-    func canInteract(with other: Token) -> Bool {
-        other is Avatar
-    }
-    
-    func interact(with other: Token) -> Collectible? {
-        other is Avatar ? nil : self
+    func affect(with other: Token) -> Collectible? {
+        nil
     }
 }
 

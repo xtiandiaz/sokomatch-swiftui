@@ -24,15 +24,25 @@ enum AvatarMode {
 class Avatar: ObservableObject, Layerable {
     
     let id = UUID()
-    let token: TokenType = .avatar
+    let category: TokenCategory = .avatar
     
     @Published
     var location: Location
     @Published
     var mode: AvatarMode = .normal
+     
+    var collisionMask: [TokenCategory] {
+        switch mode {
+        case .ghost: return [.boundary]
+        default: return [.boundary, .block]
+        }
+    }
     
-    deinit {
-        print("dead")
+    var interactionMask: [TokenCategory] {
+        switch mode {
+        case .ghost: return [.collectible]
+        default: return [.collectible, .trap]
+        }
     }
     
     init(location: Location) {
@@ -45,6 +55,10 @@ class Avatar: ObservableObject, Layerable {
         location = (try? container.decode(Location.self, forKey: .location)) ?? .zero
     }
     
+    deinit {
+        print("dead")
+    }
+    
     func addKey(_ key: UUID) {
         keys.insert(key)
     }
@@ -53,15 +67,7 @@ class Avatar: ObservableObject, Layerable {
         keys.contains(key)
     }
     
-    func canInteract(with other: Token) -> Bool {
-        switch other {
-        case is Collectible: return true
-        case let tile as Tile: return tile.type == .pit && mode != .ghost
-        default: return false
-        }
-    }
-    
-    func interact(with other: Token) -> Self? {
+    func affect(with other: Token) -> Self? {
         switch other {
         case let tile as Tile where tile.type == .pit && mode != .ghost:
             return nil

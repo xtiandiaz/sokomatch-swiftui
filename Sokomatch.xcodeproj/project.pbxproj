@@ -21,9 +21,8 @@
 		85625C6625E989E50031E380 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C6525E989E50031E380 /* Configurable.swift */; };
 		85625C6C25EB8F860031E380 /* ControlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C6B25EB8F860031E380 /* ControlManager.swift */; };
 		85625C6F25EB95330031E380 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C6E25EB95330031E380 /* Inject.swift */; };
+		85625C7225ED7C130031E380 /* InteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85625C7125ED7C130031E380 /* InteractionController.swift */; };
 		85744F1225D9911C000737C3 /* ComparableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1125D9911C000737C3 /* ComparableExtensions.swift */; };
-		85744F1525DAEA0B000737C3 /* ShovableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1425DAEA0B000737C3 /* ShovableLayer.swift */; };
-		85744F1825DAEA30000737C3 /* Shovable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85744F1725DAEA30000737C3 /* Shovable.swift */; };
 		8597CA8B25D7D25E00D9ADE6 /* CGExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8597CA8A25D7D25E00D9ADE6 /* CGExtensions.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
@@ -41,7 +40,6 @@
 		85AB2A5225D05B4700CB1592 /* MapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5125D05B4700CB1592 /* MapLayer.swift */; };
 		85AB2A5925D3001600CB1592 /* TriggerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A5825D3001600CB1592 /* TriggerLayer.swift */; };
 		85AB2A6825D582FD00CB1592 /* AccessLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6725D582FD00CB1592 /* AccessLayer.swift */; };
-		85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB2A6C25D6692200CB1592 /* BoardLayout.swift */; };
 		85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AEB46B25D6700000F1DB87 /* BoardEvent.swift */; };
 		85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA0256A5E4400DDD44E /* GameView.swift */; };
 		85B51DA4256A5E4400DDD44E /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DA1256A5E4400DDD44E /* Game.swift */; };
@@ -70,10 +68,9 @@
 		85625C6525E989E50031E380 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Configurable.swift; path = Source/Configurable.swift; sourceTree = "<group>"; };
 		85625C6B25EB8F860031E380 /* ControlManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ControlManager.swift; path = Source/ControlManager.swift; sourceTree = "<group>"; };
 		85625C6E25EB95330031E380 /* Inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Inject.swift; path = Source/Inject.swift; sourceTree = "<group>"; };
+		85625C7125ED7C130031E380 /* InteractionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InteractionController.swift; path = Source/InteractionController.swift; sourceTree = "<group>"; };
 		857402E0257EB984000ABD86 /* Emerald */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Emerald; path = ../Emerald; sourceTree = "<group>"; };
 		85744F1125D9911C000737C3 /* ComparableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComparableExtensions.swift; path = Source/ComparableExtensions.swift; sourceTree = "<group>"; };
-		85744F1425DAEA0B000737C3 /* ShovableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShovableLayer.swift; path = Source/ShovableLayer.swift; sourceTree = "<group>"; };
-		85744F1725DAEA30000737C3 /* Shovable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Shovable.swift; path = Source/Shovable.swift; sourceTree = "<group>"; };
 		8597CA8A25D7D25E00D9ADE6 /* CGExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CGExtensions.swift; path = Source/CGExtensions.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA523F7FFD900F4342C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +89,6 @@
 		85AB2A5125D05B4700CB1592 /* MapLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapLayer.swift; path = Source/MapLayer.swift; sourceTree = "<group>"; };
 		85AB2A5825D3001600CB1592 /* TriggerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriggerLayer.swift; path = Source/TriggerLayer.swift; sourceTree = "<group>"; };
 		85AB2A6725D582FD00CB1592 /* AccessLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccessLayer.swift; path = Source/AccessLayer.swift; sourceTree = "<group>"; };
-		85AB2A6C25D6692200CB1592 /* BoardLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardLayout.swift; path = Source/BoardLayout.swift; sourceTree = "<group>"; };
 		85AEB46B25D6700000F1DB87 /* BoardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BoardEvent.swift; path = Source/BoardEvent.swift; sourceTree = "<group>"; };
 		85B51DA0256A5E4400DDD44E /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = Source/GameView.swift; sourceTree = "<group>"; };
 		85B51DA1256A5E4400DDD44E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Source/Game.swift; sourceTree = "<group>"; };
@@ -204,7 +200,6 @@
 				85AB2A5825D3001600CB1592 /* TriggerLayer.swift */,
 				85AB2A5125D05B4700CB1592 /* MapLayer.swift */,
 				85AB2A6725D582FD00CB1592 /* AccessLayer.swift */,
-				85744F1425DAEA0B000737C3 /* ShovableLayer.swift */,
 			);
 			name = Layer;
 			sourceTree = "<group>";
@@ -250,7 +245,6 @@
 				85B51DB6256A5EA500DDD44E /* TokenView.swift */,
 				85AB2A3625CB3DFB00CB1592 /* Collectible.swift */,
 				85625C5D25E6F6260031E380 /* Droppable.swift */,
-				85744F1725DAEA30000737C3 /* Shovable.swift */,
 				85AB2A3A25CC826900CB1592 /* Access.swift */,
 			);
 			name = Token;
@@ -261,9 +255,9 @@
 			children = (
 				85B51DCA256A5EB400DDD44E /* Board.swift */,
 				85AEB46B25D6700000F1DB87 /* BoardEvent.swift */,
-				85AB2A6C25D6692200CB1592 /* BoardLayout.swift */,
 				85B51DC8256A5EB400DDD44E /* BoardView.swift */,
 				85AB2A3E25CE8B3300CB1592 /* Layer.swift */,
+				85625C7125ED7C130031E380 /* InteractionController.swift */,
 			);
 			name = Board;
 			sourceTree = "<group>";
@@ -367,12 +361,12 @@
 				8597CA8B25D7D25E00D9ADE6 /* CGExtensions.swift in Sources */,
 				85B51DAB256A5E5A00DDD44E /* Stage.swift in Sources */,
 				85625C4825DEE1280031E380 /* Controls.swift in Sources */,
-				85AB2A6D25D6692200CB1592 /* BoardLayout.swift in Sources */,
 				85AB2A4B25CFEB0000CB1592 /* AvatarLayer.swift in Sources */,
 				85625C5E25E6F6260031E380 /* Droppable.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */,
+				85625C7225ED7C130031E380 /* InteractionController.swift in Sources */,
 				85625C4225DEC3FD0031E380 /* ViewExtensions.swift in Sources */,
 				85625C4525DEDF160031E380 /* Shapes.swift in Sources */,
 				85AB2A4E25CFEB6300CB1592 /* CollectibleLayer.swift in Sources */,
@@ -382,8 +376,6 @@
 				859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */,
 				85AB2A3B25CC826900CB1592 /* Access.swift in Sources */,
 				85AB2A4325CE9E8F00CB1592 /* UIScreenExtensions.swift in Sources */,
-				85744F1525DAEA0B000737C3 /* ShovableLayer.swift in Sources */,
-				85744F1825DAEA30000737C3 /* Shovable.swift in Sources */,
 				85B51DA3256A5E4400DDD44E /* GameView.swift in Sources */,
 				850EB3CF258EABE900510705 /* Avatar.swift in Sources */,
 			);

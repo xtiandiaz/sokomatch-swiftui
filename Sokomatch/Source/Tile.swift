@@ -22,14 +22,25 @@ enum TileType: Hashable {
 struct Tile: Layerable {
     
     let id = UUID()
-    let token: TokenType = .map
+    let category : TokenCategory
     let type: TileType
     
     var location: Location
     
+    let collisionMask: [TokenCategory] = []
+
+    var interactionMask: [TokenCategory] {
+        switch type {
+        case .stickyFloor: return [.avatar, .block]
+        default: return []
+        }
+    }
+    
     init(type: TileType, location: Location) {
         self.type = type
         self.location = location
+        
+        category = type == .bound ? .boundary : .tile
     }
     
     func canInteract(with other: Token) -> Bool {
@@ -44,7 +55,7 @@ struct Tile: Layerable {
         }
     }
     
-    func interact(with other: Token) -> Tile? {
+    func affect(with other: Token) -> Tile? {
         switch type {
         case .pit where other is Tile:
             switch (other as! Tile).type {

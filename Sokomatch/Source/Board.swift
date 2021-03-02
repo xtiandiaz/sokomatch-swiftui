@@ -186,7 +186,7 @@ class Board: ObservableObject {
             
             switch mode {
             case .normal:
-                interact(with: avatarLayer, at: avatar.location)
+                interactionController.interact(with: avatarLayer, at: avatar.location)
             default:
                 break
             }
@@ -224,6 +224,8 @@ class Board: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    private lazy var interactionController = InteractionController(layers: layers)
+    
     private func move<T: Layerable>(
         layer: BoardLayer<T>,
         at location: Location,
@@ -242,8 +244,8 @@ class Board: ObservableObject {
                 return
             }
             
-            if self.canInteract(with: token, at: destination) {
-                self.interact(with: layer, at: destination)
+            if self.interactionController.canInteract(layer: layer, at: destination) {
+                self.interactionController.interact(with: layer, at: destination)
             }
             
             if self.avatar?.mode == .mighty, self.foregroundLayer[destination.shifted(toward: direction)] != nil {
@@ -262,9 +264,8 @@ class Board: ObservableObject {
     ) -> Location {
         let nextLocation = origin.shifted(toward: direction)
         
-        if
-            !isValid(location: nextLocation) ||
-            isObstructive(location: nextLocation, for: token) ||
+        if !isValid(location: nextLocation) ||
+            interactionController.canCollide(token: token, at: nextLocation) ||
             maxSteps <= 0
         {
             withAnimation(Self.moveAnimation()) {
@@ -273,7 +274,7 @@ class Board: ObservableObject {
             return origin
         }
         
-        if canInteract(with: token, at: nextLocation) {
+        if interactionController.canInteract(token: token, at: nextLocation) {
             withAnimation(Self.moveAnimation()) {
                 layer.relocate(token: token, to: nextLocation)
             }
@@ -289,25 +290,6 @@ class Board: ObservableObject {
     
     private func remove(in layers: [Layer], at location: Location) {
         layers.forEach { $0.remove(tokenAtLocation: location) }
-    }
-    
-    private func canInteract(with token: Token, at location: Location) -> Bool {
-        layers.first { $0.canInteract(with: token, at: location) } != nil
-    }
-    
-    private func interact<T>(with layer: BoardLayer<T>, at location: Location) {
-        guard let source = layer[location] else {
-            return
-        }
-        
-        layers
-            .filter { $0.canInteract(with: layer, at: location) }
-            .forEach {
-                if let target = $0.token(at: location) {
-                    layer.affect(with: target, at: location)
-                }
-                $0.affect(with: source, at: location)
-            }
     }
     
     private func onCollected(_ collectible: Collectible) {
@@ -338,10 +320,6 @@ class Board: ObservableObject {
     
     private func isAvailable(location: Location) -> Bool {
         layers.first { !$0.isAvailable(location: location) } == nil
-    }
-    
-    private func isObstructive(location: Location, for token: Token?) -> Bool {
-        layers.first { $0.isObstructive(location: location, for: token) } != nil
     }
     
     private func first<T: Layerable>(
