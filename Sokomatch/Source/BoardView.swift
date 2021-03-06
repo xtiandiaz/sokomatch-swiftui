@@ -18,18 +18,14 @@ struct BoardView: View {
     
     var body: some View {
         ZStack {
-            MapLayerView(layer: board.backgroundLayer, unitSize: unitSize)
+            MapLayerView(layer: board.mapLayer, unitSize: unitSize)
                 .zIndex(0)
-            MapLayerView(layer: board.foregroundLayer, unitSize: unitSize)
-                .zIndex(1)
-            AccessLayerView(layer: board.accessLayer, unitSize: unitSize)
-                .zIndex(2)
             CollectibleLayerView(layer: board.collectibleLayer, unitSize: unitSize)
+                .zIndex(2)
+            MovableLayerView(layer: board.movableLayer, unitSize: unitSize)
                 .zIndex(3)
-            AvatarLayerView(layer: board.avatarLayer, unitSize: unitSize)
-                .zIndex(4)
             DroppableLayerView(layer: board.droppableLayer, unitSize: unitSize)
-                .zIndex(5)
+                .zIndex(4)
         }
         .offset(offset())
         .aspectRatio(1, contentMode: .fit)

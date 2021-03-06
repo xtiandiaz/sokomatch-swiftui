@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Combine
-import Emerald
 
 class CollectibleLayer: BoardLayer<Collectible> {
     
@@ -27,10 +26,6 @@ class CollectibleLayer: BoardLayer<Collectible> {
         if let collectible = from, to == nil {
             collectibleSubject.send(collectible)
         }
-    }
-    
-    override func isObstructive(location: Location, for token: Token?) -> Bool {
-        false
     }
     
     // MARK: Private

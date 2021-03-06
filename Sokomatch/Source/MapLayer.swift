@@ -20,18 +20,6 @@ class MapLayer: BoardLayer<Tile> {
         default: return false
         }
     }
-    
-    override func isObstructive(location: Location, for token: Token?) -> Bool {
-        switch self[location]?.type {
-        case .bound: return true
-        case .block:
-            switch token {
-            case let avatar as Avatar: return avatar.mode != .ghost
-            default: return true
-            }
-        default: return false
-        }
-    }
 }
 
 struct MapLayerView: BoardLayerView {

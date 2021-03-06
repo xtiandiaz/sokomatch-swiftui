@@ -7,52 +7,40 @@
 //
 
 import SwiftUI
-import Emerald
 
-enum AvatarAbility {
+final class Avatar: Movable, ObservableObject {
     
-    case magnesis
-}
-
-enum AvatarMode {
+    enum Mode {
+        case normal, mighty, ghost
+    }
     
-    case normal
-    case mighty
-    case ghost
-}
-
-class Avatar: ObservableObject, Layerable {
-    
-    let id = UUID()
-    let category: TokenCategory = .avatar
+    enum Ability {
+        case magnesis
+    }
     
     @Published
-    var location: Location
-    @Published
-    var mode: AvatarMode = .normal
+    var mode: Avatar.Mode = .normal
      
-    var collisionMask: [TokenCategory] {
+    override var collisionMask: [TokenCategory] {
         switch mode {
         case .ghost: return [.boundary]
-        default: return [.boundary, .block]
+        default: return [.boundary, .movable]
         }
     }
     
-    var interactionMask: [TokenCategory] {
+    override var interactionMask: [TokenCategory] {
         switch mode {
-        case .ghost: return [.collectible]
-        default: return [.collectible, .trap]
+        case .ghost: return [.collectible, .trigger]
+        default: return [.collectible, .trap, .trigger]
         }
     }
     
     init(location: Location) {
-        self.location = location
+        super.init(type: .avatar, location: location)
     }
     
     required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        location = (try? container.decode(Location.self, forKey: .location)) ?? .zero
+        try super.init(from: decoder)
     }
     
     deinit {
@@ -67,7 +55,7 @@ class Avatar: ObservableObject, Layerable {
         keys.contains(key)
     }
     
-    func affect(with other: Token) -> Self? {
+    override func affect(with other: Token) -> Self? {
         switch other {
         case let tile as Tile where tile.type == .pit && mode != .ghost:
             return nil
@@ -115,12 +103,3 @@ struct AvatarView: View {
 
 // MARK: - Codable
 
-extension Avatar: Codable {
-    
-    enum CodingKeys: String, CodingKey {
-        case location, isFocused
-    }
-    
-    func encode(to encoder: Encoder) throws {
-    }
-}

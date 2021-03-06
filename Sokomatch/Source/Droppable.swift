@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum DroppableType {
+enum DroppableType: String, Codable {
     
     case bomb
 }
@@ -18,8 +18,7 @@ class Droppable: Layerable {
     let id = UUID()
     let category: TokenCategory = .droppable
     let type: DroppableType
-    
-    var location: Location
+    let location: Location
     
     let collisionMask: [TokenCategory] = []
     let interactionMask: [TokenCategory] = []
@@ -27,6 +26,13 @@ class Droppable: Layerable {
     init(type: DroppableType, location: Location) {
         self.type = type
         self.location = location
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        type = try container.decode(DroppableType.self, forKey: .type)
+        location = try container.decode(Location.self, forKey: .location)
     }
     
     func affect(with other: Token) -> Self? {
@@ -41,6 +47,10 @@ class Bomb: Droppable, ObservableObject {
     
     init(location: Location) {
         super.init(type: .bomb, location: location)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
     }
     
     func detonate(after delay: TimeInterval) {
@@ -69,5 +79,18 @@ extension AnyTransition {
     
     static var explosion: AnyTransition {
         scale(scale: 4)
+    }
+}
+
+// MARK: Codable
+
+extension Droppable: Codable {
+    
+    enum CodingKeys: CodingKey {
+        case type, location
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        
     }
 }

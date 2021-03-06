@@ -31,6 +31,18 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         Array(tokenAtLocation.values)
     }
     
+    init() {
+        tokenAtLocation = [:]
+        locationForToken = [:]
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        tokenAtLocation = try container.decode([Location: T].self, forKey: .tokenAtLocation)
+        locationForToken = try container.decode([T: Location].self, forKey: .locationForToken)
+    }
+    
     subscript(location: Location) -> T? {
         tokenAtLocation[location]
     }
@@ -40,15 +52,14 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
     }
     
     func place(token: T) {
+        objectWillChange.send()
+        
         tokenAtLocation[token.location] = token
         locationForToken[token] = token.location
     }
     
     func place(token: T, at location: Location) {
         remove(tokenAtLocation: location)
-        
-        var token = token
-        token.location = location
         
         locationForToken[token] = location
         tokenAtLocation[location] = token
@@ -95,14 +106,10 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         }
     }
     
-    func onTokenChanged(from: T?, to: T?, at location: Location) { }
+    func onTokenChanged(from: T, to: T?, at location: Location) { }
     
     func isAvailable(location: Location) -> Bool {
         tokenAtLocation[location] == nil
-    }
-    
-    func isObstructive(location: Location, for token: Token?) -> Bool {
-        tokenAtLocation[location] != nil
     }
     
     func token(at location: Location) -> Token? {
@@ -111,8 +118,8 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
     
     // MARK: Private
     
-    private var locationForToken = [T: Location]()
-    private var tokenAtLocation = [Location: T]()
+    private var locationForToken: [T: Location]
+    private var tokenAtLocation: [Location: T]
 }
 
 protocol BoardLayerView: View {
@@ -137,5 +144,18 @@ extension BoardLayerView {
             width: CGFloat(location.x) * unitSize,
             height: CGFloat(location.y) * unitSize
         )
+    }
+}
+
+// MARK: Codable
+
+extension BoardLayer: Codable {
+    
+    enum CodingKeys: CodingKey {
+        case id, tokenAtLocation, locationForToken
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        
     }
 }

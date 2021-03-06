@@ -29,10 +29,8 @@ class Board: ObservableObject {
     let edges: Set<Location>
     let safeArea: Set<Location>
     
-    let backgroundLayer: MapLayer
-    let foregroundLayer: MapLayer
-    let avatarLayer: AvatarLayer
-    let accessLayer: AccessLayer
+    let mapLayer: MapLayer
+    let movableLayer: MovableLayer
     let collectibleLayer: CollectibleLayer
     let triggerLayer: TriggerLayer
     let droppableLayer: DroppableLayer
@@ -78,15 +76,13 @@ class Board: ObservableObject {
         self.edges = edges.subtracting(corners)
         self.safeArea = safeArea
         
-        backgroundLayer = MapLayer()
-        foregroundLayer = MapLayer()
-        avatarLayer = AvatarLayer()
-        accessLayer = AccessLayer()
+        mapLayer = MapLayer()
+        movableLayer = MovableLayer()
         collectibleLayer = CollectibleLayer()
         triggerLayer = TriggerLayer()
         droppableLayer = DroppableLayer()
         
-        layers = [backgroundLayer, foregroundLayer, accessLayer, collectibleLayer, avatarLayer, triggerLayer, droppableLayer]
+        layers = [mapLayer, collectibleLayer, movableLayer, triggerLayer, droppableLayer]
         
         collectibleLayer.onCollected.sink {
             [weak self] in
@@ -105,14 +101,14 @@ class Board: ObservableObject {
     }
     
     func populate() {
-        avatar = avatarLayer.create(at: center)
+        avatar = movableLayer.createAvatar(at: center)
         
         for location in edges.union(corners) {
-            backgroundLayer.create(.bound, at: location)
+            mapLayer.create(.bound, at: location)
         }
         
         for location in safeArea {
-            backgroundLayer.create(.floor, at: location)
+            mapLayer.create(.floor, at: location)
         }
         
         var key: Collectible?
@@ -121,14 +117,14 @@ class Board: ObservableObject {
         }
         
         if let location = edges.randomElement(), let edge = edge(forLocation: location) {
-            backgroundLayer.create(.passageway(edge), at: location)
+            mapLayer.create(.passageway(edge), at: location)
             triggerLayer.create(withEvent: .reachedGoal, at: location)
             
             let entrance = location.shifted(toward: edge.facingDirection)
-            backgroundLayer.create(.stickyFloor, at: entrance)
+            mapLayer.create(.stickyFloor, at: entrance)
             
             if let key = key {
-                accessLayer.create(withKey: key.id, at: location)
+                lock(location: location, with: key.id)
                 triggerLayer.create(withKey: key.id, at: entrance)
             }
         }
@@ -141,10 +137,10 @@ class Board: ObservableObject {
         
         for _ in 1...diagonal/4 {
             if let location = randomAvailableLocation(in: safeArea) {
-                foregroundLayer.create(.block, at: location)
+                movableLayer.createBlock(at: location)
             }
             if let location = randomAvailableLocation(in: safeArea) {
-                backgroundLayer.create(.pit, at: location)
+                mapLayer.create(.pit, at: location)
             }
         }
         
@@ -158,7 +154,7 @@ class Board: ObservableObject {
             return
         }
         
-        move(layer: avatarLayer, at: avatar.location, toward: direction)
+        move(at: avatar.location, toward: direction)
         
         playerLocation = avatar.location
     }
@@ -173,10 +169,10 @@ class Board: ObservableObject {
             switch ability {
             case .magnesis:
                 for dir in Direction.allCases {
-                    guard let token = first(in: foregroundLayer, from: avatar.location, toward: dir) else {
+                    guard let token = first(in: movableLayer, from: avatar.location, toward: dir) else {
                         continue
                     }
-                    move(layer: foregroundLayer, at: token.location, toward: dir.opposite)
+                    move(at: token.location, toward: dir.opposite)
                 }
             }
         case .mode(let mode):
@@ -186,7 +182,7 @@ class Board: ObservableObject {
             
             switch mode {
             case .normal:
-                interactionController.interact(with: avatarLayer, at: avatar.location)
+                interactionController.interact(with: movableLayer, at: avatar.location)
             default:
                 break
             }
@@ -222,21 +218,17 @@ class Board: ObservableObject {
     
     private weak var avatar: Avatar?
     
+    private var locks = [UUID: Location]()
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var interactionController = InteractionController(layers: layers)
     
-    private func move<T: Layerable>(
-        layer: BoardLayer<T>,
-        at location: Location,
-        toward direction: Direction,
-        maxSteps: Int = Board.maxMoveSteps
-    ) {
-        guard let token = layer[location] else {
+    private func move(at location: Location, toward direction: Direction, maxSteps: Int = Board.maxMoveSteps) {
+        guard let token = movableLayer[location] else {
             return
         }
         
-        let destination = move(token: token, in: layer, from: location, toward: direction, maxSteps: maxSteps)
+        let destination = move(token: token, from: location, toward: direction, maxSteps: maxSteps)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + Self.moveDuration) {
             [weak self] in
@@ -244,20 +236,23 @@ class Board: ObservableObject {
                 return
             }
             
-            if self.interactionController.canInteract(layer: layer, at: destination) {
-                self.interactionController.interact(with: layer, at: destination)
+            if self.interactionController.canInteract(layer: self.movableLayer, at: destination) {
+                self.interactionController.interact(with: self.movableLayer, at: destination)
             }
             
-            if self.avatar?.mode == .mighty, self.foregroundLayer[destination.shifted(toward: direction)] != nil {
-                self.move(layer: self.foregroundLayer, at: destination.shifted(toward: direction), toward: direction)
+            if
+                let avatar = token as? Avatar,
+                avatar.mode == .mighty,
+                self.movableLayer[destination.shifted(toward: direction)] != nil
+            {
+                self.move(at: destination.shifted(toward: direction), toward: direction)
             }
         }
     }
     
     @discardableResult
-    private func move<T: Layerable>(
-        token: T,
-        in layer: BoardLayer<T>,
+    private func move(
+        token: Movable,
         from origin: Location,
         toward direction: Direction,
         maxSteps: Int = Board.maxMoveSteps
@@ -269,19 +264,19 @@ class Board: ObservableObject {
             maxSteps <= 0
         {
             withAnimation(Self.moveAnimation()) {
-                layer.relocate(token: token, to: origin)
+                movableLayer.relocate(token: token, to: origin)
             }
             return origin
         }
         
         if interactionController.canInteract(token: token, at: nextLocation) {
             withAnimation(Self.moveAnimation()) {
-                layer.relocate(token: token, to: nextLocation)
+                movableLayer.relocate(token: token, to: nextLocation)
             }
             return nextLocation
         }
         
-        return move(token: token, in: layer, from: nextLocation, toward: direction, maxSteps: maxSteps - 1)
+        return move(token: token, from: nextLocation, toward: direction, maxSteps: maxSteps - 1)
     }
     
     private func remove(in layers: [Layer], at locations: [Location]) {
@@ -304,14 +299,28 @@ class Board: ObservableObject {
     private func onEvent(_ event: BoardEvent) {
         switch event {
         case .unlocked(let key):
-            accessLayer.unlock(withKey: key)
+            unlock(with: key)
         case .explosion(let location):
-            remove(in: [avatarLayer, foregroundLayer], at: area(around: location, withRadius: 1))
+            remove(in: [movableLayer], at: area(around: location, withRadius: 1))
         default:
             break
         }
         
         eventSubject.send(event)
+    }
+    
+    private func lock(location: Location, with key: UUID) {
+        mapLayer.create(.door(locked: true, edge: edge(forLocation: location)), at: location)
+        locks[key] = location
+    }
+    
+    private func unlock(with key: UUID) {
+        if let location = locks[key] {
+            mapLayer.place(
+                token: Tile(type: .door(locked: false, edge: edge(forLocation: location)), location: location)
+            )
+            locks[key] = nil
+        }
     }
     
     private func isValid(location: Location) -> Bool {

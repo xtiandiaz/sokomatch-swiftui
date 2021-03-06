@@ -53,20 +53,20 @@ struct GameView: View {
                     StageView(stage: game.stage, unitSize: unitSize)
                 }
                 
+                Spacer()
+                
                 HStack {
-                    VStack(spacing: .xxs) {
-                        Image(systemName: "arrow.up").opacity(0.25).zIndex(-1)
+                    VStack(spacing: .xs) {
+                        Image(systemName: "bolt.fill").opacity(0.25).zIndex(-1)
                         
-                        SlotView(slot: inventory).frame(width: .xxl)
+                        SlotView(slot: inventory).frame(width: 80)
                         
-                        Image(systemName: "arrow.down").opacity(0.25).zIndex(-1)
+                        Image(systemName: "repeat").opacity(0.25).zIndex(-1)
                     }
                     
                     Spacer()
                 }
-                .padding(EdgeInsets(top: .s, leading: .m, bottom: 0, trailing: .m))
-
-                Spacer()
+                .padding(EdgeInsets(top: 0, leading: .m, bottom: .m, trailing: .m))
             }
         }
         .gesture(controlManager.swipeGesture)

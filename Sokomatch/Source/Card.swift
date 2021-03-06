@@ -10,7 +10,7 @@ import SwiftUI
 
 enum CardType: Hashable {
     
-    case ability(AvatarAbility), mode(AvatarMode)
+    case ability(Avatar.Ability), mode(Avatar.Mode)
     
     var color: Color {
         .grayDark

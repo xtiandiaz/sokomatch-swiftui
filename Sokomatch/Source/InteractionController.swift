@@ -19,17 +19,15 @@ struct InteractionController {
     }
     
     func canCollide(token: Token, with other: Token) -> Bool {
-        token.collisionMask.contains(other.category)
+        token.collisionMask.contains(other.category) || other.collisionMask.contains(token.category)
     }
     
     func canInteract(token: Token, at location: Location) -> Bool {
-        layers.compactMap { $0.token(at: location) }.first {
-            canInteract(token: token, with: $0) || canInteract(token: $0, with: token)
-        } != nil
+        layers.compactMap { $0.token(at: location) }.first { canInteract(token: token, with: $0) } != nil
     }
     
     func canInteract(token: Token, with other: Token) -> Bool {
-        token.interactionMask.contains(other.category)
+        token.interactionMask.contains(other.category) || other.interactionMask.contains(token.category)
     }
     
     func canInteract(layer: Layer, at location: Location) -> Bool {

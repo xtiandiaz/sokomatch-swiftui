@@ -24,12 +24,8 @@ class TriggerLayer: BoardLayer<Trigger> {
         place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-    override func onTokenChanged(from: Trigger?, to: Trigger?, at: Location) {
-        guard let trigger = from else {
-            return
-        }
-        
-        switch trigger.type {
+    override func onTokenChanged(from: Trigger, to: Trigger?, at: Location) {
+        switch from.type {
         case .event(let event):
             eventSubject.send(event)
         case .lock(let key) where to == nil:
@@ -37,10 +33,6 @@ class TriggerLayer: BoardLayer<Trigger> {
         default:
             break
         }
-    }
-    
-    override func isObstructive(location: Location, for token: Token?) -> Bool {
-        false
     }
     
     // MARK: Private
