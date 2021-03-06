@@ -89,11 +89,11 @@ struct TileView: View {
 //            Color.ground.overlay(RoundedRectangle(cornerRadius: 4).strokeBorder(Color.black, lineWidth: 1))
             Color.ground.cornerRadius(4).padding(1)
         case .passageway(let edge):
-            passageway(edge: edge)
+            passagewayView(edge: edge)
         case .door(let locked, let edge):
             ZStack {
                 if let edge = edge {
-                    passageway(edge: edge)
+                    passagewayView(edge: edge)
                 } else {
                     Color.ground
                 }
@@ -107,7 +107,7 @@ struct TileView: View {
     
     // MARK: Private
     
-    private func passageway(edge: Edge) -> some View {
+    private func passagewayView(edge: Edge) -> some View {
         LinearGradient(
             gradient: Gradient(colors: [Color.ground.opacity(0), Color.ground]),
             startPoint: edge.gradientStartPoint,
@@ -136,12 +136,16 @@ private extension Edge {
     }
 }
 
-// MARK: Codable
+// MARK: - Codable
 
 extension TileType: Codable {
     
-    enum CodingKeys: CodingKey {
-        case bound, floor
+    enum CodingKeys: String, CodingKey {
+        case bound, floor, stickyFloor, pit, bridge, passageway, door
+    }
+    
+    enum DoorKeys: String, CodingKey {
+        case locked, edge
     }
     
     init(from decoder: Decoder) throws {
@@ -151,6 +155,16 @@ extension TileType: Codable {
         switch key {
         case .bound: self = .bound
         case .floor: self = .floor
+        case .stickyFloor: self = .stickyFloor
+        case .pit: self = .pit
+        case .bridge: self = .bridge
+        case .passageway:
+            self = .passageway(try container.decode(Edge.self, forKey: .passageway))
+        case .door:
+            let door = try container.nestedContainer(keyedBy: DoorKeys.self, forKey: .door)
+            self = .door(
+                locked: try door.decode(Bool.self, forKey: .locked),
+                edge: try? door.decode(Edge.self, forKey: .edge))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -165,9 +179,16 @@ extension TileType: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         switch self {
-        case .bound: try container.encode(true, forKey: .bound)
-        case .floor: try container.encode(true, forKey: .floor)
-        default: break
+        case .bound: try container.encode(0, forKey: .bound)
+        case .floor: try container.encode(0, forKey: .floor)
+        case .stickyFloor: try container.encode(0, forKey: .stickyFloor)
+        case .pit: try container.encode(0, forKey: .pit)
+        case .bridge: try container.encode(0, forKey: .bridge)
+        case .passageway(let edge): try container.encode(edge, forKey: .passageway)
+        case .door(let locked, let edge):
+            var door = container.nestedContainer(keyedBy: DoorKeys.self, forKey: .door)
+            try door.encode(locked, forKey: .locked)
+            try door.encode(edge, forKey: .edge)
         }
     }
 }

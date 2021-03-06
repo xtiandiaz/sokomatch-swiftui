@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Combine
-import Emerald
 
 enum StageEvent {
     
@@ -50,24 +49,47 @@ class Stage: ObservableObject {
     }
     
     func reset() {
+        guard let data = boardData else {
+            return
+        }
+        
         board?.clear()
-        board?.populate()
+        
+        track(board: try! decoder.decode(Board.self, from: data))
     }
     
     // MARK: Private
     
     private let eventSubject = PassthroughSubject<GameEvent, Never>()
     
+    private var boardData: Data?
     private var cancellables = Set<AnyCancellable>()
     
+    private lazy var encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        return encoder
+    }()
+    
+    private lazy var decoder = JSONDecoder()
+    
     private func advance() {
-        board = Board.create()
-        board?.populate()
-        
-        board?.onEvent.sink {
+        track(board: .create())
+    }
+    
+    private func track(board: Board) {
+        board.onEvent.sink {
             [weak self] in
             self?.onBoardEvent($0)
         }.store(in: &cancellables)
+        
+        boardData = try? encoder.encode(board)
+        
+        if let data = boardData {
+            print(String(data: data, encoding: .utf8)!)
+        }
+        
+        self.board = board
     }
     
     private func onBoardEvent(_ event: BoardEvent) {

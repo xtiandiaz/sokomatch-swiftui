@@ -19,8 +19,7 @@ struct Trigger: Layerable {
     let id = UUID()
     let category: TokenCategory = .trigger
     let type: TriggerType
-    
-    var location: Location
+    let location: Location
     
     let collisionMask: [TokenCategory] = []
     let interactionMask: [TokenCategory] = [.avatar]
@@ -50,10 +49,6 @@ extension TriggerType: Codable {
     
     enum CodingKeys: String, CodingKey {
         case event, lock
-    }
-    
-    enum Error: Swift.Error {
-        case unknownValue
     }
     
     init(from decoder: Decoder) throws {
@@ -103,5 +98,6 @@ extension Trigger: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(type, forKey: .type)
+        try container.encode(location, forKey: .location)
     }
 }

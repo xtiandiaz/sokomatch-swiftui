@@ -61,9 +61,9 @@ struct BoardView: View {
         if board.cols <= GameView.viewportUWidth {
             offset.width = CGFloat(GameView.viewportUWidth - board.cols) * unitSize / 2
         } else {
-            let page = (board.playerLocation.x + 1) / GameView.viewportUWidth
-            let bleed = min(0, board.cols - GameView.viewportUWidth * (page + 1))
-            offset.width = -CGFloat(page) * viewportWidth - CGFloat(bleed) * unitSize
+//            let page = (board.playerLocation.x + 1) / GameView.viewportUWidth
+//            let bleed = min(0, board.cols - GameView.viewportUWidth * (page + 1))
+//            offset.width = -CGFloat(page) * viewportWidth - CGFloat(bleed) * unitSize
         }
         
 //        if board.rows <= GameView.viewportUHeight {

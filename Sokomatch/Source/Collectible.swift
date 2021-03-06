@@ -18,7 +18,7 @@ enum CollectibleType {
 
 struct Collectible: Layerable {
     
-    let id = UUID()
+    let id: UUID
     let category: TokenCategory = .collectible
     let type: CollectibleType
     
@@ -30,17 +30,11 @@ struct Collectible: Layerable {
     init(type: CollectibleType, location: Location) {
         self.type = type
         self.location = location
+        id = UUID()
     }
     
     func affect(with other: Token) -> Collectible? {
         nil
-    }
-}
-
-extension Collectible: Equatable {
-    
-    static func ==(lhs: Collectible, rhs: Collectible) -> Bool {
-        lhs.id == rhs.id
     }
 }
 
@@ -83,18 +77,25 @@ struct CollectibleView_Previews: PreviewProvider {
 
 extension CollectibleType: Codable {
     
-    enum CodingKeys: CodingKey {
-        case coin, key
+    enum CodingKeys: String, CodingKey {
+        case coin, key, card
+    }
+    
+    enum CardKeys: String, CodingKey {
+        case type, value
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         switch container.allKeys.first {
-        case .coin:
-            self = .coin(value: try container.decode(Int.self, forKey: .coin))
-        case .key:
-            self = .key
+        case .coin: self = .coin(value: try container.decode(Int.self, forKey: .coin))
+        case .key: self = .key
+        case .card:
+            let card = try container.nestedContainer(keyedBy: CardKeys.self, forKey: .card)
+            self = .card(
+                type: try card.decode(CardType.self, forKey: .type),
+                value: try card.decode(Int.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -108,27 +109,29 @@ extension CollectibleType: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-//        switch self {
-//        case .coin(let value):
-//            try container.encode(value, forKey: .coin)
-//        case .key:
-//            try container.encode(true, forKey: .key)
-//        case .card(let type, let value):
-////            try container.encode(value, forKey: .)
-//            break
-//        }
+        switch self {
+        case .coin(let value):
+            try container.encode(value, forKey: .coin)
+        case .key:
+            try container.encode(true, forKey: .key)
+        case .card(let type, let value):
+            var card = container.nestedContainer(keyedBy: CardKeys.self, forKey: .card)
+            try card.encode(type, forKey: .type)
+            try card.encode(value, forKey: .value)
+        }
     }
 }
 
 extension Collectible: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case type, value, location
+        case id, type, location
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        id = try container.decode(UUID.self, forKey: .id)
         type = try container.decode(CollectibleType.self, forKey: .type)
         location = try container.decode(Location.self, forKey: .location)
     }
@@ -136,6 +139,8 @@ extension Collectible: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(id, forKey: .id)
         try container.encode(type, forKey: .type)
+        try container.encode(location, forKey: .location)
     }
 }

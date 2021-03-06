@@ -10,17 +10,17 @@ import SwiftUI
 
 final class Avatar: Movable, ObservableObject {
     
-    enum Mode {
+    enum Mode: String, Codable {
         case normal, mighty, ghost
     }
     
-    enum Ability {
+    enum Ability: String, Codable {
         case magnesis
     }
     
     @Published
     var mode: Avatar.Mode = .normal
-     
+    
     override var collisionMask: [TokenCategory] {
         switch mode {
         case .ghost: return [.boundary]
@@ -36,11 +36,18 @@ final class Avatar: Movable, ObservableObject {
     }
     
     init(location: Location) {
+        mode = .normal
+        
         super.init(type: .avatar, location: location)
     }
     
     required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        let superDecoder = try container.superDecoder()
+        
+        mode = try container.decode(Avatar.Mode.self, forKey: .mode)
         try super.init(from: decoder)
+        
     }
     
     deinit {
@@ -62,6 +69,13 @@ final class Avatar: Movable, ObservableObject {
         default:
             return self
         }
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(mode, forKey: .mode)
     }
     
     // MARK: Private
@@ -88,7 +102,7 @@ struct AvatarView: View {
 //                Propeller(petalCount: 5, petalBreadth: Angle(degrees: 30))
 //                    .fill(Color.black)
 //                    .scaleEffect(0.75)
-//                    .rotationEffect(Angle(degrees: propellerRotation))
+//                    .rotationEffect (Angle(degrees: propellerRotation))
 //                    .animation(Animation.linear(duration: 0.5).repeatForever(autoreverses: false))
 //                    .transition(AnyTransition.scale.animation(.default))
 //                    .zIndex(1)
@@ -103,3 +117,9 @@ struct AvatarView: View {
 
 // MARK: - Codable
 
+extension Avatar {
+    
+    private enum CodingKeys: String, CodingKey {
+        case mode
+    }
+}

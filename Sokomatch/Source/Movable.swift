@@ -12,11 +12,17 @@ enum MovableType: String, Codable {
     case avatar, block
 }
 
-class Movable: Layerable {
+class Movable: Layerable, Codable {
     
-    let id = UUID()
-    let category: TokenCategory
+    let id: UUID
     let type: MovableType
+    
+    var category: TokenCategory {
+        switch type {
+        case .avatar: return .avatar
+        default: return .movable
+        }
+    }
     
     @Published
     var location: Location
@@ -27,25 +33,27 @@ class Movable: Layerable {
     init(type: MovableType, location: Location) {
         self.type = type
         self.location = location
-        
-        category = {
-            switch type {
-            case .avatar: return .avatar
-            default: return .movable
-            }
-        }()
+        id = UUID()
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        id = try container.decode(UUID.self, forKey: .id)
         type = try container.decode(MovableType.self, forKey: .type)
         location = try container.decode(Location.self, forKey: .location)
-        category = try container.decode(TokenCategory.self, forKey: .category)
     }
     
     func affect(with other: Token) -> Self? {
         return self
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(type, forKey: .type)
+        try container.encode(location, forKey: .location)
     }
 }
 
@@ -63,13 +71,9 @@ struct MovableView: View {
 
 // MARK: - Codable
 
-extension Movable: Codable {
+extension Movable {
     
-    enum CodingKeys: String, CodingKey {
-        case type, location, category
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        
+    private enum CodingKeys: String, CodingKey {
+        case id, type, location
     }
 }

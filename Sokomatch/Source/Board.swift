@@ -11,31 +11,24 @@ import CoreGraphics
 import Emerald
 import Combine
 
-class Board: ObservableObject {
+class Board: ObservableObject, Configurable {
     
     static let moveDuration: TimeInterval = 0.1
     static let maxMoveSteps = 100
     
-    @Published
-    private(set) var playerLocation: Location = .zero
-    
-    let id = UUID()
+    let id: UUID
     let cols: Int
     let rows: Int
-    
-    let locations: Set<Location>
-    let center: Location
-    let corners: Set<Location>
-    let edges: Set<Location>
-    let safeArea: Set<Location>
     
     let mapLayer: MapLayer
     let movableLayer: MovableLayer
     let collectibleLayer: CollectibleLayer
     let triggerLayer: TriggerLayer
     let droppableLayer: DroppableLayer
-    
-    let layers: [Layer]
+
+    private(set) lazy var layers: [Layer] = [
+        mapLayer, triggerLayer, collectibleLayer, movableLayer, droppableLayer
+    ]
     
     var onEvent: AnyPublisher<BoardEvent, Never> {
         eventSubject.eraseToAnyPublisher()
@@ -45,108 +38,34 @@ class Board: ObservableObject {
         self.cols = cols
         self.rows = rows
         
-        center = Location(x: cols / 2, y: rows / 2)
-        
-        corners = [
-            Location(x: 0, y: 0, corners: .topLeft),
-            Location(x: cols - 1, y: 0, corners: .topRight),
-            Location(x: 0, y: rows - 1, corners: .bottomLeft),
-            Location(x: cols - 1, y: rows - 1, corners: .bottomRight)
-        ]
-        
-        var edges = Set<Location>()
-        var safeArea = Set<Location>()
-        var locations = Set<Location>()
-        
-        for y in 0..<rows {
-            for x in 0..<cols {
-                let location = Location(x: x, y: y)
-                
-                locations.insert(location)
-                
-                if x == 0 || x == cols - 1 || y == 0 || y == rows - 1 {
-                    edges.insert(location)
-                } else {
-                    safeArea.insert(location)
-                }
-            }
-        }
-        
-        self.locations = locations
-        self.edges = edges.subtracting(corners)
-        self.safeArea = safeArea
+        id = UUID()
         
         mapLayer = MapLayer()
-        movableLayer = MovableLayer()
-        collectibleLayer = CollectibleLayer()
         triggerLayer = TriggerLayer()
+        collectibleLayer = CollectibleLayer()
+        movableLayer = MovableLayer()
         droppableLayer = DroppableLayer()
         
-        layers = [mapLayer, collectibleLayer, movableLayer, triggerLayer, droppableLayer]
-        
-        collectibleLayer.onCollected.sink {
-            [weak self] in
-            self?.onCollected($0)
-        }.store(in: &cancellables)
-
-        triggerLayer.onTriggered.sink {
-            [weak self] in
-            self?.onEvent($0)
-        }.store(in: &cancellables)
-        
-        droppableLayer.onEvent.sink {
-            [weak self] in
-            self?.onEvent($0)
-        }.store(in: &cancellables)
+        populate()
+        subscribeToPublishers()
     }
     
-    func populate() {
-        avatar = movableLayer.createAvatar(at: center)
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        for location in edges.union(corners) {
-            mapLayer.create(.bound, at: location)
-        }
+        id = try container.decode(UUID.self, forKey: .id)
+        cols = try container.decode(Int.self, forKey: .cols)
+        rows = try container.decode(Int.self, forKey: .rows)
         
-        for location in safeArea {
-            mapLayer.create(.floor, at: location)
-        }
+        mapLayer = try container.decode(MapLayer.self, forKey: .mapLayer)
+        triggerLayer = try container.decode(TriggerLayer.self, forKey: .triggerLayer)
+        collectibleLayer = try container.decode(CollectibleLayer.self, forKey: .collectibleLayer)
+        movableLayer = try container.decode(MovableLayer.self, forKey: .movableLayer)
+        droppableLayer = try container.decode(DroppableLayer.self, forKey: .droppableLayer)
         
-        var key: Collectible?
-        if let location = randomAvailableLocation(in: safeArea), Bool.random() {
-            key = collectibleLayer.create(.key, at: location)
-        }
+        avatar = movableLayer.avatars.first
         
-        if let location = edges.randomElement(), let edge = edge(forLocation: location) {
-            mapLayer.create(.passageway(edge), at: location)
-            triggerLayer.create(withEvent: .reachedGoal, at: location)
-            
-            let entrance = location.shifted(toward: edge.facingDirection)
-            mapLayer.create(.stickyFloor, at: entrance)
-            
-            if let key = key {
-                lock(location: location, with: key.id)
-                triggerLayer.create(withKey: key.id, at: entrance)
-            }
-        }
-        
-        for _ in 0...diagonal/3 {
-            if let location = randomAvailableLocation(in: safeArea) {
-                collectibleLayer.create(.coin(value: 1), at: location)
-            }
-        }
-        
-        for _ in 1...diagonal/4 {
-            if let location = randomAvailableLocation(in: safeArea) {
-                movableLayer.createBlock(at: location)
-            }
-            if let location = randomAvailableLocation(in: safeArea) {
-                mapLayer.create(.pit, at: location)
-            }
-        }
-        
-        if diagonal > 7, let location = randomAvailableLocation(in: safeArea) {
-            collectibleLayer.create(.card(type: .random(), value: 1), at: location)
-        }
+        subscribeToPublishers()
     }
     
     func move(toward direction: Direction) {
@@ -155,8 +74,6 @@ class Board: ObservableObject {
         }
         
         move(at: avatar.location, toward: direction)
-        
-        playerLocation = avatar.location
     }
     
     func execute(card: Card) {
@@ -223,6 +140,25 @@ class Board: ObservableObject {
     
     private lazy var interactionController = InteractionController(layers: layers)
     
+    private lazy var locations: Set<Location> = {
+        var locations = Set<Location>()
+        
+        for y in 0..<rows {
+            for x in 0..<cols {
+                locations.insert(Location(x: x, y: y))
+            }
+        }
+        
+        return locations
+    }()
+    
+    private lazy var corners: Set<Location> = [
+        Location(x: 0, y: 0, corners: .topLeft),
+        Location(x: cols - 1, y: 0, corners: .topRight),
+        Location(x: 0, y: rows - 1, corners: .bottomLeft),
+        Location(x: cols - 1, y: rows - 1, corners: .bottomRight)
+    ]
+    
     private func move(at location: Location, toward direction: Direction, maxSteps: Int = Board.maxMoveSteps) {
         guard let token = movableLayer[location] else {
             return
@@ -287,28 +223,6 @@ class Board: ObservableObject {
         layers.forEach { $0.remove(tokenAtLocation: location) }
     }
     
-    private func onCollected(_ collectible: Collectible) {
-        switch collectible.type {
-        case .key: avatar?.addKey(collectible.id)
-        default: break
-        }
-        
-        eventSubject.send(.collected(collectible))
-    }
-    
-    private func onEvent(_ event: BoardEvent) {
-        switch event {
-        case .unlocked(let key):
-            unlock(with: key)
-        case .explosion(let location):
-            remove(in: [movableLayer], at: area(around: location, withRadius: 1))
-        default:
-            break
-        }
-        
-        eventSubject.send(event)
-    }
-    
     private func lock(location: Location, with key: UUID) {
         mapLayer.create(.door(locked: true, edge: edge(forLocation: location)), at: location)
         locks[key] = location
@@ -349,6 +263,52 @@ class Board: ObservableObject {
         return first(in: layer, from: nextLocation, toward: direction)
     }
 }
+
+// MARK: - Events
+
+extension Board {
+    
+    func subscribeToPublishers() {
+        collectibleLayer.onCollected.sink {
+            [weak self] in
+            self?.onCollected($0)
+        }.store(in: &cancellables)
+
+        triggerLayer.onTriggered.sink {
+            [weak self] in
+            self?.onEvent($0)
+        }.store(in: &cancellables)
+        
+        droppableLayer.onEvent.sink {
+            [weak self] in
+            self?.onEvent($0)
+        }.store(in: &cancellables)
+    }
+    
+    private func onCollected(_ collectible: Collectible) {
+        switch collectible.type {
+        case .key: avatar?.addKey(collectible.id)
+        default: break
+        }
+        
+        eventSubject.send(.collected(collectible))
+    }
+    
+    private func onEvent(_ event: BoardEvent) {
+        switch event {
+        case .unlocked(let key):
+            unlock(with: key)
+        case .explosion(let location):
+            remove(in: [movableLayer], at: area(around: location, withRadius: 1))
+        default:
+            break
+        }
+        
+        eventSubject.send(event)
+    }
+}
+
+// MARK: - Utilities
 
 extension Board {
     
@@ -402,4 +362,81 @@ extension Board {
         
         return locations
     }
+}
+
+extension Board {
+    
+    func populate() {
+        let center = Location(x: cols / 2, y: rows / 2)
+        var edges = Set<Location>()
+        var safeArea = Set<Location>()
+        
+        for l in locations {
+            if l.x == 0 || l.x == cols - 1 || l.y == 0 || l.y == rows - 1 {
+                edges.insert(l)
+            } else {
+                safeArea.insert(l)
+            }
+        }
+        
+        edges = edges.subtracting(corners)
+        
+        avatar = movableLayer.createAvatar(at: center)
+        
+        for location in edges.union(corners) {
+            mapLayer.create(.bound, at: location)
+        }
+        
+        for location in safeArea {
+            mapLayer.create(.floor, at: location)
+        }
+        
+        var key: Collectible?
+        if let location = randomAvailableLocation(in: safeArea), Bool.random() {
+            key = collectibleLayer.create(.key, at: location)
+        }
+        
+        if let location = edges.randomElement(), let edge = edge(forLocation: location) {
+            mapLayer.create(.passageway(edge), at: location)
+            triggerLayer.create(withEvent: .reachedGoal, at: location)
+            
+            let entrance = location.shifted(toward: edge.facingDirection)
+            mapLayer.create(.stickyFloor, at: entrance)
+            
+            if let key = key {
+                lock(location: location, with: key.id)
+                triggerLayer.create(withKey: key.id, at: entrance)
+            }
+        }
+        
+        for _ in 0...diagonal/3 {
+            if let location = randomAvailableLocation(in: safeArea) {
+                collectibleLayer.create(.coin(value: 1), at: location)
+            }
+        }
+        
+        for _ in 1...diagonal/4 {
+            if let location = randomAvailableLocation(in: safeArea) {
+                movableLayer.createBlock(at: location)
+            }
+            if let location = randomAvailableLocation(in: safeArea) {
+                mapLayer.create(.pit, at: location)
+            }
+        }
+        
+        if diagonal > 7, let location = randomAvailableLocation(in: safeArea) {
+            collectibleLayer.create(.card(type: .random(), value: 1), at: location)
+        }
+    }
+}
+
+// MARK: - Codable
+
+extension Board: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case id, cols, rows
+        case mapLayer, triggerLayer, collectibleLayer, movableLayer, droppableLayer
+    }
+    
 }

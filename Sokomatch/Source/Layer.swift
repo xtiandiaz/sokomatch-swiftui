@@ -9,7 +9,7 @@
 import SwiftUI
 import Emerald
 
-protocol Layer {
+protocol Layer: Codable {
     
     var id: UUID { get }
     
@@ -25,22 +25,26 @@ protocol Layer {
 
 class BoardLayer<T: Layerable>: ObservableObject, Layer {
     
-    let id = UUID()
+    let id: UUID
     
     var tokens: [T] {
         Array(tokenAtLocation.values)
     }
     
     init() {
-        tokenAtLocation = [:]
-        locationForToken = [:]
+        id = UUID()
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        tokenAtLocation = try container.decode([Location: T].self, forKey: .tokenAtLocation)
-        locationForToken = try container.decode([T: Location].self, forKey: .locationForToken)
+        id = try container.decode(UUID.self, forKey: .id)
+        
+        if let tokens = try container.decodeIfPresent([T].self, forKey: .tokens) {
+            for token in tokens {
+                place(token: token)
+            }
+        }
     }
     
     subscript(location: Location) -> T? {
@@ -81,7 +85,7 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
     func remove(tokenAtLocation location: Location) {
         objectWillChange.send()
         if let token = tokenAtLocation[location] {
-            locationForToken[token] = nil
+             locationForToken[token] = nil
         }
         tokenAtLocation[location] = nil
     }
@@ -116,10 +120,17 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
         self[location]
     }
     
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(id, forKey: .id)
+        try container.encode(tokens, forKey: .tokens)
+    }
+    
     // MARK: Private
     
-    private var locationForToken: [T: Location]
-    private var tokenAtLocation: [Location: T]
+    private var locationForToken = [T: Location]()
+    private var tokenAtLocation = [Location: T]()
 }
 
 protocol BoardLayerView: View {
@@ -147,15 +158,11 @@ extension BoardLayerView {
     }
 }
 
-// MARK: Codable
+// MARK: - Codable
 
 extension BoardLayer: Codable {
     
     enum CodingKeys: CodingKey {
-        case id, tokenAtLocation, locationForToken
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        
+        case id, tokens
     }
 }

@@ -22,7 +22,7 @@ enum Direction: Int, CaseIterable {
     }
 }
 
-enum Edge {
+enum Edge: String, Codable {
     
     case top, left, bottom, right
     
@@ -36,7 +36,7 @@ enum Edge {
     }
 }
 
-enum Corner {
+enum Corner: String, Codable {
     
     case topLeft, topRight, bottomRight, bottomLeft
 }
@@ -92,13 +92,30 @@ struct Location: Equatable, Hashable {
 
 // MARK: - Codable
 
+extension UIRectEdge: Codable {}
+extension UIRectCorner: Codable {}
+
 extension Location: Codable {
     
+    enum CodingKeys: String, CodingKey {
+        case x, y, edges, corners
+    }
+    
     init(from decoder: Decoder) throws {
-        self.init(x: 0, y: 0)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        x = try container.decode(Int.self, forKey: .x)
+        y = try container.decode(Int.self, forKey: .y)
+        edges = try container.decode(UIRectEdge.self, forKey: .edges)
+        corners = try container.decode(UIRectCorner.self, forKey: .corners)
     }
     
     func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(x, forKey: .x)
+        try container.encode(y, forKey: .y)
+        try container.encode(edges, forKey: .edges)
+        try container.encode(corners, forKey: .corners)
     }
 }

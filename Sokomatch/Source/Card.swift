@@ -76,3 +76,41 @@ struct CardView: View {
         .transition(AnyTransition.opacity.combined(with: .scale).animation(.default))
     }
 }
+
+// MARK: - Codable
+
+extension CardType: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case ability, mode
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        switch container.allKeys.first {
+        case .ability:
+            self = .ability(try container.decode(Avatar.Ability.self, forKey: .ability))
+        case .mode:
+            self = .mode(try container.decode(Avatar.Mode.self, forKey: .mode))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: container.codingPath,
+                    debugDescription: "Unable to decode \(Self.self)"
+                )
+            )
+        }
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        switch self {
+        case .ability(let ability):
+            try container.encode(ability, forKey: .ability)
+        case .mode(let mode):
+            try container.encode(mode, forKey: .mode)
+        }
+    }
+}
