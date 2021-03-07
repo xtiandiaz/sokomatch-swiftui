@@ -27,6 +27,7 @@
 		859CD74C25F36C4A00164F8A /* Movable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CD74B25F36C4A00164F8A /* Movable.swift */; };
 		859CD74F25F36F2900164F8A /* MovableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CD74E25F36F2900164F8A /* MovableLayer.swift */; };
 		859CD75325F375E300164F8A /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CD75225F375E300164F8A /* Block.swift */; };
+		859CD75A25F4E6F200164F8A /* Emblem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CD75925F4E6F200164F8A /* Emblem.swift */; };
 		859E4CA623F7FFD900F4342C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA523F7FFD900F4342C /* AppDelegate.swift */; };
 		859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA723F7FFD900F4342C /* SceneDelegate.swift */; };
 		859E4CAA23F7FFD900F4342C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E4CA923F7FFD900F4342C /* ContentView.swift */; };
@@ -75,6 +76,7 @@
 		859CD74B25F36C4A00164F8A /* Movable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Movable.swift; path = Source/Movable.swift; sourceTree = "<group>"; };
 		859CD74E25F36F2900164F8A /* MovableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovableLayer.swift; path = Source/MovableLayer.swift; sourceTree = "<group>"; };
 		859CD75225F375E300164F8A /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Block.swift; path = Source/Block.swift; sourceTree = "<group>"; };
+		859CD75925F4E6F200164F8A /* Emblem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Emblem.swift; path = Source/Emblem.swift; sourceTree = "<group>"; };
 		859E4CA223F7FFD900F4342C /* Sokomatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sokomatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859E4CA523F7FFD900F4342C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		859E4CA723F7FFD900F4342C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				85B51DB1256A5EA500DDD44E /* Tile.swift */,
+				859CD75925F4E6F200164F8A /* Emblem.swift */,
 				859CD75125F3758900164F8A /* Movable */,
 				850EB3D1258EAFF400510705 /* Trigger.swift */,
 				85B51DB3256A5EA500DDD44E /* Token.swift */,
@@ -373,6 +376,7 @@
 				85625C4825DEE1280031E380 /* Controls.swift in Sources */,
 				85625C5E25E6F6260031E380 /* Droppable.swift in Sources */,
 				85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */,
+				859CD75A25F4E6F200164F8A /* Emblem.swift in Sources */,
 				859E4CA823F7FFD900F4342C /* SceneDelegate.swift in Sources */,
 				85AEB46C25D6700000F1DB87 /* BoardEvent.swift in Sources */,
 				85625C7225ED7C130031E380 /* InteractionController.swift in Sources */,

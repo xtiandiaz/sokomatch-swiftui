@@ -140,6 +140,7 @@ class Board: ObservableObject, Configurable {
     private weak var avatar: Avatar?
     
     private var locks: [UUID: Location]
+//    private var switches: [UUID: Location]
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var interactionController = InteractionController(layers: layers)
@@ -397,16 +398,16 @@ extension Board {
             key = collectibleLayer.create(.key, at: location)
         }
         
-        if let location = edges.randomElement(), let edge = edge(forLocation: location) {
-            mapLayer.create(.passageway(edge), at: location)
-            triggerLayer.create(withEvent: .reachedGoal, at: location)
+        if let exitLocation = edges.randomElement(), let edge = edge(forLocation: exitLocation) {
+            mapLayer.create(.passageway(edge), at: exitLocation)
+            triggerLayer.create(withEvent: .reachedGoal, at: exitLocation)
             
-            let entrance = location.shifted(toward: edge.facingDirection)
+            let entrance = exitLocation.shifted(toward: edge.facingDirection)
             mapLayer.create(.stickyFloor, at: entrance)
             
             if let key = key {
-                lock(location: location, with: key.id)
-                triggerLayer.create(withKey: key.id, at: entrance)
+                lock(location: exitLocation, with: key.id)
+                triggerLayer.createLock(withKey: key.id, at: entrance)
             }
         }
         
@@ -418,11 +419,19 @@ extension Board {
         
         for _ in 1...diagonal/4 {
             if let location = randomAvailableLocation(in: safeArea) {
-                movableLayer.createBlock(at: location)
-            }
-            if let location = randomAvailableLocation(in: safeArea) {
                 mapLayer.create(.pit, at: location)
             }
+        }
+        
+//        if Bool.random() {
+        if false {
+            for _ in 1...diagonal/4 {
+                if let location = randomAvailableLocation(in: safeArea) {
+                    movableLayer.createBlock(at: location)
+                }
+            }
+        } else if let location = randomAvailableLocation(in: safeArea) {
+            triggerLayer.createSwitch(withEmblem: Emblem.random(), enabled: false, at: location)
         }
         
         if diagonal > 7, let location = randomAvailableLocation(in: safeArea) {

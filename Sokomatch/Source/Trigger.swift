@@ -7,11 +7,10 @@
 //
 
 import SwiftUI
-import Emerald
 
 enum TriggerType {
     
-    case event(BoardEvent), lock(key: UUID)
+    case event(BoardEvent), lock(key: UUID), `switch`(emblem: Emblem, enabled: Bool)
 }
 
 struct Trigger: Layerable {
@@ -22,7 +21,15 @@ struct Trigger: Layerable {
     let location: Location
     
     let collisionMask: [TokenCategory] = []
-    let interactionMask: [TokenCategory] = [.avatar]
+    
+    var interactionMask: [TokenCategory] {
+        switch type {
+        case .switch(_, let enabled) where enabled:
+            return []
+        default:
+            return [.avatar]
+        }
+    }
     
     init(type: TriggerType, location: Location) {
         self.type = type
@@ -31,15 +38,35 @@ struct Trigger: Layerable {
     }
     
     func affect(with other: Token) -> Trigger? {
-        guard let avatar = other as? Avatar else {
-            return self
-        }
-        
-        switch type {
-        case .lock(let key):
-            return avatar.hasKey(key) ? nil : self
+        return self
+    }
+}
+
+struct TriggerView: View {
+    
+    let trigger: Trigger
+    let unitSize: CGFloat
+    
+    var body: some View {
+        switch trigger.type {
+        case .switch(let emblem, let enabled):
+            ZStack {
+                Circle().fill(emblem.color).brightness(-0.5)
+                Group {
+                    if !enabled {
+                        Circle().fill(emblem.color)
+                    }
+                    
+                    emblem.icon(withSize: unitSize)
+                        .foregroundColor(emblem.color)
+                        .if(!enabled) { $0.brightness(-0.5) }
+                        .scaleEffect(0.5)
+                }
+                .if(!enabled) { $0.offset(x: 0, y: -.xxs) }
+            }
+            .scaleEffect(0.5)
         default:
-            return self
+            EmptyView()
         }
     }
 }
@@ -49,7 +76,11 @@ struct Trigger: Layerable {
 extension TriggerType: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case event, lock
+        case event, lock, `switch`
+    }
+    
+    enum SwitchKeys: String, CodingKey {
+        case emblem, enabled
     }
     
     init(from decoder: Decoder) throws {
@@ -60,6 +91,12 @@ extension TriggerType: Codable {
             self = .event(try container.decode(BoardEvent.self, forKey: .event))
         case .lock:
             self = .lock(key: try container.decode(UUID.self, forKey: .lock))
+        case .switch:
+            let `switch` = try container.nestedContainer(keyedBy: SwitchKeys.self, forKey: .switch)
+            self = .switch(
+                emblem: try `switch`.decode(Emblem.self, forKey: .emblem),
+                enabled: try `switch`.decode(Bool.self, forKey: .enabled)
+            )
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -78,6 +115,10 @@ extension TriggerType: Codable {
             try container.encode(event, forKey: .event)
         case .lock(let key):
             try container.encode(key, forKey: .lock)
+        case .switch(let emblem, let enabled):
+            var `switch` = container.nestedContainer(keyedBy: SwitchKeys.self, forKey: .switch)
+            try `switch`.encode(emblem, forKey: .emblem)
+            try `switch`.encode(enabled, forKey: .enabled)
         }
     }
 }

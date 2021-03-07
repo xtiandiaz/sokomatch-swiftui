@@ -76,8 +76,9 @@ struct TileView: View {
                 Color.ground
                 
                 Image(systemName: "circle.grid.3x3.fill")
-                    .font(.title)
-                    .foregroundColor(Color.black).opacity(0.25)
+                    .resizableToFit()
+                    .foregroundColor(Color.black.opacity(0.25))
+                    .scaleEffect(0.5)
             }
         case .pit:
             Color.clear
