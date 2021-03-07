@@ -174,8 +174,8 @@
 				859E4CA923F7FFD900F4342C /* ContentView.swift */,
 				859E4CAB23F7FFDA00F4342C /* Assets.xcassets */,
 				859E4CB023F7FFDA00F4342C /* LaunchScreen.storyboard */,
-				859E4CB323F7FFDA00F4342C /* Info.plist */,
 				859E4CAD23F7FFDA00F4342C /* Preview Content */,
+				859E4CB323F7FFDA00F4342C /* Info.plist */,
 			);
 			path = Sokomatch;
 			sourceTree = "<group>";

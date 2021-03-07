@@ -20,12 +20,12 @@ struct BoardView: View {
         ZStack {
             MapLayerView(layer: board.mapLayer, unitSize: unitSize)
                 .zIndex(0)
+            MovableLayerView(layer: board.movableLayer, unitSize: unitSize)
+                .zIndex(1)
             CollectibleLayerView(layer: board.collectibleLayer, unitSize: unitSize)
                 .zIndex(2)
-            MovableLayerView(layer: board.movableLayer, unitSize: unitSize)
-                .zIndex(3)
             DroppableLayerView(layer: board.droppableLayer, unitSize: unitSize)
-                .zIndex(4)
+                .zIndex(3)
         }
         .offset(offset())
         .aspectRatio(1, contentMode: .fit)

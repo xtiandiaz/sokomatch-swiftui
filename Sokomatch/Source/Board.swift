@@ -46,6 +46,8 @@ class Board: ObservableObject, Configurable {
         movableLayer = MovableLayer()
         droppableLayer = DroppableLayer()
         
+        locks = [:]
+        
         populate()
         subscribeToPublishers()
     }
@@ -62,6 +64,8 @@ class Board: ObservableObject, Configurable {
         collectibleLayer = try container.decode(CollectibleLayer.self, forKey: .collectibleLayer)
         movableLayer = try container.decode(MovableLayer.self, forKey: .movableLayer)
         droppableLayer = try container.decode(DroppableLayer.self, forKey: .droppableLayer)
+        
+        locks = try container.decode([UUID: Location].self, forKey: .locks)
         
         avatar = movableLayer.avatars.first
         
@@ -135,7 +139,7 @@ class Board: ObservableObject, Configurable {
     
     private weak var avatar: Avatar?
     
-    private var locks = [UUID: Location]()
+    private var locks: [UUID: Location]
     private var cancellables = Set<AnyCancellable>()
     
     private lazy var interactionController = InteractionController(layers: layers)
@@ -172,15 +176,12 @@ class Board: ObservableObject, Configurable {
                 return
             }
             
-            if self.interactionController.canInteract(layer: self.movableLayer, at: destination) {
-                self.interactionController.interact(with: self.movableLayer, at: destination)
-            }
+            let layer = self.movableLayer
             
-            if
-                let avatar = token as? Avatar,
-                avatar.mode == .mighty,
-                self.movableLayer[destination.shifted(toward: direction)] != nil
-            {
+            if self.interactionController.canInteract(layer: layer, at: destination) {
+                self.interactionController.interact(with: layer, at: destination)
+            }
+            if layer.canPush(at: destination, toward: direction) {
                 self.move(at: destination.shifted(toward: direction), toward: direction)
             }
         }
@@ -437,6 +438,6 @@ extension Board: Codable {
     enum CodingKeys: String, CodingKey {
         case id, cols, rows
         case mapLayer, triggerLayer, collectibleLayer, movableLayer, droppableLayer
+        case locks
     }
-    
 }

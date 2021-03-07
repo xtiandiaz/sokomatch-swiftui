@@ -35,19 +35,24 @@ final class Avatar: Movable, ObservableObject {
         }
     }
     
+    override var weight: Int {
+        switch mode {
+        case .mighty: return 10
+        default: return 0
+        }
+    }
+    
     init(location: Location) {
-        mode = .normal
+        mode = .mighty
         
         super.init(type: .avatar, location: location)
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-//        let superDecoder = try container.superDecoder()
-        
         mode = try container.decode(Avatar.Mode.self, forKey: .mode)
-        try super.init(from: decoder)
         
+        try super.init(from: try container.superDecoder())
     }
     
     deinit {
@@ -72,10 +77,10 @@ final class Avatar: Movable, ObservableObject {
     }
     
     override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(mode, forKey: .mode)
+        try super.encode(to: container.superEncoder())
     }
     
     // MARK: Private

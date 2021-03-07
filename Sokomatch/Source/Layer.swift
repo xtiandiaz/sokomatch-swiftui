@@ -70,6 +70,14 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
     }
     
     func relocate(token: T, to destination: Location) {
+        guard
+            let current = self[token.location],
+            current.id == token.id,
+            current.location != destination
+        else {
+            return
+        }
+            
         remove(token: token)
         place(token: token, at: destination)
     }
@@ -101,10 +109,12 @@ class BoardLayer<T: Layerable>: ObservableObject, Layer {
             return
         }
         
-        if let result = target.affect(with: token) {
+        let result = target.affect(with: token)
+        
+        if let result = result, result != target {
             place(token: result, at: location)
             onTokenChanged(from: target, to: result, at: location)
-        } else {
+        } else if result == nil {
             remove(token: target)
             onTokenChanged(from: target, to: nil, at: location)
         }

@@ -27,8 +27,15 @@ class Movable: Layerable, Codable {
     @Published
     var location: Location
     
-    var collisionMask: [TokenCategory] { [] }
-    var interactionMask: [TokenCategory] { [] }
+    var collisionMask: [TokenCategory] {
+        [.boundary, .movable]
+    }
+    
+    var interactionMask: [TokenCategory] {
+        [.trap]
+    }
+    
+    var weight: Int { 1 }
     
     init(type: MovableType, location: Location) {
         self.type = type
@@ -45,7 +52,16 @@ class Movable: Layerable, Codable {
     }
     
     func affect(with other: Token) -> Self? {
-        return self
+        switch other {
+        case let tile as Tile where tile.type == .pit:
+            return nil
+        default:
+            return self
+        }
+    }
+    
+    func canPush(_ other: Movable) -> Bool {
+        other.weight <= weight
     }
     
     func encode(to encoder: Encoder) throws {

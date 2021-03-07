@@ -50,6 +50,17 @@ class MovableLayer: BoardLayer<Movable> {
         token.location = location
     }
     
+    func canPush(at origin: Location, toward direction: Direction) -> Bool {
+        guard
+            let source = self[origin],
+            let target = self[origin.shifted(toward: direction)]
+        else {
+            return false
+        }
+        
+        return source.canPush(target)
+    }
+    
     override func onTokenChanged(from: Movable, to: Movable?, at location: Location) {
         if to == nil, let avatar = from as? Avatar {
             _avatars.remove(avatar)

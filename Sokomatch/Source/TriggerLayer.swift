@@ -24,12 +24,19 @@ class TriggerLayer: BoardLayer<Trigger> {
         place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-    override func onTokenChanged(from: Trigger, to: Trigger?, at: Location) {
-        switch from.type {
+    override func affect(with token: Token, at location: Location) {
+        guard
+            let avatar = token as? Avatar,
+            let trigger = self[location]
+        else {
+            return
+        }
+        
+        switch trigger.type {
+        case .lock(let key) where avatar.hasKey(key):
+            eventSubject.send(.unlocked(key: key))
         case .event(let event):
             eventSubject.send(event)
-        case .lock(let key) where to == nil:
-            eventSubject.send(.unlocked(key: key))
         default:
             break
         }

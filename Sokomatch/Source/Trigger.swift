@@ -16,7 +16,7 @@ enum TriggerType {
 
 struct Trigger: Layerable {
     
-    let id = UUID()
+    let id: UUID
     let category: TokenCategory = .trigger
     let type: TriggerType
     let location: Location
@@ -27,6 +27,7 @@ struct Trigger: Layerable {
     init(type: TriggerType, location: Location) {
         self.type = type
         self.location = location
+        id = UUID()
     }
     
     func affect(with other: Token) -> Trigger? {
@@ -84,12 +85,13 @@ extension TriggerType: Codable {
 extension Trigger: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case type, location
+        case id, type, location
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        id = try container.decode(UUID.self, forKey: .id)
         type = try container.decode(TriggerType.self, forKey: .type)
         location = try container.decode(Location.self, forKey: .location)
     }
@@ -97,6 +99,7 @@ extension Trigger: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(id, forKey: .id)
         try container.encode(type, forKey: .type)
         try container.encode(location, forKey: .location)
     }
