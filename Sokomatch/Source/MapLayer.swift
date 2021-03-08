@@ -14,6 +14,14 @@ class MapLayer: BoardLayer<Tile> {
         place(token: Tile(type: tile, location: location))
     }
     
+    func activate(locations: [Location], withEmblem emblem: Emblem) {
+        locations.forEach {
+            if self[$0]?.type == .block(emblem: emblem, enabled: false) {
+                place(token: Tile(type: .block(emblem: emblem, enabled: true), location: $0))
+            }
+        }
+    }
+    
     override func isAvailable(location: Location) -> Bool {
         switch self[location]?.type {
         case nil, .floor: return true
@@ -31,7 +39,7 @@ struct MapLayerView: BoardLayerView {
     
     var body: some View {
         ForEach(layer.tokens) {
-            TileView(tile: $0)
+            TileView(tile: $0, unitSize: unitSize)
                 .frame(width: unitSize, height: unitSize)
                 .position(position(for: $0.location))
         }

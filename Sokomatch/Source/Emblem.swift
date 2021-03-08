@@ -24,9 +24,9 @@ enum Emblem: String, CaseIterable, Codable {
         allCases.randomElement()!
     }
     
-    func icon(withSize size: CGFloat) -> some View {
+    func icon(withSize size: CGFloat, weight: Font.Weight = .black) -> some View {
         Image(systemName: "\(rawValue)")
-            .font(Font.system(size: size, weight: .black))
+            .font(Font.system(size: size, weight: weight))
             .frame(width: size, height: size)
             .if(self == .triangle) { $0.offset(x: 0, y: -3) }
     }

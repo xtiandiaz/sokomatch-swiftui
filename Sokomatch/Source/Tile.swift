@@ -17,6 +17,7 @@ enum TileType: Hashable {
     case bridge
     case passageway(Edge)
     case door(locked: Bool, edge: Edge?)
+    case block(emblem: Emblem, enabled: Bool)
 }
 
 struct Tile: Layerable {
@@ -31,11 +32,12 @@ struct Tile: Layerable {
         case .bound: return .boundary
         case .pit, .stickyFloor: return .trap
         case .door(let locked, _): return locked ? .boundary : .map
+        case .block(_, let enabled): return enabled ? .boundary : .map
         default: return .map
         }
     }
     
-    let collisionMask: [TokenCategory] = [.boundary]
+    let collisionMask: [TokenCategory] = []
 
     var interactionMask: [TokenCategory] {
         switch type {
@@ -64,6 +66,8 @@ struct Tile: Layerable {
 struct TileView: View {
 
     let tile: Tile
+    
+    let unitSize: CGFloat
 
     var body: some View {
         switch tile.type {
@@ -81,7 +85,7 @@ struct TileView: View {
                     .scaleEffect(0.5)
             }
         case .pit:
-            Color.clear
+            Color.black
 //            Color.ground.mask(
 //                Color.white.overlay(Color.black.cornerRadius(4).padding(1))
 //                    .compositingGroup()
@@ -103,6 +107,24 @@ struct TileView: View {
                     Image(systemName: "lock.fill").resizableToFit().scaleEffect(0.4)
                 }
             }
+        case .block(let emblem, let enabled):
+            ZStack {
+                if enabled {
+                    emblem.color
+                    emblem.icon(withSize: unitSize, weight: .regular)
+                        .foregroundColor(emblem.color)
+                        .brightness(-0.5)
+                        .scaleEffect(0.5)
+                } else {
+                    Color.ground
+                    Group {
+                        Rectangle().strokeBorder(style: StrokeStyle(lineWidth: 1, dash: [8]))
+                        emblem.icon(withSize: unitSize, weight: .regular)
+                            .scaleEffect(0.5)
+                    }
+                    .foregroundColor(emblem.color.opacity(0.5))
+                }
+            }
         }
     }
     
@@ -110,7 +132,7 @@ struct TileView: View {
     
     private func passagewayView(edge: Edge) -> some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color.ground.opacity(0), Color.ground]),
+            gradient: Gradient(colors: [Color.ground.opacity(0.5), Color.ground]),
             startPoint: edge.gradientStartPoint,
             endPoint: edge.gradientEndPoint)
     }
@@ -142,11 +164,15 @@ private extension Edge {
 extension TileType: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case bound, floor, stickyFloor, pit, bridge, passageway, door
+        case bound, floor, stickyFloor, pit, bridge, passageway, door, block
     }
     
     enum DoorKeys: String, CodingKey {
         case locked, edge
+    }
+    
+    enum BlockKeys: String, CodingKey {
+        case emblem, enabled
     }
     
     init(from decoder: Decoder) throws {
@@ -166,6 +192,11 @@ extension TileType: Codable {
             self = .door(
                 locked: try door.decode(Bool.self, forKey: .locked),
                 edge: try? door.decode(Edge.self, forKey: .edge))
+        case .block:
+            let block = try container.nestedContainer(keyedBy: BlockKeys.self, forKey: .block)
+            self = .block(
+                emblem: try block.decode(Emblem.self, forKey: .emblem),
+                enabled: try block.decode(Bool.self, forKey: .enabled))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -190,6 +221,10 @@ extension TileType: Codable {
             var door = container.nestedContainer(keyedBy: DoorKeys.self, forKey: .door)
             try door.encode(locked, forKey: .locked)
             try door.encode(edge, forKey: .edge)
+        case .block(let emblem, let enabled):
+            var block = container.nestedContainer(keyedBy: BlockKeys.self, forKey: .block)
+            try block.encode(emblem, forKey: .emblem)
+            try block.encode(enabled, forKey: .enabled)
         }
     }
 }

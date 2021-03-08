@@ -125,7 +125,7 @@ class Board: ObservableObject, Configurable {
     }
     
     static func create() -> Board {
-        let length = { (5...9).randomElement()! }
+        let length = { (5...GameView.viewportUWidth).randomElement()! }
         return Board(cols: length(), rows: length())
     }
     
@@ -302,6 +302,8 @@ extension Board {
             unlock(with: key)
         case .explosion(let location):
             remove(in: [movableLayer], at: area(around: location, withRadius: 1))
+        case .activate(let locations, let emblem):
+            mapLayer.activate(locations: locations, withEmblem: emblem)
         default:
             break
         }
@@ -368,7 +370,16 @@ extension Board {
 
 extension Board {
     
+    enum PopulationMode: CaseIterable {
+        case keyAndBlocks, switches
+    }
+    
     func populate() {
+//        populate(mode: PopulationMode.allCases.randomElement()!)
+        populate(mode: .switches)
+    }
+    
+    func populate(mode: PopulationMode) {
         let center = Location(x: cols / 2, y: rows / 2)
         var edges = Set<Location>()
         var safeArea = Set<Location>()
@@ -383,8 +394,6 @@ extension Board {
         
         edges = edges.subtracting(corners)
         
-        avatar = movableLayer.createAvatar(at: center)
-        
         for location in edges.union(corners) {
             mapLayer.create(.bound, at: location)
         }
@@ -393,23 +402,40 @@ extension Board {
             mapLayer.create(.floor, at: location)
         }
         
-        var key: Collectible?
-        if let location = randomAvailableLocation(in: safeArea), Bool.random() {
-            key = collectibleLayer.create(.key, at: location)
+        switch mode {
+        case .keyAndBlocks:
+            populate1(center: center, edges: edges, safeArea: safeArea)
+        case .switches:
+            populate2(center: center, edges: edges, safeArea: safeArea)
         }
+    }
+    
+    func populate2(center: Location, edges: Set<Location>, safeArea: Set<Location>) {
         
-        if let exitLocation = edges.randomElement(), let edge = edge(forLocation: exitLocation) {
-            mapLayer.create(.passageway(edge), at: exitLocation)
-            triggerLayer.create(withEvent: .reachedGoal, at: exitLocation)
-            
-            let entrance = exitLocation.shifted(toward: edge.facingDirection)
-            mapLayer.create(.stickyFloor, at: entrance)
-            
-            if let key = key {
-                lock(location: exitLocation, with: key.id)
-                triggerLayer.createLock(withKey: key.id, at: entrance)
+        placeAvatar(at: center)
+        
+        placeExit(locked: false, edges: edges, safeArea: safeArea)
+        
+        let emblem = Emblem.random()
+        
+        var points = [Location]()
+        for _ in 1...diagonal/4 {
+            if let location = randomAvailableLocation(in: safeArea) {
+                mapLayer.create(.block(emblem: emblem, enabled: false), at: location)
+                points.append(location)
             }
         }
+        
+        if let location = randomAvailableLocation(in: safeArea) {
+            placeSwitch(emblem: emblem, enabled: false, points: points, at: location)
+        }
+    }
+    
+    func populate1(center: Location, edges: Set<Location>, safeArea: Set<Location>) {
+        
+        placeAvatar(at: center)
+        
+        placeExit(locked: Bool.random(), edges: edges, safeArea: safeArea)
         
         for _ in 0...diagonal/3 {
             if let location = randomAvailableLocation(in: safeArea) {
@@ -423,20 +449,39 @@ extension Board {
             }
         }
         
-//        if Bool.random() {
-        if false {
-            for _ in 1...diagonal/4 {
-                if let location = randomAvailableLocation(in: safeArea) {
-                    movableLayer.createBlock(at: location)
-                }
+        for _ in 1...diagonal/4 {
+            if let location = randomAvailableLocation(in: safeArea) {
+                movableLayer.createBlock(at: location)
             }
-        } else if let location = randomAvailableLocation(in: safeArea) {
-            triggerLayer.createSwitch(withEmblem: Emblem.random(), enabled: false, at: location)
         }
         
         if diagonal > 7, let location = randomAvailableLocation(in: safeArea) {
             collectibleLayer.create(.card(type: .random(), value: 1), at: location)
         }
+    }
+    
+    func placeSwitch(emblem: Emblem, enabled: Bool, points: [Location], at location: Location) {
+        triggerLayer.createSwitch(withEmblem: emblem, enabled: false, points: points, at: location)
+    }
+    
+    func placeExit(locked: Bool, edges: Set<Location>, safeArea: Set<Location>) {
+        if let exitLocation = edges.randomElement(), let edge = edge(forLocation: exitLocation) {
+            mapLayer.create(.passageway(edge), at: exitLocation)
+            triggerLayer.create(withEvent: .reachedGoal, at: exitLocation)
+            
+            let entrance = exitLocation.shifted(toward: edge.facingDirection)
+            mapLayer.create(.stickyFloor, at: entrance)
+            
+            if let keyLocation = randomAvailableLocation(in: safeArea), locked {
+                let key = collectibleLayer.create(.key, at: keyLocation)
+                lock(location: exitLocation, with: key.id)
+                triggerLayer.createLock(withKey: key.id, at: entrance)
+            }
+        }
+    }
+    
+    func placeAvatar(at location: Location) {
+        avatar = movableLayer.createAvatar(at: location)
     }
 }
 

@@ -100,9 +100,9 @@ struct SlotView: View {
             }.onEnded {
                 _ in
                 if topCardOffsetY < -.l {
-                    slot.executeOne()
-                } else if topCardOffsetY >= .l {
                     slot.deferOne()
+                } else if topCardOffsetY >= .l {
+                    slot.executeOne()
                 }
                 
                 topCardOffsetY = 0

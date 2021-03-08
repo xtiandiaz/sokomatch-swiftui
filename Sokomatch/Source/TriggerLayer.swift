@@ -23,8 +23,8 @@ class TriggerLayer: BoardLayer<Trigger> {
         place(token: Trigger(type: .lock(key: key), location: location))
     }
     
-    func createSwitch(withEmblem emblem: Emblem, enabled: Bool, at location: Location) {
-        place(token: Trigger(type: .switch(emblem: emblem, enabled: enabled), location: location))
+    func createSwitch(withEmblem emblem: Emblem, enabled: Bool, points: [Location], at location: Location) {
+        place(token: Trigger(type: .switch(emblem: emblem, enabled: enabled, points: points), location: location))
     }
     
     override func affect(with token: Token, at location: Location) {
@@ -40,9 +40,10 @@ class TriggerLayer: BoardLayer<Trigger> {
             eventSubject.send(.unlocked(key: key))
         case .event(let event):
             eventSubject.send(event)
-        case .switch(let emblem, let enabled):
+        case .switch(let emblem, let enabled, let points):
             if !enabled {
-                createSwitch(withEmblem: emblem, enabled: true, at: location)
+                createSwitch(withEmblem: emblem, enabled: true, points: points, at: location)
+                eventSubject.send(.activate(locations: points, emblem: emblem))
             }
         default:
             break

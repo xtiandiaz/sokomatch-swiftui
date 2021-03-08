@@ -10,7 +10,9 @@ import SwiftUI
 
 enum TriggerType {
     
-    case event(BoardEvent), lock(key: UUID), `switch`(emblem: Emblem, enabled: Bool)
+    case event(BoardEvent)
+    case lock(key: UUID)
+    case `switch`(emblem: Emblem, enabled: Bool, points: [Location])
 }
 
 struct Trigger: Layerable {
@@ -24,7 +26,7 @@ struct Trigger: Layerable {
     
     var interactionMask: [TokenCategory] {
         switch type {
-        case .switch(_, let enabled) where enabled:
+        case .switch(_, let enabled, _) where enabled:
             return []
         default:
             return [.avatar]
@@ -49,7 +51,7 @@ struct TriggerView: View {
     
     var body: some View {
         switch trigger.type {
-        case .switch(let emblem, let enabled):
+        case .switch(let emblem, let enabled, _):
             ZStack {
                 Circle().fill(emblem.color).brightness(-0.5)
                 Group {
@@ -80,7 +82,7 @@ extension TriggerType: Codable {
     }
     
     enum SwitchKeys: String, CodingKey {
-        case emblem, enabled
+        case emblem, enabled, points
     }
     
     init(from decoder: Decoder) throws {
@@ -95,7 +97,8 @@ extension TriggerType: Codable {
             let `switch` = try container.nestedContainer(keyedBy: SwitchKeys.self, forKey: .switch)
             self = .switch(
                 emblem: try `switch`.decode(Emblem.self, forKey: .emblem),
-                enabled: try `switch`.decode(Bool.self, forKey: .enabled)
+                enabled: try `switch`.decode(Bool.self, forKey: .enabled),
+                points: try `switch`.decode([Location].self, forKey: .points)
             )
         default:
             throw DecodingError.dataCorrupted(
@@ -115,10 +118,11 @@ extension TriggerType: Codable {
             try container.encode(event, forKey: .event)
         case .lock(let key):
             try container.encode(key, forKey: .lock)
-        case .switch(let emblem, let enabled):
+        case .switch(let emblem, let enabled, let points):
             var `switch` = container.nestedContainer(keyedBy: SwitchKeys.self, forKey: .switch)
             try `switch`.encode(emblem, forKey: .emblem)
             try `switch`.encode(enabled, forKey: .enabled)
+            try `switch`.encode(points, forKey: .points)
         }
     }
 }

@@ -30,8 +30,8 @@ final class Avatar: Movable, ObservableObject {
     
     override var interactionMask: [TokenCategory] {
         switch mode {
-        case .ghost: return [.collectible, .trigger]
-        default: return [.collectible, .trap, .trigger]
+        case .ghost: return [.collectible]
+        default: return [.collectible, .trap]
         }
     }
     
@@ -42,9 +42,7 @@ final class Avatar: Movable, ObservableObject {
         }
     }
     
-    init(location: Location) {
-        mode = .mighty
-        
+    init(location: Location) {        
         super.init(type: .avatar, location: location)
     }
     

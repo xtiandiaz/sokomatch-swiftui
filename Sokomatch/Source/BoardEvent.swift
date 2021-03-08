@@ -13,6 +13,7 @@ enum BoardEvent {
     case unlocked(key: UUID)
     case collected(Collectible)
     case explosion(at: Location)
+    case activate(locations: [Location], emblem: Emblem)
     case reachedGoal
     case death
 }

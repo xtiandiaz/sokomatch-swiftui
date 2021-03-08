@@ -34,39 +34,37 @@ struct GameView: View {
                 }
             }
             
-            VStack {
-                HStack {
-                    IconButton(
-                        icon: Image(systemName: "repeat"),
-                        iconColor: .white,
-                        backgroundColor: .clear,
-                        onTapped: game.reset
-                    )
+            VStack(spacing: 0) {
+                ZStack(alignment: .top) {
+                    HStack {
+                        Text("\(game.score)").font(.title)
+                        
+                        Spacer()
+                        
+                        IconButton(
+                            icon: Image(systemName: "repeat"),
+                            iconColor: .white,
+                            backgroundColor: .clear,
+                            onTapped: game.reset
+                        )
+                    }
+                    .padding(.leading, .xs)
                     
-                    Spacer()
-                    
-                    Text("\(game.score)").font(.title)
+                    VStack(spacing: .xxs) {
+                        Image(systemName: "arrow.up").opacity(0.25).zIndex(-1)
+                        
+                        SlotView(slot: inventory).frame(width: .xxl)
+                        
+                        Image(systemName: "arrow.down").opacity(0.25).zIndex(-1)
+                    }
                 }
-                .padding(EdgeInsets(top: 0, leading: .xs, bottom: 0, trailing: .m))
+                .padding(EdgeInsets(top: 0, leading: .xs, bottom: .s, trailing: .xs))
                 
                 if let unitSize = unitSize {
                     StageView(stage: game.stage, unitSize: unitSize)
                 }
                 
                 Spacer()
-                
-                HStack {
-                    VStack(spacing: .xs) {
-                        Image(systemName: "bolt.fill").opacity(0.25).zIndex(-1)
-                        
-                        SlotView(slot: inventory).frame(width: 80)
-                        
-                        Image(systemName: "repeat").opacity(0.25).zIndex(-1)
-                    }
-                    
-                    Spacer()
-                }
-                .padding(EdgeInsets(top: 0, leading: .m, bottom: .m, trailing: .m))
             }
         }
         .gesture(controlManager.swipeGesture)
@@ -79,7 +77,6 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         
         GameView()
-            .environmentObject(Game())
             .colorScheme(.dark)
     }
 }
