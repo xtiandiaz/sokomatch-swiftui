@@ -45,9 +45,14 @@ struct CollectibleView: View {
     var body: some View {
         switch collectible.type {
         case .coin:
-            Circle().fill(Color.yellow).scaleEffect(0.25)
+            Circle()
+                .fill(Color.yellow)
+                .scaleEffect(0.25)
         case .key:
-            Image(systemName: "key.fill").resizableToFit().scaleEffect(0.5)
+            Image(systemName: "key.fill")
+                .resizableToFit()
+                .foregroundColor(Color.white)
+                .scaleEffect(0.5)
         case .card(_, _):
             ZStack {
                 Image(systemName: "questionmark")

@@ -375,8 +375,7 @@ extension Board {
     }
     
     func populate() {
-//        populate(mode: PopulationMode.allCases.randomElement()!)
-        populate(mode: .switches)
+        populate(mode: PopulationMode.allCases.randomElement()!)
     }
     
     func populate(mode: PopulationMode) {

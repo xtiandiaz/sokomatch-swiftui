@@ -104,7 +104,10 @@ struct TileView: View {
                 }
                 
                 if locked {
-                    Image(systemName: "lock.fill").resizableToFit().scaleEffect(0.4)
+                    Image(systemName: "lock.fill")
+                        .resizableToFit()
+                        .foregroundColor(Color.white)
+                        .scaleEffect(0.4)
                 }
             }
         case .block(let emblem, let enabled):
