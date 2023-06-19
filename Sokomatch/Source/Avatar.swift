@@ -96,7 +96,7 @@ struct AvatarView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(Color.white)
+        .fill(Color.white)
                 .padding(1)
                 .if(avatar.mode == .ghost) { $0.opacity(0.5) }
                 .if(avatar.mode == .mighty) { $0.shadow(color: Color.white, radius: 20, x: 0, y: 0) }

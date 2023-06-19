@@ -14,14 +14,7 @@ extension View {
         clipShape(RoundedCorners(radius: radius, corners: corners))
     }
     
-    @ViewBuilder
-    func `if`<T: View>(_ condition: Bool, then content: (Self) -> T) -> some View {
-        if condition {
-            content(self)
-        } else {
-            self
-        }
-    }
+    
 }
 
 struct RoundedCorners: Shape {
