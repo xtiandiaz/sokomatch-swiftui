@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -51,7 +51,8 @@
 		85B51DCB256A5EB400DDD44E /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DC8256A5EB400DDD44E /* BoardView.swift */; };
 		85B51DCD256A5EB400DDD44E /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B51DCA256A5EB400DDD44E /* Board.swift */; };
 		85FF46A625DEB59B00797CEF /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF46A525DEB59B00797CEF /* ColorExtensions.swift */; };
-		983ADADE2A40903D00178A74 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 983ADADD2A40903D00178A74 /* Emerald */; };
+		98DA37DD2F29541300DBF146 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 98DA37DC2F29541300DBF146 /* Emerald */; };
+		98DA37E02F29544500DBF146 /* Emerald in Frameworks */ = {isa = PBXBuildFile; productRef = 98DA37DF2F29544500DBF146 /* Emerald */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,7 +110,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				983ADADE2A40903D00178A74 /* Emerald in Frameworks */,
+				98DA37DD2F29541300DBF146 /* Emerald in Frameworks */,
+				98DA37E02F29544500DBF146 /* Emerald in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +309,8 @@
 			);
 			name = Sokomatch;
 			packageProductDependencies = (
-				983ADADD2A40903D00178A74 /* Emerald */,
+				98DA37DC2F29541300DBF146 /* Emerald */,
+				98DA37DF2F29544500DBF146 /* Emerald */,
 			);
 			productName = Sokomatch;
 			productReference = 859E4CA223F7FFD900F4342C /* Sokomatch.app */;
@@ -338,6 +341,7 @@
 			);
 			mainGroup = 859E4C9923F7FFD900F4342C;
 			packageReferences = (
+				98DA37DE2F29544500DBF146 /* XCLocalSwiftPackageReference "emerald-swift" */,
 			);
 			productRefGroup = 859E4CA323F7FFD900F4342C /* Products */;
 			projectDirPath = "";
@@ -607,8 +611,19 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		98DA37DE2F29544500DBF146 /* XCLocalSwiftPackageReference "emerald-swift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "emerald-swift";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		983ADADD2A40903D00178A74 /* Emerald */ = {
+		98DA37DC2F29541300DBF146 /* Emerald */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Emerald;
+		};
+		98DA37DF2F29544500DBF146 /* Emerald */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Emerald;
 		};
